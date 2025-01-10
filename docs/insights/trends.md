@@ -7,7 +7,7 @@ description: See how grouping tests reveals outcome patterns across isolated var
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-The Trends section of the Insights feature provides a variety of data visualizations to give you a holistic perspective of your test outcomes. The following table describes each section.
+The **Trends** section of the Insights feature provides a variety of data visualizations to give you a holistic perspective of your test outcomes. The following table describes each section.
 
 <table>
   <tr>
@@ -15,12 +15,13 @@ The Trends section of the Insights feature provides a variety of data visualizat
     <th>Statistical Information</th>
   </tr>
   <tr>
-    <td><b>Number of Tests</b></td>
+    <td><b>Number of Jobs</b></td>
     <td>The total number of tests run during the specified time period, separated in increments relative to the overall duration. For example, increments may be every 10 minutes for a time period of one hour, while increments might be daily for a 30-day time period.</td>
   </tr>
   <tr>
     <td><b>Pass/Fail Rate</b></td>
-    <td>For each increment in the time period, the percentage of tests that:<br/>
+    <td>
+        For each increment in the time period, the percentage of tests that:<br/>
       <ul>
         <li><b>Completed</b>: Ran to completion, but did not have a pass or fail status.</li>
         <li><b>Passed</b>: Ran to completion with a status of Passed.</li>
@@ -34,10 +35,17 @@ The Trends section of the Insights feature provides a variety of data visualizat
     <td>The total number or errors that occurred during the specified time period, sorted by individual error message.</td>
   </tr>
   <tr>
-    <td><b>Build and Test Statistics</b></td>
-    <td>A snapshot of all tests run during the time period, displayed in separate tabs based on whether the test is or is not assigned a Build ID.For each test listed, basic data about the time the test was executed, the time it took to run, the Sauce Labs user who ran it, and its outcome. Tests in the <b>Builds</b> tab have an additional statistic &mdash; <i>Efficiency</i> &mdash; that indicates whether the tests in the build run in parallel to optimize the execution time for the entire build.<br/>This visualization can be further filtered to show only tests with a failed and/or errored status.</td>
+    <td><b>Build and Job Statistics</b></td>
+    <td>A snapshot of all tests run during the time period, displayed in separate tabs based on whether the test is or is not assigned a Build ID. For each test listed, basic data about the time the test was executed, the time it took to run, the Sauce Labs user who ran it, and its outcome.<br/> 
+    Tests in the <b>Builds</b> tab have an additional statistic &mdash; <i>Efficiency</i> &mdash; that indicates whether the tests in the build run in parallel to optimize the execution time for the entire build.<br/>
+    Tests in the <b>Jobs without build</b> tab have an additional statistic &mdash; <i>Error</i> &mdash; which displays the error message for the test where it was interrupted.<br/>
+    This visualization can be further filtered to show only tests with a failed and/or errored status.</td>
   </tr>
 </table>
+
+The above sections are available for Virtual Cloud (VDC) and Real Device (RDC).
+
+You can also filter the results by **Owner**, **Build**, **Operating System (OS)**, **Browser** (in VDC) or **Device** (in RDC), **Device Group** (in RDC), **Framework**, **Tag** and **Time Period**. The Time Period is set by default to 7 days, but options are also available: 15 minutes, 1 hour, 6 hours, 12 hours, 1 day, and 30 days, or you can define start and end dates by switching to the **Absolute** tab in the date range filter.
 
 ## Drilling Down on Visualizations
 
@@ -55,7 +63,7 @@ To find out how well a site under test performs against a browser update, we sta
 
 As the figure below shows, more than 3,500 tests were run on Windows 7 for Chrome 50 in the past seven days, with a 41% pass rate.
 
-<img src={useBaseUrl('img/insights/chrome50.png')} alt="Chrome 50 Trends" width="750"/>
+<img src={useBaseUrl('img/insights/chrome50.webp')} alt="Chrome 50 Trends" width="750"/>
 
 There are no errors, indicating that this is a robust set of tests, but a large number of tests ran to completion without reporting a Pass or Fail status. Hovering over one of the bars in the graph shows that these no-status completions account for about 65% of the tests in every time increment.
 

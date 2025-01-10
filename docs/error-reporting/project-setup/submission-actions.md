@@ -9,15 +9,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-## Overview
-
 Submission Actions allow you to configure Backtrace to perform actions in response to incoming traffic. Actions can be performed based on a flexible rule system that can match strings or regex to modules, callstacks, or attributes and decide how to proceed. Highlights of the actions provided include: dropping traffic, automated assignment, setting classifiers and more.
 
 ## Supported Actions
 
 Submission actions can be configured under **Project Settings** > **Submission actions**:
 
-<img src={useBaseUrl('img/error-reporting/project-settings/submission-actions.png')} alt="Shows the available submission actions in the Project Settings." />
+<img src={useBaseUrl('img/error-reporting/project-settings/submission-actions.webp')} alt="Shows the available submission actions in the Project Settings." />
 
 The following actions are supported:
 
@@ -41,10 +39,10 @@ Both **Reject submission** and **Drop objects and index only** allow you to crea
 
 This action can be used for automated assignment or to set specific attribute values.
 
-<img src={useBaseUrl('img/error-reporting/project-settings/submission-action-set-value.png')} width= "500" alt="Shows an example configuration for the Set values submission action." />
+<img src={useBaseUrl('img/error-reporting/project-settings/submission-action-set-value.webp')} width= "500" alt="Shows an example configuration for the Set values submission action." />
 
 ### Union Values
 
 This action is like **Set value** , but for label types, like Tags or Classifiers, where instead of setting a value, the system is adding a value to the field, so it can contain multiple values.
 
-<img src={useBaseUrl('img/error-reporting/project-settings/submission-action-union-values.png')} width= "500" alt="Shows an example configuration for the Union values submission action." />
+<img src={useBaseUrl('img/error-reporting/project-settings/submission-action-union-values.webp')} width= "500" alt="Shows an example configuration for the Union values submission action." />

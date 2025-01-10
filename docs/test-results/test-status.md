@@ -122,7 +122,7 @@ https://github.com/saucelabs-training/demo-ruby/blob/docs-1.0/intro/spec/spec_he
 ## Updating Test Status After Completion
 
 If you did not use the JavaScript Executor to update the status of your test as an assertion in the test code,
-you can still use the Sauce Labs REST API to update the test status.
+you can still use the [Sauce Labs REST API](/dev/api/) to update the test status.
 
 ## What You'll Need
 
@@ -147,4 +147,4 @@ You can obtain the JOB_ID either by:
 - Collecting and storing the web driver SessionId for the test, which Sauce Labs uses as the JOB_ID
 - testFinding the Id value in the test's Metadata tab on Sauce Labs, as shown in the following figure
 
-<img src={useBaseUrl('img/test-results/test-results-meta-id.png')} alt="Test results metadata - JOB_ID"/>
+<img src={useBaseUrl('img/test-results/test-results-meta-id-updated.png')} alt="Test results metadata - JOB_ID"/>

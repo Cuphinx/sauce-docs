@@ -18,56 +18,57 @@ This Quickstart guide will get you up and running with a functional API Test. Le
 - A Sauce Labs account ([Log in](https://accounts.saucelabs.com/am/XUI/#login/) or sign up for a [free trial license](https://saucelabs.com/sign-up)).
 
 :::note
-If your APIs are behind a firewall, you'll need to set up a [Sauce Connect Proxy](/secure-connections/sauce-connect/) tunnel before proceeding.
+If your APIs are behind a firewall, you'll need to set up a [Sauce Connect Proxy](/api-testing/sauce-connect) tunnel before proceeding.
 :::
 
 ## Create Project
 
 1. Log in to Sauce Labs, then click **API Testing**.
 
-2. From the list of test creation methods, click **Use HTTP Client**.<br/><img src={useBaseUrl('img/api-testing/newtestHTTP.png')} alt="Enter API URL" width="550" />
+2. From the list of test creation methods, click **Use HTTP Client**.<br/><img src={useBaseUrl('img/api-testing/newtestHTTP.webp')} alt="Enter API URL" width="550" />
 
 :::note Returning Users
-If you're seeing an existing list of Projects instead of the landing page shown above, click **Create Project** instead.<br/><img src={useBaseUrl('img/api-fortress/2021/01/createProject.png')} alt="Create Project" width="450" />
+If you're seeing an existing list of Projects instead of the landing page shown above, click **Create Project** instead.<br/><img src={useBaseUrl('img/api-testing/createProject.png')} alt="Create Project" width="450" />
 :::
 
 3. In the **Create a New Project** window:
    - Set the **Create from** dropdown to **blank project**.
    - Enter your **Project Name**.
    - Optionally, you can add **Tags**, a **Description**, **Notes**. For the purpose of this Quickstart, leave **Access** as-is.
-   - Click **Save** when you're finished. <br/><img src={useBaseUrl('img/api-fortress/2021/01/newProject.png')} alt="Create a Project UI" width="300" />
+   - Click **Save** when you're finished. <br/><img src={useBaseUrl('img/api-testing/newProject.png')} alt="Create a Project UI" width="300" />
 
 ## Create Test
 
 For the purpose of this Quickstart, we'll test a `GET` call from [Dog CEO](https://dog.ceo/dog-api/documentation/), a public API that generates a list of dog breeds.
 
-In the **HTTP Client** tab > **Enter request URL** field, enter `https://dog.ceo/api/breeds/list/all`:
-<img src={useBaseUrl('img/api-fortress/2021/01/enterRequestURL.png')} alt="Enter API URL" width="500" />
+In the **HTTP Client** > **Enter request URL** field, enter `https://dog.ceo/api/breeds/list/all`:
+<img src={useBaseUrl('img/api-testing/enterRequestURL.png')} alt="Enter API URL" width="500" />
 
 ## Send Request
 
-Click **Send** to submit this HTTP request.<br/><img src={useBaseUrl('img/api-fortress/2021/01/enterRequestSave.png')} alt="Enter API Request save" width="500" />
+Click **Send** to submit this HTTP request.<br/><img src={useBaseUrl('img/api-testing/enterRequestSave.png')} alt="Enter API Request save" width="500" />
 
-The JSON response &#8212; in this case, a list of dog breeds &#8212; will populate in the **Body** section along with a **200** OK success status.<br/><img src={useBaseUrl('img/api-fortress/2021/01/testSuccess.png')} alt="API Request success" width="400" />
+The JSON response &#8212; in this case, a list of dog breeds &#8212; will populate in the **Body** section along with a **200** OK success status.<br/><img src={useBaseUrl('img/api-testing/testSuccess.png')} alt="API Request success" width="400" />
 
 ## Generate Test
 
-1. Click **Generate Test**.<br/><img src={useBaseUrl('img/api-fortress/2021/01/generateTest.png')} alt="Generate Test" width="400" />
+1. Click **Generate Test**.<br/><img src={useBaseUrl('img/api-testing/generateTest.png')} alt="Generate Test" width="400" />
 
 2. In the **New Test** window:
    - Enter your **Test Name**.
    - Optionally, you can add a **Description** and/or **Tags**.
-   - Click **Create Test** when you're finished.<br/><img src={useBaseUrl('img/api-fortress/2021/01/testDetails.png')} alt="Create Test" width="400"/>
+   - Click **Create Test** when you're finished.<br/><img src={useBaseUrl('img/api-testing/testDetails.png')} alt="Create Test" width="400"/>
 
-This will generate a series of functional tests for this specific API request.
+This will generate a series of assertions for this specific API request.
 
 :::tip
 
-<details><summary>Viewing your test data</summary>
+<details>
+<summary>Viewing your test</summary>
 
-**Visual** view shows your test as components:<br/><img src={useBaseUrl('img/api-testing/testVisual.png')} alt="Sample Test Visual View"/>
+**Visual** view shows your test as UI components:<br/><img src={useBaseUrl('img/api-testing/testVisual.png')} alt="Sample Test Visual View"/>
 
-**Code** view displays it as code:<br/><img src={useBaseUrl('img/api-testing/testCode.png')} alt="Sample Test Code View"/>
+**Code** view displays it as code:<br/><img src={useBaseUrl('img/api-testing/testCode.webp')} alt="Sample Test Code View"/>
 
 </details>
 :::
@@ -80,9 +81,9 @@ This will generate a series of functional tests for this specific API request.
 
 ## View Test Results
 
-1. To view your test results, hover your mouse over your test line item and click **Open report document**.<br/><img src={useBaseUrl('img/api-fortress/2021/01/testResultsOpen.png')} alt="Open Test Results" width="200" />
+1. To view your test results, hover your mouse over your test line item and click **Open report document**.<br/><img src={useBaseUrl('img/api-testing/testResultsOpen.png')} alt="Open Test Results" width="200" />
 
-1. Your test report will open in a new browser tab. The report displays granular test information that's helpful for debugging any failures ([more info](/api-testing/project-dashboard/#test-outcome-reports)).<br/><img src={useBaseUrl('img/api-testing/testResultsPage.png')} alt="Test Results Page" width="600" />
+1. Your test report will open in a new browser tab. The report displays granular test information that's helpful for debugging any failures ([more info](/api-testing/project-dashboard/#test-outcome-report)).<br/><img src={useBaseUrl('img/api-testing/testResultsPageRebrand.webp')} alt="Test Results Page" width="600" />
 
 ## Publish Your Test
 
@@ -101,4 +102,3 @@ Sauce Labs API Testing has a full suite of tools that enables comprehensive cont
 - Create a new test from a [spec file](/api-testing/build-from-spec) or [Postman collection](/api-testing/import-postman-collection).
   - When you [generate a test](#generate-test) this way, the test components will be based on your imported request-and-response data.
 - Create a new test [from scratch](/api-testing/composer/).
-- Watch our [API Testing and Monitoring](https://saucelabs.com/resources/videos/api-testing-and-monitoring-demo)

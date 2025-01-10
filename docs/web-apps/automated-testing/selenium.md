@@ -38,7 +38,7 @@ between the components using HTTP commands.
 
 #### For Sauce Labs, it looks like this:
 
-<img src={useBaseUrl('img/selenium/selenium-diagram.png')} alt="Diagram of Selenium and Sauce Labs"/>
+<img src={useBaseUrl('img/selenium/selenium-diagram.webp')} alt="Diagram of Selenium and Sauce Labs"/>
 
 ## Seven Steps of Selenium Tests
 
@@ -68,9 +68,9 @@ The way to define capabilities in recent versions of Selenium is with browser op
 
 - Ensure you have the session you want (e.g., browser name, browser version, operating system).
 - Set the behavior you want in your session. There are three types of options that set behavior:
-  - [Common options](/dev/test-configuration-options/#browser-w3c-capabilities--optional):
+  - [Common options](/dev/test-configuration-options/#w3c-webdriver-browser-capabilities--optional):
     these include things such as page load timeouts, and insecure certificate behavior.
-  - [Browser options](/dev/test-configuration-options/#browser-vendor-capabilities)
+  - [Browser options](/dev/test-configuration-options/#desktop-browser-capabilities-sauce-specific--optional)
   - Sauce Labs options: see [Test Configuration](/dev/test-configuration-options)
     for a complete guide to our available capabilities.
 
@@ -100,7 +100,7 @@ https://github.com/saucelabs-training/demo-java/blob/docs-1.1/selenium-examples/
 <TabItem value="Python">
 
 ```py reference title="Starting a Sauce Labs Session"
-https://github.com/saucelabs-training/demo-python/blob/docs-1.1/examples/selenium/conftest.py#L12-L23
+https://github.com/saucelabs-training/demo-python/blob/docs-1.1/examples/selenium/conftest.py#L12-L25
 ```
 
 </TabItem>

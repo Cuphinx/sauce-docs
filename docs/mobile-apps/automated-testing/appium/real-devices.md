@@ -16,9 +16,9 @@ Appium automated real device testing supports tests designed to run against a we
 See [When to Test on Real Devices](https://docs.saucelabs.com/mobile-apps/supported-devices/#when-to-test-on-real-devices) for deails about real device testing use cases, benefits, and system requirements.
 
 :::note
-Sauce Labs does not support automatic testing of ADB commands for Appium. To use ADB and shell commands, the usage of [vUSB](/mobile-apps/features/virtual-usb) with private devices is necessary as Sauce Labs does not support ADB without the use of vUSB.
+Sauce Labs now supports ADB commands for Appium. To use ADB and mobile:shell commands, please [sign up for our BETA through this form](https://forms.gle/42qv8U1RukqC62x86) and indicate the desired ADB commands you would like to run. We will be supporting a limited list of ADB commands through mobile:shell.
 <br/>
-ADB can also be used during live testing.
+ADB can already be used during live testing.
 :::
 
 ## What You'll Need
@@ -36,32 +36,19 @@ ADB can also be used during live testing.
 
 If your Appium tests are intended to test a native mobile app on real devices, the app file must be available to Sauce Labs so it can be installed on the devices selected for testing. Sauce Labs provides a variety of methods for doing this, including:
 
-- Upload your app to Sauce App Storage using the [Sauce Labs UI](/mobile-apps/app-storage/#uploading-apps-via-ui) or [REST API](/mobile-apps/app-storage/#uploading-apps-via-rest-api)
+- Upload your app to Sauce App Storage using the [Sauce Labs UI](/mobile-apps/app-storage/#upload-apps-via-ui) or [REST API](/mobile-apps/app-storage/#upload-apps-via-rest-api)
 - Install your app to a real device from a remote location [How?](/mobile-apps/app-storage/#installing-apps-from-a-remote-location)
 
 The following app file types are supported for real device tests:
 
 - \*.apk or \*.aab for Android app files
-- \*.ipa for iOS app files (See [Create .ipa Files for Appium](/mobile-apps/automated-testing/ipa-files/#real-devices))
+- \*.ipa for iOS app files (See [Create .ipa Files for Appium](/mobile-apps/automated-testing/ipa-files/#creating-ipa-files-for-appium-testing))
 
-The following Appium versions are supported on our Real Device Cloud:
-
-- Appium 2.0 Beta
-- 1.22.2
-- 1.22.0
-- 1.21.0
-- 1.20.1
-- 1.19.0
-- 1.18.1
-- 1.17.1
-- 1.17.0
-- 1.15.1
-- 1.15.0
-- 1.14.0
+See [Appium Versions](./appium-versions.md) for information about Appium versions supported for real device testing.
 
 ## Using the W3C WebDriver Specification
 
-As the W3C WebDriver Protocol is supported in Appium v1.6.5 and higher, and required for Appium v2.0 (currently in beta), we recommend and support using it exclusively in your test scripts instead of the JSON Wire Protocol (JWP). See [Migrating Appium Real Device Tests to W3C](https://support.saucelabs.com/hc/en-us/articles/4412359870231) for more information.
+As the W3C WebDriver Protocol is supported in Appium v1.6.5 and higher, and required for Appium v2.0, we recommend and support using it exclusively in your test scripts instead of the JSON Wire Protocol (JWP). See [Migrating Appium Real Device Tests to W3C](https://support.saucelabs.com/hc/en-us/articles/4412359870231) for more information.
 
 The W3C WebDriver Protocol test capability syntax differs from that of JWP, so it's important to make sure you configure your tests accurately so your intended protocol is followed and your settings are applied correctly.
 
@@ -175,8 +162,9 @@ driver.installApp(
 :::note Limitations
 
 - The provided app path needs to be publicly available as this method does not have access to your local path/storage.
-- This method does not have access to apps in Sauce Storage. Only apps that are publicly available can be installed with this command. Therefore, we also can't re-sign and instrument the app. The Instrumentation will not work for apps installed using the `driver.installApp('path-to-app')` command (see [App Settings](/mobile-apps/live-testing/live-mobile-app-testing/#app-settings) to learn more).
+- This method does not have access to apps in Sauce Storage. Only apps that are publicly available can be installed with this command. Therefore, we also can't re-sign and instrument the app. The Instrumentation will not work for apps installed using the `driver.installApp('path-to-app')` command (see [App Settings](/mobile-apps/live-testing/live-mobile-app-testing/#app-and-device-settings) to learn more).
 - This method will not work for iOS due to signing. Each iOS app needs to be resigned so it is allowed to be installed on our devices. To make this work you must use a private device and add the UDID of the private device to the provisioning profile for iOS (see our [resigning process](/mobile-apps/automated-testing/ipa-files/) to learn more).
+
 :::
 
 For more information about this command, see the [Appium documentation](http://appium.io/docs/en/commands/device/app/install-app/).
@@ -290,7 +278,7 @@ To optimize device availability, consistency, and efficiency for multiple tests,
 To skip the uninstallation and reinstallation of your app from the device, you can set `noReset` to `true` in conjunction with using a `cacheId`. This setting adds efficiency, but may not be suitable for test setups that require the app's state to be reset between tests.
 
 ```js
-"appium: noReset" : "true",
+"appium:noReset" : "true",
 "sauce:options" : {
   "cacheId" : "jnc0x1256",
 }

@@ -13,7 +13,7 @@ An API conversation consists of:
 
 The conversation needs to follow specific rules that the API producer and API consumer must agree upon. The formal description of these rules is the contract, which is generally presented as a specification file such as [OpenAPI](https://swagger.io/docs/specification/about/).
 
-<img src={useBaseUrl('img/api-fortress/2022/03/api-conversation.png')} alt="API Conversation and Contract" width="300"/>
+<img src={useBaseUrl('img/api-testing/contract-test/api-conversation.png')} alt="API Conversation and Contract" width="300"/>
 
 If this contract is broken by either party, it can lead to bugs and malfunctions. _API Contract Testing_ is the act of validating that the API producer and the API consumer are respecting the contract.
 
@@ -29,12 +29,12 @@ Contract testing is a fast, lightweight form of API testing that strictly checks
 - Testing APIs during the early stages of design and development
 - Creating APIs that are internal and/or have limited number of consumers
 
-<img src={useBaseUrl('img/api-fortress/2022/03/api-consumer-contract.png')} alt="API Conversation and Contract" width="600"/>
+<img src={useBaseUrl('img/api-testing/contract-test/api-consumer-contract.png')} alt="API Conversation and Contract" width="600"/>
 
 ## Testing the API Producer Side
 
 Sauce Labs API Testing will validate the API producer (server) side by creating a contract test from your OpenAPI spec file.
-<img src={useBaseUrl('img/api-fortress/2022/03/api-producer-contract.png')} alt="API Conversation and Contract" width="500"/>
+<img src={useBaseUrl('img/api-testing/contract-test/api-producer-contract.png')} alt="API Conversation and Contract" width="500"/>
 
 1. From an API Testing Project, go to the HTTP Client.
 2. Import an OpenAPI specification file (v3.0 or higher).
@@ -47,11 +47,12 @@ Sauce Labs API Testing will validate the API producer (server) side by creating 
 
 6. <p>Double-click on the <small><strong>ASSERT VALID JSON SCHEMA</strong></small> component to expand and see the contract validation details.</p>
 
-<img src={useBaseUrl('img/api-testing/assertJSON_expanded.png')} alt="API Conversation and Contract" width="600"/>
+<img src={useBaseUrl('img/api-testing/assertJSON_expanded.webp')} alt="API Conversation and Contract" width="600"/>
 
 Optionally, you can add further [assertions](/api-testing/composer/) here to your test, which will perform functional testing on top of your contract tests and fully validate the APIs are working as intended.
 
-<details><summary>What is functional testing?</summary>
+<details>
+<summary>What is functional testing?</summary>
 <i>Functional testing</i> is a more robust, data-driven method that checks the API logic and consumer flows. If your organization is creating a large-scale API program that will have public APIs with third-party consumers, for example, functional testing is ideal. That's where adding functional testing to complement your contract testing strategy can give your development team insight into how accurately your APIs render, and ultimately bring products to market faster.
 </details>
 
@@ -61,7 +62,7 @@ After you've run your tests as part of a build (i.e., as part of your CI pipelin
 
 With Sauce Labs API Testing, you'll test the API consumer (client) side in a protected, static environment, where tests are run against mocked (not live) APIs. This allows contract tests to compare isolated API responses to the contract for immediate attention if something is wrong.
 
-1. You'll first need to [generate a webhook URL](/api-testing/integrations/apifctl-cicd-integration/#creating-webhooks) for your API Testing Project, if you don't have one already.
+1. You'll first need to [generate a webhook URL](/api-testing/integrations/apitesting-saucectl-integration/#step-1-create-a-webhook) for your API Testing Project, if you don't have one already.
 
 2. From a command-line terminal, start [Piestry](/api-testing/mocking/), our API mocking server, by issuing the launch command below. The `--logger` value will be the webhook URL you generated in the previous step, appended with `/insights/events/_contract`.
 
@@ -72,7 +73,8 @@ docker run --pull always -v "$(pwd)/myspec:/specs" \
 --logger https://{SAUCE_USERNAME}:{SAUCE_ACCESS_KEY}@{SAUCE_API_ENDPOINT}/{hook_id}/insights/events/_contract
 ```
 
-  <details><summary>Want to run Piestry as part of a build?</summary>
+<details>
+<summary>Want to run Piestry as part of a build?</summary>
 
 Alternatively, you can run the command as a [build](/api-testing/project-dashboard/#test-build-reports) by issuing the following launch command instead of the above:
 
@@ -99,4 +101,4 @@ Use the [`--validate-request`](/api-testing/mocking/#validate-request) switch to
 
 Sauce Labs API Testing will validate that the API consumer side has complied with the contract specifications.
 
-<img src={useBaseUrl('img/api-fortress/2022/03/api-testing-overview.png')} alt="API Conversation and Contract" width="600"/>
+<img src={useBaseUrl('img/api-testing/contract-test/api-testing-overview.png')} alt="API Conversation and Contract" width="600"/>

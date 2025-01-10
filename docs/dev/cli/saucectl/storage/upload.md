@@ -1,10 +1,8 @@
 ---
 id: upload
 title: saucectl storage upload
-sidebar_label: saucectl storage upload
+sidebar_label: upload
 ---
-
-## Description
 
 Uploads an app file to Sauce Storage and returns a unique file ID assigned to the app. Sauce Storage supports app files in _.apk, _.aab, _.ipa, or _.zip format.
 

@@ -5,6 +5,10 @@ sidebar_label: What's New
 description: See what's new with the Backtrace Console, including new features and improvements.
 ---
 
+:::note Page Deprecated
+This page is now deprecated and will be removed. To see what's new for Error Reporting, see the [Sauce Labs Product Announcements](https://changelog.saucelabs.com/en?category=error%20reporting).
+:::
+
 ## View Users' Last Login (2022-12-02)
 
 As an admin, you can now check when a user last logged in to their account.
@@ -97,7 +101,7 @@ Tunable heuristic-based analysis spots new API signatures or changes further up 
 
 ## Case Insensitive Filtering (2020-08-24)
 
-By default, all filter operators are case sensitive. If you want to filter using case insensitivity, enter a regex or inverse regex within /{text}/i to invoke case insensitive search.
+By default, all filter operators are case sensitive. If you want to filter using case insensitivity, enter a regex or inverse regex within /\{text}/i to invoke case insensitive search.
 For example, if you want to search for "banana" or "Banana" or "BaNaNa", you can enter "/banana/i" and each search term will be included in the results.
 
 ## Aggregation Filters (2020-07-28)

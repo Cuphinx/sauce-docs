@@ -1,10 +1,8 @@
 ---
 id: download
 title: saucectl storage download
-sidebar_label: saucectl storage download
+sidebar_label: download
 ---
-
-## Description
 
 Downloads an app file from Sauce Storage.
 

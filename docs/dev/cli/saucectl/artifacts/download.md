@@ -1,10 +1,8 @@
 ---
 id: download
 title: saucectl artifacts download
-sidebar_label: saucectl artifacts download
+sidebar_label: download
 ---
-
-## Description
 
 Downloads artifacts for a job from Sauce Labs.
 
@@ -48,7 +46,7 @@ $ saucectl artifacts download jobID globPattern [flags]
 ### <span className="cli">--target-dir</span>
 
 <div className="cli-desc">
-<p><small>| REQUIRED | STRING |</small></p>
+<p><small>| OPTIONAL | STRING |</small></p>
 
 Save files to target directory. Defaults to current working directory.
 
@@ -61,9 +59,9 @@ saucectl artifacts download <jobID> <globPattern> --target-dir my-artifacts-dir
 ### <span className="cli">--out</span>
 
 <div className="cli-desc">
-<p><small>| REQUIRED | STRING |</small></p>
+<p><small>| OPTIONAL | STRING |</small></p>
 
-Save files to target directory. Defaults to current working directory.
+Specifies the output format for the console. Options include: "text" or "json". The default setting is "text".
 
 **Shorthand:** `-o <text/json>`
 

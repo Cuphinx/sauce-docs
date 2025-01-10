@@ -48,7 +48,7 @@ When creating your executable file, take into account the operating system you'l
 
 ### Storing a Configuration Script
 
-Your script can be stored in GitHub or in [Sauce Storage](/mobile-apps/app-storage/). You can also use [Gist](https://gist.github.com/) to easily host your executable file. Make sure to use the link containing the raw file contents.
+Your script can be stored in GitHub or in [File Storage](/mobile-apps/app-storage/) (for more information see [Common Error Messages](https://docs.saucelabs.com/dev/error-messages/#failed-to-download-mobile-application)). You can also use [Gist](https://gist.github.com/) to easily host your executable file. Make sure to use the link containing the raw file contents.
 
 ### Set the `prerun` Capability
 
@@ -61,7 +61,7 @@ desired_capabilities['prerun'] = {
 }
 ```
 
-This example accesses the same script from Sauce Storage:
+This example accesses the same script from [App Storage](#upload-files-with-the-rest-api):
 
 ```
 desired_capabilities['prerun'] = {
@@ -128,7 +128,7 @@ curl -o /Users/chef/file.txt http://mywebsite.com/file.txt
 
 <TabItem value="Windows">
 
-### Windows 7, 8, 8.1
+### Windows 7, 8, 8.1, 10, 11
 
 This batch file accomplishes the same thing as the OS X curl method, but using **bitsadmin.exe** since Windows doesn't ship with curl.
 
@@ -206,7 +206,7 @@ Editing the Host file of the virtual machine will not work if [Sauce Connect Pro
 An example of configuring a Sauce Labs virtual machine with a pre-run executable is editing the host file in the virtual machine, so when the driver tries to access a particular domain, like google.com, it will be redirected to a new IP address, for example 162.222.75.243 ([saucelabs.com](http://saucelabs.com/)). As with other `prerun` configurations, the basic steps are:
 
 1. Write a script with the URL redirect to the new IP address.
-1. Upload the script to a publicly accessible location, like GitHub or Sauce Storage
+1. Upload the script to a publicly accessible location, like GitHub or [File Storage](/dev/api/storage).
 1. Set the [`prerun` capability](/dev/test-configuration-options#pre-run-executables) in your test script to load the script as host file in the Sauce Labs virtual machine.
 
 ### Host File Script
@@ -305,3 +305,322 @@ If using Sauce Storage for your pre-run executable send the following desired ca
 ### 64 v. 32-bit Version of AutoIT
 
 The 64bit version of AutoIT works on IE11, and not on IE9. The 32bit version works with both browser versions.
+
+## Automated Testing
+
+### Upload Files with the REST API
+
+Below are some examples of how to use the [Sauce Labs REST API](/dev/api/storage) to upload your files to Sauce Storage.
+
+#### REST API Authentication
+
+You can find the authorization credentials at [app.saucelabs.com](https://app.saucelabs.com/user-settings). A recommended best practice is to set your credentials as environment variables, as shown below:
+
+```bash
+SAUCE_USERNAME='valid.username'
+SAUCE_ACCESS_KEY='valid.key'
+```
+
+For specific instructions on how to set environment variables visit the following links:
+
+- [Set Environment Variables with Windows 10](https://www.architectryan.com/2018/08/31/how-to-change-environment-variables-on-windows-10/)
+- [Set Environment Variables with MacOS](https://apple.stackexchange.com/questions/106778/how-do-i-set-environment-variables-on-os-x)
+- [Set Environment Variables with Linux](https://askubuntu.com/questions/58814/how-do-i-add-environment-variables)
+
+#### Accepted File Types
+
+File Storage recognizes certain file types for different platforms.
+Here are the accepted file types for the mobile app testing scenarios:
+
+**Android Apps (APK):** .apk files are recognized as Android apps.
+
+**iOS Apps (IPA):** .ipa files are recognized as iOS apps.
+
+**iOS Apps (APP Bundle):** A .zip file will be parsed to determine whether a valid .app bundle exists, and if found, it will be accepted as an iOS app.
+
+Mobile apps could be uploaded and managed through the [File Storage API](/dev/api/storage/)
+as well as through the [App Management](https://app.saucelabs.com/app-management) section of the SauceLabs web site.
+
+For the generic use cases, you could upload and store any other file types
+like pre-run executables, packages or binaries, for example:
+
+- .js
+- .py
+- .tar
+- .zip
+- .sh
+- .bat
+- .exe
+
+Generic files could be uploaded and managed **only** through the [File Storage API](/dev/api/storage/).
+Any file which is not recognized as a valid mobile app won't be shown in the
+[App Management](https://app.saucelabs.com/app-management) section of the SauceLabs web site.
+
+#### Organization Management Sync
+
+File Storage utilizes a Organization Management sync feature that enables user permission schemes. In other words, a Sauce Labs administrator, whether an organization admin or a team admin, can regulate access to individual application files or specific binary/script files. By default, the system shares all uploaded files with the team to which the user belongs. As a user, you can only access files shared with the team in which you contribute/participate unless you hold the role of an organization admin; in this case, you have access to all files in your organization.
+
+To manage access to your organization, navigate to **Account** > **Organization Management**.
+
+#### Storage API Endpoints
+
+For the full list of the available endpoints, see [Storage API](/dev/api/storage/)
+
+### Using File Storage with Pre-run Executables
+
+After successfully uploading your file to the file storage, you need to reference the unique file Identifier (file_id) in your test code to retrieve and use your file for automated tests.
+
+For example, let's assume you've updated a new version of your file using the [/upload](/dev/api/storage/#upload-file-to-app-storage) endpoint. The JSON response would be something like below:
+
+```json
+{
+   "item":{
+      "id":"379c301a-199c-4b40-ad45-4a95e5f30a3a",
+      "owner":{
+         "id":"286c0fbb0cb644c4a012d505b8a0a1ac",
+         "org_id":"c064890612424e34a12fca98ce4f32c6"
+      },
+      "name":"script.sh",
+      "upload_timestamp":1593450387,
+      "etag":"0cf189b1c4c17a56656ada5e2d75cd51",
+      "kind":"other",
+      "group_id":2807,
+      "metadata":null,
+      ...
+      }
+   }
+}
+```
+
+Then the file_id would be "id":"379c301a-199c-4b40-ad45-4a95e5f30a3a". If you're unsure of the id of an existing file, you can use the [endpoint](/dev/api/storage/#get-app-storage-files), along with the necessary parameters to find the desired file.
+
+:::tip File Name instead of File ID
+
+You can also use the file `name` field from the storage API in the `app` capability. This approach is particularly useful if you uploaded your build to the File Storage via a CI pipeline, and you either don't know the `id`, or you do not wish to perform JSON parsing in order to retrieve the `id`. The `filename` field also includes [any supported file that can be uploaded to file storage](#accepted-file-types).
+
+Example of using a shell script (.sh) file that has been uploaded to the [File Storage](/dev/api/storage/):
+
+<Tabs
+groupId="lang-ex"
+defaultValue="java"
+values={[
+{label: 'Java', value: 'java'},
+{label: 'JS', value: 'js'},
+{label: 'Python', value: 'python'},
+{label: 'Ruby', value: 'ruby'},
+{label: 'C#', value: 'c'},
+]}>
+
+<TabItem value="java">
+
+```java
+caps.setCapability("prerun", "storage:filename=<file-name>.sh");
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+```js
+caps['prerun'] = 'storage:filename=<file-name>.sh';
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+caps['prerun'] = "storage:filename=<file-name>.sh"
+```
+
+</TabItem>
+
+<TabItem value="ruby">
+
+```ruby
+caps['prerun'] = 'storage:filename=<file-name>.sh'
+```
+
+</TabItem>
+
+<TabItem value="c">
+
+```csharp
+caps.SetCapability("prerun","storage:filename=<file-name>.sh");
+```
+
+</TabItem>
+
+</Tabs>
+
+**Limitations**:
+
+- File names are **NOT** unique, therefore they will always default to the latest version.
+- Currently you cannot specify the version of the file using this feature.
+- `build` capability not supported in VDC at this time.
+
+:::
+
+#### Updating WebDriver Capabilities
+
+If you were previously using a file stored in sauce-storage, you can convert your existing test capabilities by replacing `sauce-storage:myfile` with `storage:<file_id>`.
+
+##### Example Code Snippets
+
+These examples assume `file_id = c8511dd6-38ec-4f58-b8b9-4ec8c23ad882`.
+
+<Tabs
+groupId="lang-ex"
+defaultValue="java"
+values={[
+{label: 'Java', value: 'java'},
+{label: 'JS', value: 'js'},
+{label: 'Python', value: 'python'},
+{label: 'Ruby', value: 'ruby'},
+{label: 'C#', value: 'c'},
+]}>
+
+<TabItem value="java">
+
+**Before**
+
+```java
+caps.setCapability("prerun", "sauce-storage:some-file.sh");
+```
+
+**After**
+
+```java
+caps.setCapability("prerun", "storage:c8511dd6-38ec-4f58-b8b9-4ec8c23ad882");
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+**Before**
+
+```js
+caps['prerun'] = 'sauce-storage:my_file.sh';
+```
+
+**After**
+
+```js
+caps['prerun'] = 'storage:c8511dd6-38ec-4f58-b8b9-4ec8c23ad882';
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+**Before**
+
+```python
+caps['prerun'] = "sauce-storage:my_file.sh"
+```
+
+**After**
+
+```python
+caps['prerun'] = "storage:c8511dd6-38ec-4f58-b8b9-4ec8c23ad882"
+```
+
+</TabItem>
+
+<TabItem value="ruby">
+
+**Before**
+
+```prerun
+caps['prerun'] = 'sauce-storage:my_file.sh'
+```
+
+**After**
+
+```ruby
+caps['prerun'] = 'storage:c8511dd6-38ec-4f58-b8b9-4ec8c23ad882'
+```
+
+</TabItem>
+
+<TabItem value="c">
+
+**Before**
+
+```csharp
+caps.SetCapability("prerun","sauce-storage:my_file.sh");
+```
+
+**After**
+
+```csharp
+caps.SetCapability("prerun","storage:c8511dd6-38ec-4f58-b8b9-4ec8c23ad882");
+```
+
+</TabItem>
+
+</Tabs>
+
+### Uploading to a Remote Location
+
+There may be situations where you want to download the file from a downloadable remote location (AWS S3 bucket, a GitHub repository, etc.).
+
+Review the following guidelines below before uploading your file:
+
+1. Upload your file to the hosting location.
+2. Ensure Sauce Labs has READ access to the file URL.
+3. In your test script, enter the URL for the file as the `prerun` desired capability. Below are some example snippets:
+
+<Tabs
+groupId="lang-ex"
+defaultValue="java"
+values={[
+{label: 'Java', value: 'java'},
+{label: 'Node.js', value: 'js'},
+{label: 'Python', value: 'python'},
+{label: 'Ruby', value: 'ruby'},
+{label: 'C#', value: 'c'},
+]}>
+
+<TabItem value="java">
+
+```java
+caps.setCapability("prerun", "https://github.com/saucelabs/sample-app-mobile/releases/download/2.2.1/iOS.Simulator.SauceLabs.Mobile.Sample.app.2.1.1.zip);
+```
+
+</TabItem>
+
+<TabItem value="js">
+
+```js
+caps.prerun = 'https://github.com/saucelabs/sample-app-mobile/releases/download/2.2.1/iOS.Simulator.SauceLabs.Mobile.Sample.app.2.1.1.zip',
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+caps['prerun'] = 'https://github.com/saucelabs/sample-app-mobile/releases/download/2.2.1/iOS.Simulator.SauceLabs.Mobile.Sample.app.2.1.1.zip',
+```
+
+</TabItem>
+
+<TabItem value="ruby">
+
+```ruby
+caps['prerun'] = 'https://github.com/saucelabs/sample-app-mobile/releases/download/2.2.1/iOS.Simulator.SauceLabs.Mobile.Sample.app.2.1.1.zip'
+```
+
+</TabItem>
+
+<TabItem value="c">
+
+```csharp
+caps.SetCapability("prerun", "https://github.com/saucelabs/sample-app-mobile/releases/download/2.2.1/iOS.Simulator.SauceLabs.Mobile.Sample.app.2.1.1.zip");
+```
+
+</TabItem>
+
+</Tabs>

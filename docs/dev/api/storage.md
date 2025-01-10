@@ -1,6 +1,6 @@
 ---
 id: storage
-title: File Storage API Methods
+title: File Storage API Endpoints
 sidebar_label: Storage
 description: Upload and manage files in Sauce Storage.
 ---
@@ -19,7 +19,8 @@ Refer to [Getting Started](/dev/api) for Authentication and Server information.
 
 ### Get App Storage Files
 
-<details><summary><span className="api get">GET</span> <code>/v1/storage/files</code></summary>
+<details>
+<summary><span className="api get">GET</span> <code>/v1/storage/files</code></summary>
 <p/>
 
 Returns the set of files that have been uploaded to Sauce Storage by the requestor.
@@ -55,6 +56,18 @@ Returns the set of files that have been uploaded to Sauce Storage by the request
     <tr>
      <td><code>sha256</code></td>
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>SHA-256 hexadecimal (64 chars) hash of the file to look for.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>icon_repr</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Available values are: <ul><li><code>base64</code></li><li><code>hash</code></li></ul>. The default value is <code>base64</code>. If set to <code>hash</code>, then only the <code>icon_hash</code> field will be populated in the file metadata, while the <code>icon</code> field will always be <code>null</code>. This helps to reduce the overall size of the JSON response significantly.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>tag</code></td>
+     <td><p><small>| QUERY | OPTIONAL | ARRAY of STRINGS |</small></p><p>One or more tags to only include files having these tags assigned into the resulting JSON. AND condition is applied if more than one tag is provided</p></td>
     </tr>
   </tbody>
   <tbody>
@@ -118,12 +131,6 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
     <td colSpan='2'>Success.</td>
   </tr>
 </tbody>
-<tbody>
-  <tr>
-    <td><code>404</code></td>
-    <td colSpan='2'>Not found.</td>
-  </tr>
-</tbody>
 </table>
 
 ```jsx title="Sample Response"
@@ -142,12 +149,14 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
             "group_id": 396353,
             "size": 6743553,
             "description": null,
+            "tags": [],
             "metadata": {
                 "identifier": "com.saucelabs.mydemoapp.rn",
                 "name": "My Demo App",
                 "version": "162",
                 "is_test_runner": false,
                 "icon": "...",
+                "icon_hash": "...",
                 "short_version": "1.3.0",
                 "is_simulator": true,
                 "min_os": "12.0",
@@ -178,12 +187,14 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
             "group_id": 396353,
             "size": 6743553,
             "description": null,
+            "tags": [],
             "metadata": {
                 "identifier": "com.saucelabs.mydemoapp.rn",
                 "name": "My Demo App",
                 "version": "162",
                 "is_test_runner": false,
                 "icon": "...",
+                "icon_hash": "...",
                 "short_version": "1.3.0",
                 "is_simulator": true,
                 "min_os": "12.0",
@@ -214,12 +225,14 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
             "group_id": 396353,
             "size": 6743553,
             "description": null,
+            "tags": [],
             "metadata": {
                 "identifier": "com.saucelabs.mydemoapp.rn",
                 "name": "My Demo App",
                 "version": "162",
                 "is_test_runner": false,
                 "icon": "...",
+                "icon_hash": "...",
                 "short_version": "1.3.0",
                 "is_simulator": true,
                 "min_os": "12.0",
@@ -255,7 +268,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Get App Storage Groups
 
-<details><summary><span className="api get">GET</span> <code>/v1/storage/groups</code></summary>
+<details>
+<summary><span className="api get">GET</span> <code>/v1/storage/groups</code></summary>
 <p/>
 
 Returns an array of groups (apps containing multiple files) currently in storage for the authenticated requestor.
@@ -279,6 +293,18 @@ Returns an array of groups (apps containing multiple files) currently in storage
     <tr>
      <td><code>group_id</code></td>
      <td><p><small>| QUERY | OPTIONAL | ARRAY of STRINGS |</small></p><p>One or more specific IDs of the groups to return.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>project_name</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>The project name of the groups to return. If no <code>project_name</code> is provided, only groups with no projects assigned are provided. You can look up projects by using the <a href="#list-projects"><code>GET /v1/storage/projects</code></a> endpoint.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>icon_repr</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Available values are: <ul><li><code>base64</code></li><li><code>hash</code></li></ul>. The default value is <code>base64</code>. If set to <code>hash</code>, then only the <code>icon_hash</code> field will be populated in the file metadata, while the <code>icon</code> field will always be <code>null</code>. This helps to reduce the overall size of the JSON response significantly.</p></td>
     </tr>
   </tbody>
   <tbody>
@@ -344,6 +370,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         {
             "id": 64612,
             "name": "com.saucelabs.SwagLabsMobileApp",
+            "project_path": "My Swag Project",
             "recent": {
                 "id": "43732d5b-5275-4a79-a936-197e4b9cd2d4",
                 "owner": {
@@ -356,26 +383,28 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
                 "kind": "ios",
                 "group_id": 64612,
                 "description": null,
+                "tags": [],
                 "metadata": {
                     "identifier": "com.saucelabs.SwagLabsMobileApp",
                     "name": "SwagLabsMobileApp",
                     "version": "12",
                     "is_test_runner": false,
                     "icon": "...",
-                "short_version": "2.7.1",
-                "is_simulator": false,
-                "min_os": "10.0",
-                "target_os": "14.2",
-                "test_runner_plugin_path": null
+                    "icon_hash": "...",
+                    "short_version": "2.7.1",
+                    "is_simulator": false,
+                    "min_os": "10.0",
+                    "target_os": "14.2",
+                    "test_runner_plugin_path": null
+                }
             },
             "access": {
                 "team_ids": [
                     "80d69d16ebdb4c018cc9d81ea911761a"
                 ],
                 "org_ids": []
-            }
-        }
-        "count": 1,
+            },
+            "count": 1,
             "access": {...},
             "settings": {
                 "proxy": {
@@ -408,7 +437,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Get App Storage Group Settings
 
-<details><summary><span className="api get">GET</span> <code>/v1/storage/groups/&#123;group_id&#125;/settings</code></summary>
+<details>
+<summary><span className="api get">GET</span> <code>/v1/storage/groups/&#123;group_id&#125;/settings</code></summary>
 <p/>
 
 Returns the settings of an app group with the given ID.
@@ -499,7 +529,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
 
 ### Edit App Storage Group Settings
 
-<details><summary><span className="api put">PUT</span> <code>/v1/storage/groups/&#123;group_id&#125;/settings</code></summary>
+<details>
+<summary><span className="api put">PUT</span> <code>/v1/storage/groups/&#123;group_id&#125;/settings</code></summary>
 <p/>
 
 Adds or updates the settings of an app group with the given ID.
@@ -623,10 +654,16 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
 
 ### Upload File to App Storage
 
-<details><summary><span className="api post">POST</span> <code>/v1/storage/upload</code></summary>
+<details>
+<summary><span className="api post">POST</span> <code>/v1/storage/upload</code></summary>
 <p/>
 
-Uploads an app file to Sauce Storage for the purpose of mobile app testing and returns a unique file ID assigned to the app. Sauce Storage supports app files in \*.apk, \*.aab, \*.ipa, or \*.zip format, up to 4GB.
+Uploads an app file to Sauce Storage for the purpose of mobile app testing or generic files
+to be used as [Pre-Run Executables](/web-apps/automated-testing/selenium/pre-run-executables/)
+and returns a unique file ID assigned to the uploaded file.
+Sauce Storage supports mobile app packages in \*.apk, \*.aab, \*.ipa, or \*.zip
+format as well as any other file format.
+The maximum size of a single file is limited to 4GB.
 
 #### Parameters
 
@@ -647,6 +684,18 @@ Uploads an app file to Sauce Storage for the purpose of mobile app testing and r
     <tr>
      <td><code>description</code></td>
      <td><p><small>| FORM-TEXT | OPTIONAL | STRING |</small></p><p>A description to distinguish your app.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>tags</code></td>
+     <td><p><small>| FORM-TEXT | OPTIONAL | STRING |</small></p><p>An optional list of comma-separated tag names assigned to the uploaded file. Each tag name length must be between 1 and 16 characters. Tag names must only consist of uppercase (A-Z), lowercase (a-z), digits (0-9), underscore ("_"), hyphen ("-"), and dot (".") characters. Tag names are case-sensitive. It is allowed to assign up to 10 tags to a single file.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>project_name</code></td>
+     <td><p><small>| FORM-TEXT | OPTIONAL | STRING |</small></p><p>An optional name for the project you want the file (group) to be assigned to. If the project doesn't exist, it will be created. Project names can only consist of alphanumeric (uppercase and lowercase) characters, along with underscores ("_"), hyphens ("-"), periods ("."), and spaces (" "). Project names are case-sensitive and can be max 64 characters long.</p></td>
     </tr>
   </tbody>
 </table>
@@ -720,12 +769,14 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         "kind": "ios",
         "group_id": 64612,
         "description": null,
+        "tags": [],
         "metadata": {
             "identifier": "com.saucelabs.SwagLabsMobileApp",
             "name": "SwagLabsMobileApp",
             "version": "12",
             "is_test_runner": false,
             "icon": "...",
+            "icon_hash": "...",
             "short_version": "2.7.1",
             "is_simulator": false,
             "min_os": "10.0",
@@ -743,7 +794,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Download a File from App Storage
 
-<details><summary><span className="api get">GET</span> <code>/v1/storage/download/&#123;file_id&#125;</code></summary>
+<details>
+<summary><span className="api get">GET</span> <code>/v1/storage/download/&#123;file_id&#125;</code></summary>
 <p/>
 
 Returns an app file from Sauce Storage as a payload object in the response.
@@ -814,12 +866,13 @@ PK
 
 ---
 
-### Edit a Stored File's Description
+### Edit a Stored File
 
-<details><summary><span className="api put">PUT</span> <code>/v1/storage/files/&#123;file_id&#125;</code></summary>
+<details>
+<summary><span className="api put">PUT</span> <code>/v1/storage/files/&#123;file_id&#125;</code></summary>
 <p/>
 
-Adds or updates the `description` attribute of the specified file.
+Adds or updates various attributes of the specified file.
 
 #### Parameters
 
@@ -833,7 +886,13 @@ Adds or updates the `description` attribute of the specified file.
   <tbody>
     <tr>
      <td><code>description</code></td>
-     <td><p><small>| BODY | REQUIRED | STRING |</small></p><p>A description to more clearly distinguish the stored file within the Sauce Labs system.</p></td>
+     <td><p><small>| BODY | OPTIONAL | STRING |</small></p><p>A description to more clearly distinguish the stored file in the Sauce Labs system.</p></td>
+    </tr>
+  </tbody>
+    <tbody>
+    <tr>
+     <td><code>tags</code></td>
+     <td><p><small>| BODY | OPTIONAL | STRING |</small></p><p>An optional list of comma-separated tag names assigned to the uploaded file. Each tag name length must be between 1 and 16 characters. Tag names must only consist of uppercase (A-Z), lowercase (a-z), digits (0-9), underscore ("_"), hyphen ("-"), and dot (".") characters. Tag names are case-sensitive. It is allowed to assign up to 10 tags to a single file. The value overrides the previously set tags.</p></td>
     </tr>
   </tbody>
 </table>
@@ -854,7 +913,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 --header 'Content-Type: text/html' \
 --data-raw '{
     "item": {
-        "description": "Sauce Docs iOS Test App"
+        "description": "Sauce Docs iOS Test App",
+        "tags": "Europe,Asia,US"
     }
 }'\
 ```
@@ -868,7 +928,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 --header 'Content-Type: text/html' \
 --data-raw '{
     "item": {
-        "description": "Sauce Docs iOS Test App"
+        "description": "Sauce Docs iOS Test App",
+        "tags": "Europe,Asia,US"
     }
 }'\
 ```
@@ -913,12 +974,14 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         "kind": "ios",
         "group_id": 64612,
         "description": "Sauce Docs iOS Test App",
+        "tags": ["Europe", "Asia", "US"],
         "metadata": {
             "identifier": "com.saucelabs.SwagLabsMobileApp",
             "name": "SwagLabsMobileApp",
             "version": "12",
             "is_test_runner": false,
             "icon": "...",
+            "icon_hash": "...",
             "short_version": "2.7.1",
             "is_simulator": false,
             "min_os": "10.0",
@@ -937,7 +1000,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Delete an App Storage File
 
-<details><summary><span className="api delete">DELETE</span> <code>/v1/storage/files/&#123;file_id&#125;</code></summary>
+<details>
+<summary><span className="api delete">DELETE</span> <code>/v1/storage/files/&#123;file_id&#125;</code></summary>
 <p/>
 
 Deletes the specified file from Sauce Storage.
@@ -1010,12 +1074,14 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         "kind": "ios",
         "group_id": 64612,
         "description": "Sauce Docs iOS Test App",
+        "tags": [],
         "metadata": {
             "identifier": "com.saucelabs.SwagLabsMobileApp",
             "name": "SwagLabsMobileApp",
             "version": "12",
             "is_test_runner": false,
             "icon": "...",
+            "icon_hash": "...",
             "short_version": "2.7.1",
             "is_simulator": false,
             "min_os": "10.0",
@@ -1033,7 +1099,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Delete a Group of App Storage Files
 
-<details><summary><span className="api delete">DELETE</span> <code>/v1/storage/groups/&#123;group_id&#125;</code></summary>
+<details>
+<summary><span className="api delete">DELETE</span> <code>/v1/storage/groups/&#123;group_id&#125;</code></summary>
 <p/>
 
 Deletes the specified group of files from Sauce Storage.
@@ -1084,6 +1151,72 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
     <td colSpan='2'>Success.</td>
   </tr>
 </tbody>
+</table>
+
+```jsx title="Sample Response"
+{
+    "code": 404,
+    "title": "NotFound",
+    "detail": "The group identified by \"64612\" does not exist or is not accessible (Request ID: nancy.swee__delete_group__35803e43)"
+}
+```
+
+</details>
+
+---
+
+### Get File Icon
+
+<details>
+<summary><span className="api get">GET</span> <code>/v1/storage/icons/&#123;icon_hash&#125;</code></summary>
+<p/>
+
+Returns the actual payload for the given icon hash. All icons are stored in .png format. This endpoint supports caching.
+
+<table id="table-api">
+  <tbody>
+    <tr>
+     <td><code>icon_hash</code></td>
+     <td><p><small>| PATH | REQUIRED | STRING |</small></p><p>Hash string of the particular icon. You can look up icon hashes using the <a href="#get-app-storage-files">Get App Storage Files</a> endpoint.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs
+groupId="dc-url"
+defaultValue="us"
+values={[
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
+]}>
+
+<TabItem value="us">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.us-west-1.saucelabs.com/v1/storage/icons/<icon_hash>' --output icon.png
+```
+
+</TabItem>
+<TabItem value="eu">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.eu-central-1.saucelabs.com/v1/storage/icons/<icon_hash>' --output icon.png
+```
+
+</TabItem>
+</Tabs>
+
+#### Responses
+
+<table id="table-api">
+<tbody>
+  <tr>
+    <td><code>200</code></td>
+    <td colSpan='2'>Success.</td>
+  </tr>
+</tbody>
 <tbody>
   <tr>
     <td><code>404</code></td>
@@ -1092,11 +1225,174 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 </tbody>
 </table>
 
+</details>
+
+---
+
+### List Tags
+
+<details>
+<summary><span className="api get">GET</span><code>/v1/storage/tags</code></summary>
+<p/>
+
+Returns the list of tags available for your team sorted alphabetically. Each tag name is only returned if assigned to at least one file.
+
+<table id="table-api">
+  <tbody>
+    <tr>
+     <td><code>page</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Return results beginning with a specific page. Default is <code>1</code>.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>per_page</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>The number of results (max. 100) to be shown per page.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs
+groupId="dc-url"
+defaultValue="us"
+values={[
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
+]}>
+
+<TabItem value="us">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.us-west-1.saucelabs.com/v1/storage/tags'
+```
+
+</TabItem>
+<TabItem value="eu">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.eu-central-1.saucelabs.com/v1/storage/tags'
+```
+
+</TabItem>
+</Tabs>
+
+#### Responses
+
+<table id="table-api">
+<tbody>
+  <tr>
+    <td><code>200</code></td>
+    <td colSpan='2'>Success.</td>
+  </tr>
+</tbody>
+</table>
+
 ```jsx title="Sample Response"
 {
-    "code": 404,
-    "title": "NotFound",
-    "detail": "The group identified by \"64612\" does not exist or is not accessible (Request ID: nancy.swee__delete_group__35803e43)"
+    "items": [
+      "Asia",
+      "Europe",
+      "US"
+    ]
+    "links": {
+        "prev": null,
+        "next": null,
+        "self": "?page=1&per_page=25"
+    },
+    "page": 1,
+    "per_page": 25,
+    "total_items": 3
+}
+```
+
+</details>
+
+---
+### List Projects
+
+<details>
+<summary><span className="api get">GET</span><code>/v1/storage/projects</code></summary>
+<p/>
+
+Returns an alphabetically sorted list of projects available for your team. Each project name is only returned if assigned to at least one file (group).
+
+<table id="table-api">
+<tbody>
+    <tr>
+     <td><code>kind</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>The app type associated with the project(s), such as <ul><li><code>android</code></li>, <li><code>ios</code></li> or <li><code>other</code></li></ul>.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>page</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Return results beginning with a specific page. Default is <code>1</code>.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>per_page</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>The number of results (max 100) to be shown per page.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs
+groupId="dc-url"
+defaultValue="us"
+values={[
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
+]}>
+
+<TabItem value="us">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.us-west-1.saucelabs.com/v1/storage/projects'
+```
+
+</TabItem>
+<TabItem value="eu">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.eu-central-1.saucelabs.com/v1/storage/projects'
+```
+
+</TabItem>
+</Tabs>
+
+#### Responses
+
+<table id="table-api">
+<tbody>
+  <tr>
+    <td><code>200</code></td>
+    <td colSpan='2'>Success.</td>
+  </tr>
+</tbody>
+</table>
+
+```jsx title="Sample Response"
+{
+    "items": [
+      "Asia",
+      "Buenos Aires",
+      "Europe",
+      "Los Angeles",
+      "US"
+    ]
+    "links": {
+        "prev": null,
+        "next": null,
+        "self": "?page=1&per_page=25"
+    },
+    "page": 1,
+    "per_page": 25,
+    "total_items": 5
 }
 ```
 

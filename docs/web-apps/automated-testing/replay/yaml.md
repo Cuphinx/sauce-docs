@@ -30,7 +30,7 @@ While you can use multiple files of different names or locations to specify your
 https://github.com/saucelabs/saucectl-replay-example/blob/main/.sauce/config.yml
 ```
 
-Each of the properties supported for running Playwright tests through `saucectl` is defined below.
+Each of the properties supported for replaying Chrome DevTools recordings through `saucectl` is defined below.
 
 ## `apiVersion`
 
@@ -104,7 +104,6 @@ The parent property containing all settings related to how Jobs are run and iden
 sauce:
   region: us-west-1
   metadata:
-    name: Testing Replay Support
     tags:
       - e2e
       - release team
@@ -120,6 +119,10 @@ sauce:
 <p><small>| OPTIONAL | STRING/ENUM |</small></p>
 
 Specifies on which Sauce Labs data center jobs will run. Valid values are: `us-west-1` or `eu-central-1`.
+
+:::note
+If you do not specify a region in your config file, you must set it when running your command with the `--region` flag.
+:::
 
 ```yaml
 sauce:
@@ -137,7 +140,6 @@ The set of properties that allows you to provide additional information about yo
 ```yaml
 sauce:
   metadata:
-    name: Testing Replay Support
     build: RC 10.4.a
     tags:
       - e2e
@@ -175,7 +177,8 @@ saucectl run --ccy 5
 
 <p><small>| OPTIONAL | INTEGER |</small></p>
 
-Sets the number of times to retry a failed suite. For more settings, you can refer to [passThreshold](#passThreshold).
+Sets the number of times to retry a failed suite. For more settings, you can
+refer to [passThreshold](#passthreshold).
 
 ```yaml
 sauce:
@@ -202,6 +205,10 @@ sauce:
     name: your_tunnel_name
     owner: tunnel_owner_username
 ```
+
+:::caution
+[Only certain HTTP(S) ports](/secure-connections/sauce-connect/advanced/specifications/#supported-browsers-and-ports) are proxied by the tunnel.
+:::
 
 ---
 
@@ -238,6 +245,21 @@ sauce:
   tunnel:
     name: your_tunnel_name
     owner: tunnel_owner_username
+```
+
+---
+
+#### `timeout`
+
+<p><small>| OPTIONAL | DURATION |</small></p>
+
+How long to wait for the specified tunnel to be ready. Supports duration values like '10s', '30m' etc. (default: 30s)
+
+```yaml
+sauce:
+  tunnel:
+    name: your_tunnel_name
+    timeout: 30s
 ```
 
 ---
@@ -286,6 +308,21 @@ reporters:
     enabled: true
     filename: saucectl-report.json
     webhookURL: https://my-webhook-url
+```
+
+---
+
+### `spotlight`
+
+<p><small>| OPTIONAL | OBJECT |</small></p>
+
+The spotlight reporter highlights failed or otherwise interesting jobs.
+It may include an excerpt of failed tests or other information that may be useful for troubleshooting.
+
+```yaml
+reporters:
+  spotlight:
+    enabled: true
 ```
 
 ---
@@ -379,6 +416,35 @@ artifacts:
 
 ---
 
+### `retain`
+
+<p><small>| OPTIONAL | OBJECT |</small></p>
+
+Define directories to archive and retain as a test asset at the end of a test run. Archived test assets can
+be downloaded automatically using the `download` configuration, via the 
+[REST API](https://docs.saucelabs.com/dev/api/jobs/#get-a-job-asset-file), or through the test details page.
+
+```yaml
+artifacts:
+  retain:
+    source-directory: destination-archive.zip
+  download:
+    when: always
+    match:
+      - destination-archive.zip
+    directory: ./artifacts/
+```
+
+:::note
+The source and destination will be relative to the `rootDir` defined in your configuration.
+:::
+
+:::note
+The destination archive must have a .zip file extension.
+:::
+
+---
+
 ### `download`
 
 <p><small>| OPTIONAL | OBJECT |</small></p>
@@ -444,69 +510,21 @@ artifacts:
 
 ---
 
-## `notifications`
+#### `allAttempts`
 
-<p><small>| OPTIONAL | OBJECT |</small></p>
+<p><small>| OPTIONAL | BOOLEAN |</small></p>
 
-Specifies how to set up automatic job result alerts.
-
-```yaml
-notifications:
-  slack:
-    channels:
-      - "replay-results"
-    send: always
-```
-
----
-
-### `slack`
-
-<p><small>| OPTIONAL | OBJECT |</small></p>
-
-Specifies the settings related to sending tests result notifications through Slack. See [Slack Integration](/basics/integrations/slack) for information about integrating your Sauce Labs account with your Slack workspace.
+If you have your tests configured with [retries](#retries), you can set this option to `true` to download artifacts for every attempt. Otherwise, only artifacts of the last attempt
+will be downloaded.
 
 ```yaml
-notifications:
-  slack:
-    channels:
-      - "saucectl-pw-tests"
-    send: always
-```
-
----
-
-#### `channels`
-
-<p><small>| OPTIONAL | STRING/ARRAY |</small></p>
-
-The set of Slack channels to which the test result notifications are to be sent.
-
-```yaml
-notifications:
-  slack:
-    channels:
-      - "saucectl-results"
-      - "playwright-team"
-```
-
----
-
-#### `send`
-
-<p><small>| OPTIONAL | STRING |</small></p>
-
-Specifies when and under what circumstances to send notifications to specified Slack channels. Valid values are:
-
-- `always`: Send notifications for all test results.
-- `never`: Do not send any test result notifications.
-- `pass`: Send notifications for passing suites only.
-- `fail`: Send notifications for failed suites only.
-
-```yaml
-notifications:
-  slack:
-    send: always
+artifacts:
+  download:
+    match:
+      - console.log
+    when: always
+    allAttempts: true
+    directory: ./artifacts/
 ```
 
 ---
@@ -601,7 +619,7 @@ suites:
 
 <p><small>| OPTIONAL | DURATION |</small></p>
 
-Instructs how long `saucectl` should wait for the suite to complete, potentially overriding the default project timeout setting.
+Instructs how long `saucectl` should wait for the suite to complete, overriding the default project timeout setting of 30 minutes.
 
 When the suite reaches the timeout limit, its status is set to '?' in the CLI. This does not reflect the actual status of the job in the Sauce Labs web UI or API.
 

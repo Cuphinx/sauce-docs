@@ -37,7 +37,7 @@ backtraceClient.metrics.enable(new BacktraceMetricsSettings(credentials));
 </TabItem>
 <TabItem value="kotlin" label="Kotlin">
 
-```kotlin
+```java
 // replace with your submission url
 val credentials = BacktraceCredentials("<submissionUrl>")
 val backtraceClient = BacktraceClient(applicationContext, credentials)
@@ -60,7 +60,7 @@ backtraceClient.metrics.enable(BacktraceMetricsSettings(credentials))
 
 ## Global Custom Attributes
 
-You can set global custom attributes to be included with each report. To set global custom attributes, pass a map with custom attributes to the `BacktraceClient` constructor method, as shown below.
+Custom attributes can be included with both managed and native reports. To set global custom attributes, pass in a map of attributes to the `BacktraceClient` constructor method.
 
 <Tabs groupId="languages">
 <TabItem value="java" label="Java">
@@ -75,9 +75,57 @@ BacktraceClient backtraceClient = new BacktraceClient(context, credentials, attr
 </TabItem>
 <TabItem value="kotlin" label="Kotlin">
 
-```kotlin
+```java
 val attributes: HashMap<String, Any> = hashMapOf("custom-attribute-key" to "custom-attribute-value")
 val backtraceClient = BacktraceClient(context, credentials, attributes)
+```
+
+</TabItem>
+</Tabs>
+
+## Dynamic Custom Attributes
+
+Use `BacktraceClient.addAttribute` to add global attributes to both the managed and native layer after initialization.
+
+<Tabs groupId="languages">
+<TabItem value="java" label="Java">
+
+```java
+BacktraceClient backtraceClient = new BacktraceClient(context, credentials, database);
+// ...
+
+// Add a single attribute
+final String attributeKey = "test-attribute";
+final String attributeValue = "test-value";
+backtraceClient.addAttribute(attributeKey, attributeValue);
+
+// Append an attribute map
+final String attributeKey = "test-attribute";
+final String attributeValue = "test-value";
+Map<String, Object> attributes = new HashMap<>();
+attributes.put(attributeKey, attributeValue);
+backtraceClient.addAttribute(attributes);
+
+```
+
+</TabItem>
+<TabItem value="kotlin" label="Kotlin">
+
+```java
+val backtraceClient = BacktraceClient(context, credentials, database)
+// ...
+
+// Add a single attribute
+val attributeKey = "test-attribute"
+val attributeValue = "test-value"
+backtraceClient.addAttribute(attributeKey, attributeValue)
+
+// Append an attribute map
+val attributeKey = "test-attribute"
+val attributeValue = "test-value"
+val attributes: HashMap<String, Any> = HashMap<String, Any> ()
+attributes[attributeKey] = attributeValue
+backtraceClient.addAttribute(attributes)
 ```
 
 </TabItem>
@@ -183,7 +231,7 @@ try {
 </TabItem>
 <TabItem value="kotlin" label="Kotlin">
 
-```kotlin
+```java
 try {
     // throw exception here
 }
@@ -215,7 +263,7 @@ client.send(report, new OnServerResponseEventListener() {
 </TabItem>
 <TabItem value="kotlin" label="Kotlin">
 
-```kotlin
+```java
 client.send(report) { backtraceResult ->
     // process result here
 }
@@ -249,7 +297,7 @@ try {
 </TabItem>
 <TabItem value="kotlin" label="Kotlin">
 
-```kotlin
+```java
 try {
     // throw exception here
 } catch (exception: Exception) {
@@ -265,6 +313,32 @@ try {
 
 </TabItem>
 </Tabs>
+
+### Sending Inner and Suppressed exceptions
+
+:::warning Inner and suppressed exception support
+
+Support for inner and suppressed exceptions is available starting backtrace-android@3.9.0
+:::
+
+Backtrace client allows sending Inner and suppressed exceptions. By default, this option is disabled. To enable inner and suppressed exception support, use the code shown below.
+
+```java
+// enable inner exceptions
+backtraceClient.sendInnerExceptions(true);
+// enable suppressed exceptions
+backtraceClient.sendSuppressedExceptions(true);
+```
+
+When enabled, the Backtrace client will send an additional report for each inner and/or suppressed exception detected. The additional reports will contain the same attributes as the parent. Linking attributes will also be added to each report to define the connection and relationships between the reports:
+
+| Attribute name | Attribute description                                                               |
+| -------------- | ----------------------------------------------------------------------------------- |
+| error.trace    | Exception trace id. All exceptions in the exception chain will have the same value. |
+| error.id       | Current report identifier. The value is allows to identify the current report id    |
+| error.parent   | Parent report id. Allows to identify the exception parent id                        |
+
+The outer exception always has `error.trace` and `error.id`. Since this is the first error in the exception chain, the `error.parent` attribute is set to `null`. The first inner exception of the outer exception will have the same `error.trace` attribute, its own unique `error.id` attribute, and `error.parent` set to the outer exception `error.id`. Each suppressed exception of the outer exception, follows the same pattern.
 
 ## Custom Event Handlers
 
@@ -286,7 +360,7 @@ backtraceClient.setOnBeforeSendEventListener(new OnBeforeSendEventListener() {
 </TabItem>
 <TabItem value="kotlin" label="Kotlin">
 
-```kotlin
+```java
 backtraceClient.setOnBeforeSendEventListener { data ->
     // another code
     data
@@ -334,6 +408,14 @@ To enable displaying logs from inside the library, set the level from which info
 ```java
 BacktraceLogger.setLevel(LogLevel.DEBUG);
 ```
+
+You can replace internal BacktraceLogger with your custom implementation using code below.
+
+```java
+BacktraceLogger.setLogger(customLoggerInstance);
+```
+
+Your custom logger implementation has to implement [Logger](https://github.com/backtrace-labs/backtrace-android/blob/master/backtrace-library/src/main/java/backtraceio/library/logger/Logger.java) interface.
 
 ## Monitoring Custom Threads
 

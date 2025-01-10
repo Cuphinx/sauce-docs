@@ -9,7 +9,7 @@ class Community extends Component {
                 <div className='column-left'>
                     <img
                         className='landpage-community'
-                        src='img/important-links-hero.png'
+                        src='img/customer-experience-tier-1.png'
                     />
                 </div>
                 <div className='column-right'>
@@ -17,17 +17,17 @@ class Community extends Component {
                     <p>Can&apos;t find what you need? We are here to help.</p>
                     <span className='landpage-buttons-container'>
                         <a
-                            href='https://stackoverflow.com/tags/saucelabs'
+                            href='https://saucelabs.com/resources/community/slack#mktoForm_3389'
                             target='_blank'
                             rel='noopener noreferrer'
                         >
                             <Button
                                 className='button-light'
-                                name='Stack Overflow'
+                                name='Community Forum'
                             />
                         </a>
                         <a
-                            href='https://support.saucelabs.com/hc/en-us'
+                            href='https://support.saucelabs.com'
                             target='_blank'
                             rel='noopener noreferrer'
                         >

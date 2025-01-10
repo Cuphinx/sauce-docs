@@ -25,11 +25,13 @@ From the Sauce Labs side, the Sauce Connect system includes the following compon
 
 Here is an overview of how these components interact with the user environment:
 
-<img src={useBaseUrl('img/sauce-connect/sc-arch-components.png')} alt="Sauce Connect components interacting with user’s environment" width="800"/>
+<img src={useBaseUrl('img/sauce-connect/sc-arch-components.webp')} alt="Sauce Connect components interacting with user’s environment" width="800"/>
 
 ### Sauce Connect Proxy Client
 
-The [client (also known as SC)](/secure-connections/sauce-connect/installation/#download-latest-version) is distributed as a single binary that contains several distinct components. These include:
+The [client (also known as SC)](/secure-connections/sauce-connect/installation)
+is distributed as a single binary that contains several distinct components.
+These include:
 
 - SC Client controller: the “brain” of the SC client. It issues requests to the Sauce Labs REST API, starts all the other included components and ensures that everything is working as expected.
 - KGP Client: the client side implementation of [KGP, Sauce Labs proprietary protocol](/secure-connections/sauce-connect/advanced/kgp).
@@ -53,8 +55,8 @@ If you're executing tests through Sauce Connect Proxy, you'll be able to see all
 
 ## Start Sequence Diagram
 
-<img src={useBaseUrl('img/sauce-connect/start-sequence.png')} alt="Sauce Connect Proxy start sequence" width="800"/>
+<img src={useBaseUrl('img/sauce-connect/start-sequence.webp')} alt="Sauce Connect Proxy start sequence" width="800"/>
 
 ## Shutdown Sequence Diagram
 
-<img src={useBaseUrl('img/sauce-connect/shutdown-sequence.png')} alt="Sauce Connect Proxy shutdown sequence" width="800"/>
+<img src={useBaseUrl('img/sauce-connect/shutdown-sequence.webp')} alt="Sauce Connect Proxy shutdown sequence" width="800"/>

@@ -44,11 +44,11 @@ To set up integration with Stride an app token must be generated for each conver
 
 To set up the integration, first go to the **Project Settings** page for the project you want to add a integration for:
 
-<img src={useBaseUrl('img/error-reporting/workflow-integrations/set-up-workflow-integration.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/workflow-integrations/set-up-workflow-integration.webp')} alt="" />
 
 Then click **Integrations** in the left-hand menu, and the plus sign to create a new integration:
 
-<img src={useBaseUrl('img/error-reporting/workflow-integrations/add-wf-integration.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/workflow-integrations/add-wf-integration.webp')} alt="" />
 
 Select **Stride** and fill in the required settings:
 
@@ -61,4 +61,4 @@ Select **Stride** and fill in the required settings:
 
 <img src={useBaseUrl('img/error-reporting/workflow-integrations/stride-settings.png')} alt="" />s
 
-Next: After filling in the integration-specific settings, proceed to [Common Settings](/error-reporting/workflow-integrations/common-settings) to finish configuring the integration.
+Next: After filling in the integration-specific settings, proceed to Common Settings to finish configuring the integration.

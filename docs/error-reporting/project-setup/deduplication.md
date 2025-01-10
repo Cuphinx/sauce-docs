@@ -9,8 +9,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-## Overview
-
 Backtrace automatically groups errors and crashes together according to similarity. This grouping allows you to effectively determine which bugs have the highest impact on users, revenue and other important factors. This guide provides a brief overview of the advantages and internals of the deduplication feature.
 
 Depending on your application, crash reports may come in from a few to many thousands a day. Triage and prioritization relies on determining which users are affected by a crash as well as the potential ramifications. Backtrace solves both of these problems through deduplication and classification.
@@ -21,7 +19,7 @@ The deduplication mechanism itself greatly reduces the surface area of bugs that
 
 <img src={useBaseUrl('img/error-reporting/project-settings/deduplicated-crashes.png')} alt="" />
 
-Deduplication is only one facet of triage. If there is a memory corruption bug or security hole, then a bug may be a ticking time bomb that will eventually manifest as a major denial of service. Backtrace analyzes the memory and executable code of a crash to classify the fault. Learn more about classifiers [here](https://support.backtrace.io/hc/en-us/articles/360040105812-Classifiers).
+Deduplication is only one facet of triage. If there is a memory corruption bug or security hole, then a bug may be a ticking time bomb that will eventually manifest as a major denial of service. Backtrace analyzes the memory and executable code of a crash to classify the fault.
 
 Other systems rely on simplistic callstack-based grouping algorithms for determining the uniqueness of a fault. These systems are either too fine-grained or too coarse-grained. If deduplication is too fine-grained, the same bug impacting a large number of users may manifest as many unique bugs impacting a small set of users. If deduplication is too coarse-grained, then the impact of bugs will be inflated leading to incorrect prioritization.
 
@@ -43,9 +41,9 @@ Backtrace uses a dynamic system that intelligently determines which portions of 
 
 ### Group By First Application Frame
 
-Some systems will group according to the first application frame. This quickly starts to fall apart for many reasons including internal application error handling, faults in external libraries and more. More likely than not, such a system is too coarse-grained to be useful. Users are unable to distinguish
+Some systems will group according to the first application frame. This quickly starts to fall apart for many reasons including internal application error handling, faults in external libraries and more. More likely than not, such a system is too coarse-grained to be useful.
 
-Take the following example for a program called `program.exe`. The callstack of the crashing thread is `abort → application_abort → a → b` where `application_abort` is the first application frame. Competing systems will group by `application_abort`. This function is invoked in almost all cases where the application is explicitly aborting, leading to grossly ineffective deduplication.
+Take the following example for a program called `program.exe`. The callstack of the crashing thread is `abort → application_abort → a → b` where `application_abort` is the first application frame. Competing systems will group by `application_abort`. This function is invoked in almost all cases where the application is explicitly aborted, leading to grossly ineffective deduplication.
 
 This mechanism breaks down for any commonly-used functions, not just error handling functions. For example, let's say a bug was introduced that leads to a fault in a commonly called utility function. These systems would group these faults by the utility function rather than the caller.
 

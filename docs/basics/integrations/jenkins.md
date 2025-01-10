@@ -16,7 +16,7 @@ The OnDemand plugin allows you to easily manage your Sauce Labs testing from [Je
 - How to install and configure the Sauce OnDemand Plugin for Jenkins
 - How to configure Sauce Connect to enable testing on private networks
 - How to run parallel tests in Jenkins
-- How to set up reporting between Sauce Labs & Jenkins
+- How to set up reporting between Sauce Labs and Jenkins
 - How to implement the OnDemand plugin into your Jenkins pipeline
 
 ## What You'll Need
@@ -108,9 +108,7 @@ When options can be set at both levels, project settings override global setting
   </tr>
   <tr>
     <td><b>Sauce Connect Options</b></td>
-    <td>The list of command line arguments to apply each time Sauce Connect Proxy is launched for any project. For example:<br/>
-    <code>-i myTunnel -l ./jenkins_scp_log</code>
-    </td>
+    <td>The list of command line arguments to apply each time Sauce Connect Proxy is launched for any project. For example:<br/><code>-i myTunnel -l ./jenkins_scp_log</code></td>
   </tr>
   <tr>
     <td><b>Sauce Connect Max Retries</b></td>
@@ -151,7 +149,8 @@ Project specific settings will always override the global value for the same set
     </tr>
     <tr>
       <td><b>WebDriver</b></td>
-      <td>Choose one or more operating system and browser combinations you wish to test using the WebDriver automation tool. If you specify one option, the plugin populates the following environment variables with values that correspond to your selection.
+      <td>
+          Choose one or more operating system and browser combinations you wish to test using the WebDriver automation tool. If you specify one option, the plugin populates the following environment variables with values that correspond to your selection.
         <ul>
           <li><code>SELENIUM_PLATFORM</code></li>
           <li><code>SELENIUM_BROWSER</code></li>
@@ -181,7 +180,7 @@ Project specific settings will always override the global value for the same set
     </tr>
     <tr>
       <td><b>Clean up jobs and uniquely generated tunnels instead of waiting for timeouts</b></td>
-      <td>If <b>Create a new unique Sauce Connect tunnel per build</b> in enabled in the Advanced Options section, checking this option ensures that aborted builds do not tie up tunnels unnecessarily.</td>
+      <td>If <b>Create a new unique Sauce Connect tunnel per build</b> in enabled in the Advanced Options section, checking this option ensures that cancelled builds do not tie up tunnels unnecessarily.</td>
     </tr>
   </table>
 1. Scroll to the **Sauce Connect Advanced Options** section, and click **Advanced** to display additional options described in the following table as needed.
@@ -212,13 +211,11 @@ Project specific settings will always override the global value for the same set
      </tr>
      <tr>
        <td><b>Sauce Connect Options</b></td>
-       <td>A list of command line arguments to apply each time Sauce Connect Proxy is launched for this project. For example:<br/>
-         <code>-i projectTunnel -l ./scp_project_log</code>
-       </td>
+       <td>A list of command line arguments to apply each time Sauce Connect Proxy is launched for this project. For example:<br/><code>-i projectTunnel -l ./scp_project_log</code></td>
      </tr>
      <tr>
        <td><b>Create a new unique Sauce Connect tunnel per build</b></td>
-       <td>Generates a unique tunnel identifier for each build in this project and populates a <code>TUNNEL_IDENTIFIER</code> environment variable. You must then reference this variable in the capabilities for your tests.</td>
+       <td>Generates a unique tunnel identifier for each build in this project and populates a <code>TUNNEL_NAME</code> environment variable. You must then reference this variable in the capabilities for your tests.</td>
      </tr>
      <tr>
        <td><b>Sauce Connect Binary Location</b></td>
@@ -242,24 +239,25 @@ Sauce Labs tests use capabilities settings to specify the environment on which a
 
 The following environment variables are relevant for Sauce Labs tests running in Jenkins and can be used to populate your test capabilities. Most of the environment variables defined here are automatically generated based on your project configurations for the plugin and Sauce Connect.
 
-| Variable                      | Description                                                                                                                                   | Usage                                                                                                                                                                                                 |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `SELENIUM_HOST`               | Identifies the Selenium server host.                                                                                                          | Configured by the **Sauce Host** project setting. When not set, defaults to `localhost` if Sauce Connect is enabled or `ondemand.saucelabs.com` if Sauce Connect is not enabled.                      |
-| `SELENIUM_PORT`               | Identifies the Selenium server port.                                                                                                          | Configured by the **Sauce Port** project setting. When not set, defaults to `4445` if Sauce Connect is enabled or `4444` if Sauce Connect is not enabled.                                             |
-| `SELENIUM_PLATFORM`           | The operating system on which the browser being tested is installed.                                                                          | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
-| `SELENIUM_VERSION`            | The version number of the browser being tested.                                                                                               | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration or dynamically if the **Use latest version of selected browsers** option is enabled. |
-| `SELENIUM_BROWSER`            | The name of the browser being tested.                                                                                                         | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
-| `SELENIUM_DRIVER`             | Contains the operating system, version and browser name of the selected browser, in a format designed for use by the Selenium Client Factory. | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
-| `SELENIUM_DEVICE`             | The type of hardware on which the browser being tested is running.                                                                            | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
-| `SELENIUM_DEVICE_ORIENTATION` | The direction of the device (`Portrait` or `Landscape`) used for testing.                                                                     | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
-| `SELENIUM_URL`                | The initial URL to load when the test begins.                                                                                                 | Not automatically populated.                                                                                                                                                                          |
-| `SAUCE_USERNAME`              | The username of the Sauce Labs account on which tests in this project are run.                                                                | Populated by the `Username` value of the authentication credential associated with the project.                                                                                                       |
-| `SAUCE_ACCESS_KEY`            | The access key of the Sauce Labs account on which tests in this project are run.                                                              | Populated by the `Access Key` value of the authentication credential associated with the project.                                                                                                     |
-| `SELENIUM_STARTING_URL`       | The value of the Starting URL field.                                                                                                          | This value is not populated by any configuration setting.                                                                                                                                             |
-| `SAUCE_ONDEMAND_BROWSERS`     | A JSON-formatted string containing a set of attributes for multiple operating system and browser combinations.                                | Populated when you select more than one **WebDriver** or **Appium** value during project configuration.                                                                                               |
-| `TUNNEL_IDENTIFIER`           | The unique tunnel identifier used when Sauce Connect is launched.                                                                             | Populated when the **Create a new unique Sauce Connect tunnel per build** option is selected during project configuration.                                                                            |
-| `JENKINS_BUILD_NUMBER`        | The ID of the build the Sauce OnDemand plugin will use when showing results that are not in the logs.                                         | Populated when the `buildName` capability is set for the test.                                                                                                                                        |
-| `SAUCE_BUILD_NAME`            | The name of the build the Sauce OnDemand plugin will use when showing test results.                                                           | The plugin automatically populates this this value at run-time with `${JOB_NAME}_${BUILD_NUMBER}`.                                                                                                    |
+| Variable                                          | Description                                                                                                                                   | Usage                                                                                                                                                                                                 |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SELENIUM_HOST`                                   | Identifies the Selenium server host.                                                                                                          | Configured by the **Sauce Host** project setting. When not set, defaults to `localhost` if Sauce Connect is enabled or `ondemand.saucelabs.com` if Sauce Connect is not enabled.                      |
+| `SELENIUM_PORT`                                   | Identifies the Selenium server port.                                                                                                          | Configured by the **Sauce Port** project setting. When not set, defaults to `4445` if Sauce Connect is enabled or `4444` if Sauce Connect is not enabled.                                             |
+| `SELENIUM_PLATFORM`                               | The operating system on which the browser being tested is installed.                                                                          | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
+| `SELENIUM_VERSION`                                | The version number of the browser being tested.                                                                                               | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration or dynamically if the **Use latest version of selected browsers** option is enabled. |
+| `SELENIUM_BROWSER`                                | The name of the browser being tested.                                                                                                         | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
+| `SELENIUM_DRIVER`                                 | Contains the operating system, version and browser name of the selected browser, in a format designed for use by the Selenium Client Factory. | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
+| `SELENIUM_DEVICE`                                 | The type of hardware on which the browser being tested is running.                                                                            | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
+| `SELENIUM_DEVICE_ORIENTATION`                     | The direction of the device (`Portrait` or `Landscape`) used for testing.                                                                     | Populated by the **WebDriver** or **Appium** operating system combination specified during project configuration.                                                                                     |
+| `SELENIUM_URL`                                    | The initial URL to load when the test begins.                                                                                                 | Not automatically populated.                                                                                                                                                                          |
+| `SAUCE_USERNAME`                                  | The username of the Sauce Labs account on which tests in this project are run.                                                                | Populated by the `Username` value of the authentication credential associated with the project.                                                                                                       |
+| `SAUCE_ACCESS_KEY`                                | The access key of the Sauce Labs account on which tests in this project are run.                                                              | Populated by the `Access Key` value of the authentication credential associated with the project.                                                                                                     |
+| `SELENIUM_STARTING_URL`                           | The value of the Starting URL field.                                                                                                          | This value is not populated by any configuration setting.                                                                                                                                             |
+| `SAUCE_ONDEMAND_BROWSERS`                         | A JSON-formatted string containing a set of attributes for multiple operating system and browser combinations.                                | Populated when you select more than one **WebDriver** or **Appium** value during project configuration.                                                                                               |
+| `TUNNEL_IDENTIFIER or TUNNEL_NAME (as of v1.207)` | The unique tunnel identifier used when Sauce Connect is launched.                                                                             | Populated when the **Create a new unique Sauce Connect tunnel per build** option is selected during project configuration.                                                                            |
+
+| `JENKINS_BUILD_NUMBER` | The ID of the build the Sauce OnDemand plugin will use when showing results that are not in the logs. | Populated when the `buildName` capability is set for the test. |
+| `SAUCE_BUILD_NAME` | The name of the build the Sauce OnDemand plugin will use when showing test results. | The plugin automatically populates this value at run-time with `${JOB_NAME}_${BUILD_NUMBER}`. |
 
 ### Referencing Environment Variables in Your Tests
 
@@ -295,7 +293,7 @@ Jenkins populates the `SELENIUM_PLATFORM`, `SELENIUM_VERSION`, `SELENIUM_BROWSER
 
 ## Reporting between Sauce Labs and Jenkins
 
-<p><span className="sauceDBlue">VIRTUAL CLOUD ONLY</span></p>
+<p><span className="sauceGreen">VIRTUAL CLOUD ONLY</span></p>
 
 The following sections describe how to share information about your Sauce Labs tests in both the Sauce Labs site and your Jenkins dashboard.
 
@@ -387,7 +385,8 @@ node('mac') {
 
 ### Creating the Sauce Publisher Snippet
 
-The `{saucePublisher}` function lets you send test result data to Sauce Labs. See [Publishing Test Status to Sauce Labs](#publishing-test-status-to-sauce-labs).
+The `{saucePublisher}` function lets you send test result data to Sauce Labs.
+See [Publishing Test Status to Sauce Labs](#publish-test-status-to-sauce-labs).
 
 1. Enable the **Snippet Generator** in Jenkins Pipeline.
 1. Select **saucePublisher: Run Sauce Labs Test Publisher** and **Generate Groovy**.

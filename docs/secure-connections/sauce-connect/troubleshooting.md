@@ -56,10 +56,10 @@ values={[
 <TabItem value="curl">
 
 ```curl
-curl -v https://saucelabs.com/
+curl -v https://api.us-west-1.saucelabs.com/rest/v1/public/tunnels/info/versions
 ```
 
-This command should return "Connected to saucelabs.com".
+This command should return 200 and a text containing Sauce Connect versions.
 
 </TabItem>
 
@@ -105,7 +105,7 @@ Cross-Origin Resource Sharing (CORS) errors could be caused by a variety of reas
 
 As a primer, the diagram below is the ideal network configuration with regards to Sauce Connect Proxy. Your firewall only needs to allow for outbound connections to Sauce Labs. Sauce Connect Proxy establishes a TLS connection (tunnel) to a dedicated tunnel endpoint server hosted in the Sauce Labs cloud. For best performance, Sauce Connect Proxy should be running close to the Site Under Test or App Under Test.
 
-<img src={useBaseUrl('img/sauce-connect/correct-network-config.png')} alt="Correct network configuration" width="400"/>
+<img src={useBaseUrl('img/sauce-connect/correct-network-config.webp')} alt="Correct network configuration" width="400"/>
 
 The diagrams below illustrate common configuration mistakes that result in dysfunctional setups.
 
@@ -117,7 +117,7 @@ For example, if an SC Host is in Berlin and the SUT is located in a data center 
 
 The way to prevent this is to ensure the SC Host is placed in the same geographic domain as the SUT.
 
-<img src={useBaseUrl('img/sauce-connect/dys-geo-config.png')} alt="Dysfunctional geographic domain configuration" width="400"/>
+<img src={useBaseUrl('img/sauce-connect/dys-geo-config.webp')} alt="Dysfunctional geographic domain configuration" width="400"/>
 
 **Diagram Legend**
 
@@ -131,7 +131,7 @@ The way to prevent this is to ensure the SC Host is placed in the same geographi
 
 Another common mistake is placing the SUT in the same network as the [Demilitarized Zone (DMZ)](<https://en.wikipedia.org/wiki/DMZ_(computing)>). It's exposed to the internet, but isolated from the internal network.
 
-<img src={useBaseUrl('img/sauce-connect/dys-dmz-config.png')} alt="Dysfunctional DMZ + SUT network configuration" width="400"/>
+<img src={useBaseUrl('img/sauce-connect/dys-dmz-config.webp')} alt="Dysfunctional DMZ + SUT network configuration" width="400"/>
 
 **Diagram Legend**
 
@@ -140,6 +140,16 @@ Another common mistake is placing the SUT in the same network as the [Demilitari
 | SC Host (Sauce Connect Host)       | Machine in your network on which the Sauce Connect Proxy app is running. |
 | SUT (Site Under Test)              | The site that you're testing.                                            |
 | Tunnel VM (Tunnel Virtual Machine) | Virtual machine that hosts Sauce Connect Proxy on the Sauce Labs side.   |
+
+## Known Issues and Workarounds
+
+### HTTP and Chrome 120 and newer
+
+Chrome 120 automatically attempts to upgrade connections from HTTP to HTTPS, and the error detection fails when using a proxy. In this case, the Sauce Connect architecture uses a proxy to route traffic from the browser through the secure tunnel. The HTTP proxy returns HTTP error codes (500) which Chrome interprets as a response from the non-existent HTTPS server.
+
+In an interactive session with a keyboard, a second attempt falls back to HTTP, however there is no workaround when controlling the browser through an automated test.
+
+If you encounter errors when using HTTP URLs with Chrome 120, the only solution is to update your endpoint to HTTPS.
 
 ## Additional Support
 
@@ -153,7 +163,3 @@ For additional help, please reach out to the Sauce Labs Support Team. To better 
   ```
 
 Then, attach the resulting `sc.log` file to your support request.
-
-## More Information
-
-- Effective with Sauce Connect Proxy version 4.7.0, the `--doctor` flag was deprecated. Diagnostics are now automatically triggered. Refer to our [Changelog](https://changelog.saucelabs.com/en/sauce-connect-proxy-version-30JTvzO0F) for more information.

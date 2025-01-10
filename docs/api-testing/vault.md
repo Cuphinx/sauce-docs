@@ -1,7 +1,7 @@
 ---
 id: vault
 title: Adding Reusable Variables, Snippets, and Files in the Vault
-sidebar_label: Vault, Variables, Snippets, Files
+sidebar_label: Variables, Snippets, Files
 description: 'The Vault allows you to store variables, code snippets, and files that can be used across an entire project.'
 ---
 
@@ -19,11 +19,11 @@ There are two types of API Testing vaults, the **Company Vault** and a project-s
 
 ### Company Vault
 
-The **Company Vault** is where you can store variables and test code snippets to use across all of your projects. You can access this tab from your API Testing home page, where all of your projects are listed.<br/><img src={useBaseUrl('img/api-fortress/2021/04/fromDashboard.png')} alt="Access Vault from Dashboard" width="400" />
+The **Company Vault** is where you can store variables and test code snippets to use across all of your projects. You can access this tab from your API Testing home page, where all of your projects are listed.<br/><img src={useBaseUrl('img/api-testing/companyVault.png')} alt="Access Company Vault" width="400" />
 
 ### Project Vault
 
-The project **Vault**, which you can access from within a project, is where you can store project-specific variables, test code snippets, and files.<br/><img src={useBaseUrl('img/api-fortress/2021/04/vaultFromProject.png')} alt="Access Vault from Project View" />
+The project **Vault**, which you can access from within a project, is where you can store project-specific variables, test code snippets, and files.<br/><img src={useBaseUrl('img/api-testing/projectVault.png')} alt="Access Vault from Project View" width="300"/>
 
 ## Variables
 
@@ -43,19 +43,6 @@ Additionally, you can import variables from Postman. See [Importing Postman Coll
 If the same variable with the same name definition exists in both the **Project Vault** and **Company Vault**, then the value in the **Project Vault** will override the one in the **Company Vault**.
 :::
 
-### Mark Variables as Sensitive
-
-You can mark a variable as sensitive if it contains a sensitive value that you do not want to appear in your test reports. When you mark a variable as sensitive, the value is obfuscated anywhere it appears: in Vault, tests reports, and the project dashboard's logs and metrics when the variable is used in the URL, path, or query.
-
-:::note
-Variables marked as sensitive are always excluded from Vault exports.
-:::
-
-In the following example test report, the token variable has been marked as sensitive in Vault and appears as obfuscated in the report.
-
-<img src={useBaseUrl('img/api-testing/sensitive-data.png')} alt="data obfuscated in report" width="600"/>
-<img src={useBaseUrl('img/api-testing/sensitive-data2.png')} alt="data obfuscated in report" width="600"/>
-
 ### Create a Variable
 
 1. Open a project.
@@ -63,66 +50,155 @@ In the following example test report, the token variable has been marked as sens
 1. Select **New Entry**.
 1. Add a Key (e.g., `domain`).
 1. Add a Value (e.g., `api.us-west-1.saucelabs.com`).
-1. Optionally, check **Sensitive**. Variables marked sensitive cannot be edited. If you need to change the value, you can delete the variable and recreate it with the new value.
+1. Optionally, check [**Sensitive**](/api-testing/vault/#mark-variables-as-sensitive).
 1. Select **Confirm**.
 
 <img src={useBaseUrl('img/api-testing/variableEntry2.png')} alt="Domain Variables"/>
 
 Then in your tests, you'd reference the variable by the `Key` using the following syntax: `${domain}`.
 
-### Use Case: Product Variable
+### Mark Variables as Sensitive
 
-Consider a scenario where an `/product` endpoint requires a specific `id` query parameter.
+You can mark a variable as sensitive if it contains a sensitive value that you do not want to appear in your test reports. When you mark a variable as sensitive, the value is obfuscated anywhere it appears: in Vault, tests reports, and the project dashboard's logs and metrics when the variable is used in the URL, path, or query. Variables marked sensitive cannot be edited. If you need to change the value, you can delete the variable and recreate it with the new value.
 
-<img src={useBaseUrl('img/api-testing/vault_productID0.png')} alt="Product ID 0"/>
+:::note
+Variables marked as sensitive are always excluded from Vault exports.
+:::
 
-While this is a perfectly valid request parameter, it can be hard to manage and update if you scale out your tests. Therefore, rather than continuously hard-coding this value into the **Query Params** field, a safer and more efficient approach is to export this value into to a variable.
+In the following example test report, the token variable has been marked as sensitive in Vault and appears as obfuscated in the report.
 
-The following is an example of how it might look in the project-specific Vault:
+<img src={useBaseUrl('img/api-testing/sensitive-data2.webp')} alt="data obfuscated in report" width="600"/>
 
-<img src={useBaseUrl('img/api-fortress/2021/04/productID1.png')} alt="Product ID 1"/>
+### Update Variables Using a File
 
-Now you can switch the **Query Params** field from a String value to a Variable and enter the variable name: `product_id` (see the screenshot below). This allows you to have multiple tests in your project using the same product_id.
+You can update the values by editing each variable manually. However, when you need to update many (or all) variables in the Vault, importing a file that contains the updates can speed up the process.
 
-<img src={useBaseUrl('img/api-testing/vault_productID2.png')} alt="Product ID 2"/>
+The file can be a .cvs or .json and the structure will be as follow:
+
+```json title="Example of a json file"
+{
+  "values": [
+    {
+      "key": "var1",
+      "value": "foo"
+    },
+    {
+      "key": "var2",
+      "value": "bar"
+    },
+    {
+      "key": "var3",
+      "value": "chu"
+    }
+  ]
+}
+```
+
+<img src={useBaseUrl('img/api-testing/csv-example.png')} alt="csv example"/>
+
+#### Project Vault:
+
+1. Open a project.
+1. In the left panel, click **Vault**.
+1. Click **Variables**.
+1. Click **Import**.
+1. Click **Choose File**.
+1. Select the .csv or .json file from your machine.
+1. Optionally, you can skip the last two steps by dragging and dropping the file.
+
+#### Company Vault:
+
+1. From the Projects page, in the left panel, click **Company Vault**.
+1. Click **Variables**.
+1. Click **Import**.
+1. Click **Choose File**.
+1. Select the .csv or .json file from your machine.
+1. Optionally, you can skip the last two steps by dragging and dropping the file.
+
+#### Rules for Updating Variables Using a File:
+
+- If the file contains a variable with the same key as one in the Vault, the variable in the Vault will be overwritten.
+- If the file contains a variable that is not saved in the Vault, the variable will be added into the Vault.
+- If the variables in the Vault are not present in the file, the variables in the Vault will not be deleted.
+
+Check a common [use case](/api-testing/use-cases/vault-variable/) out of saving variables in the vault.
 
 ## Snippets
 
-In the **Snippets** section of the **Vault**, you can create or import test component/code examples. A _snippet_ is a test code fragment that you can create, import, and store in your [Vault](/api-testing/vault) and reuse in multiple tests. Snippet length can range from one line of code to an entire test.
+In the **Code Snippets** section of the **Vault**, you can create or import test component/code examples. A _snippet_ is a test code fragment that you can create, import, and store in your [Vault](/api-testing/vault) and reuse in multiple tests. Snippet length can range from one line of code to an entire test.
 
 Much like with variable scope, snippets saved in a project **Vault** are only available in that project, and snippets saved in the **Company Vault** are available across all projects.
 
 When you save a snippet from the [**Composer**](/api-testing/composer/), it will be saved in the project **Vault**. While you cannot save a snippet from the **Composer** to the **Company Vault**, you can export there using the import/export feature (see screenshot below).<br/><img src={useBaseUrl('img/api-testing/vault_exportSnippet.png')} alt="Snippet"/>
 
+### Create a Snippet
+
+While is perfectly fine typing the code snippet directly in the area, if you are comfortable doing this. There's a easier way to create a snippet.
+
+1. Open a project.
+1. Open the test you want to generate the snippet of.
+1. Hold down the Ctrl key, highlight the components in the UI you want to include in the snippet. They do not need to be adjacent to each other
+   <img src={useBaseUrl('img/api-testing/vault_savesnippet.png')} alt="Save snippet"/>
+1. Click **Save Snippet**
+1. Give the snippet a name and click **Save Snippet**
+   <img src={useBaseUrl('img/api-testing/vault_snippetname.webp')} alt="Snippet name" width="600"/>
+
 ### Update a Snippet
 
 1. Open a project.
 1. In the left panel, click **Vault**, then click **Code Snippets**.
-1. Click any of the fields and begin typing to edit the details.
-   Your changes are saved automatically.
+1. Double-click any of the fields and begin typing to edit the details.
+1. When you have finished, click **Save Snippet**.
 
-### Use Case: Authentication Snippet
+### Update Snippets Using a File
 
-A good use case for the snippets feature is building an authentication flow; you don't need to rewrite all authentication steps for every single test. Instead, call the snippet that contains these authentication details. Another good example is integration testing, where you can reuse various tests to create one larger flow.
+You can update the code by editing each snippet manually or you can use a file.
 
-Below is an example of how to create an Authentication Snippet.
+The file can be a .cvs or .json and the structure will be as follow:
 
-1. First, create a new test with a request component that requires basic authentication. For examples, check the [Sauce Labs REST API endpoints](/dev/api/) for ideas.<br/><img src={useBaseUrl('img/api-testing/vault_exampleSnippetRequest.png')} alt="Example Snippet Request"/>
-1. Select **Add Child Component** below the request component.<br/><img src={useBaseUrl('img/api-testing/vault_addRequestHeader.png')} alt="Add Request Header"/>
-1. Select **Basic Authentication** from the list.<br/><img src={useBaseUrl('img/api-testing/vault_basicAuth.png')} alt="Basic Auth Component"/>
-1. Enter the details for `username` and `password`, then select **Confirm**.<br/><img src={useBaseUrl('img/api-testing/vault_basicAuthDetails.png')} alt="Basic Auth Details" width="600"/>
-1. Once the **Authorization Header** appears, click **Save Changes**.<br/>
-1. Hold down the Ctrl key, highlight the code in the UI and **Save Snippet**.<br/><img src={useBaseUrl('img/api-testing/vault_savesnippet.png')} alt="Save snippet"/>
-1. Give the snippet a name and **Save Snippet**.<br/><img src={useBaseUrl('img/api-testing/vault_snippetname.png')} alt="Snippet name" width="600"/>
+```json title="Example of a json file"
+{
+  "values": [
+    {
+      "key": "authentication",
+      "value": "- id: post\n  children:\n    - id: body\n      contentType: application/json\n      content: |-\n        {\n        \t\"user_id\": 4628362,\n        \t\"password\": \"abc123\"\n        }\n  url: https://m2-authentication.load2.apifortress.com/request/token\n  var: authPayload\n  mode: json\n"
+    }
+  ]
+}
+```
 
-Consider a scenario where this login will be required for all the endpoints we have to test. It makes sense for this call to be stored in the **Vault**.
+<img src={useBaseUrl('img/api-testing/csv-example-snippet.webp')} alt="csv example"/>
 
-Now you can choose to **Call Snippet** or **Paste Snippet** in future tests that require the Login.
-<img src={useBaseUrl('img/api-testing/call_paste_snippet.png')} alt="Snippet options"/>
+#### Project Vault:
+
+1. Open a project.
+1. In the left panel, click **Vault**.
+1. Click **Code Snippets**.
+1. Click **Import**.
+1. Click **Choose File**.
+1. Select the .csv or .json file from your machine.
+1. Optionally, you can skip the last two steps by dragging and dropping the file.
+
+#### Company Vault:
+
+1. From the Projects page, in the left panel, click **Company Vault**.
+1. Click **Code Snippets**.
+1. Click **Import**.
+1. Click **Choose File**.
+1. Select the .csv or .json file from your machine.
+1. Optionally, you can skip the last two steps by dragging and dropping the file.
+
+#### Rules for Updating Snippets Using a File:
+
+- If the file contains a snippet with the same key as one in the Vault, the snippet in the Vault will be overwritten.
+- If the file contains a snippet that is not saved in the Vault, the snippet will be added into the Vault.
+- If the snippets in the Vault are not present in the file, the snippets in the Vault will not be deleted.
+
+Learn how you can improve your test by generating an [Authentication Snippet](/api-testing/use-cases/vault-snippet/)
 
 ## Files
 
-In the **Drive** section of a project-specific **Vault**, you can upload files to use in your tests. The file size limit for an individual file is 16 MB. The total limit for the **Company Vault** is 100 MB. This means if one project-specific **Vault** is using 100 MB of storage, other projects cannot upload additional files.
+In the **Drive** section of a project-specific **Vault**, you can upload files to use in your tests. The file size limit for an individual file is 16 MB. The total limit for the Organization is 100 MB. This means if one project-specific **Vault Drive** is using 100 MB of storage, other projects cannot upload additional files.
 
 ### Upload a file
 
@@ -133,12 +209,15 @@ In the **Drive** section of a project-specific **Vault**, you can upload files t
 
 You can work with your files in **Vault Drive** as follows:
 
-If you upload a file via a URL, you can hover over **source url** to view the full address. <br/><img src={useBaseUrl('img/api-fortress/2022/09/vaultuploadfileURL.png')} alt="View Source URL" />
+If you upload a file via a URL, you can hover over **source url** to view the full address. <br/><img src={useBaseUrl('img/api-testing/vaultuploadfileURL.png')} alt="View Source URL" />
 
-You can rename, download, or delete individual files.<br/><img src={useBaseUrl('img/api-fortress/2022/09/vaultfileoptions.png')} alt="Rename, delete or download files" />
+You can rename, download, or delete individual files.<br/><img src={useBaseUrl('img/api-testing/vaultfileoptions.png')} alt="Rename, delete or download files" />
 
-To delete multiple files, select the checkbox next to the files, then click **Delete Selected**.<br/><img src={useBaseUrl('img/api-fortress/2022/09/vaultdeletefileoptions.png')} alt="Delete multiple files" />
+To delete multiple files, select the checkbox next to the files, then click **Delete Selected**.<br/><img src={useBaseUrl('img/api-testing/vaultdeletefileoptions.png')} alt="Delete multiple files" />
 
 ## More Information
 
-- [API Fortress Legacy Migration Guide](/api-testing/legacy)
+- [Build an Integration Test](/api-testing/use-cases/integration-test/)
+- [Save a Variable in Vault](/api-testing/use-cases/vault-variable/)
+- [Creating a Snippet](/api-testing/use-cases/vault-snippet/)
+- [Using File from the Drive](/api-testing/use-cases/use-drive/)

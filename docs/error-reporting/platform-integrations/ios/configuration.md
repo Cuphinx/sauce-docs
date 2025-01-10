@@ -374,7 +374,7 @@ https://github.com/backtrace-labs/backtrace-cocoa/blob/dfe0d9046c6d5706137d9e861
 
 ## Breadcrumbs
 
-<p><span className="sauceDBlue">iOS and macOS Only</span></p>
+<p><span className="sauceGreen">iOS and macOS Only</span></p>
 
 Breadcrumbs allow you track events leading up to your crash, error, or other submitted object. When breadcrumbs are enabled, any captured breadcrumbs will automatically be attached as a file to your crash, error, or other submitted object (including native crashes).
 
@@ -392,8 +392,8 @@ https://github.com/backtrace-labs/backtrace-cocoa/blob/a817605c07eb83af412533ac8
 </TabItem>
 <TabItem value="objc" label="Objective-C">
 
-```objc reference title="Code Sample"
-https://github.com/backtrace-labs/backtrace-cocoa/blob/a817605c07eb83af412533ac8e185ebcbdf79562/Examples/Example-iOS-ObjC/AppDelegate.m#L53
+```objc title="Code Sample"
+[BacktraceClient.shared enableBreadCrumbs];
 ```
 
 </TabItem>

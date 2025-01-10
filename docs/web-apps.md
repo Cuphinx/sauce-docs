@@ -11,8 +11,7 @@ Achieving digital confidence for your website app involves knowing that every us
 <div className="box box1 card">
   <div className="container">
   <h2><a href="/web-apps/live-testing/live-cross-browser-testing">Live Testing</a></h2>
-  <p>Manually test your web app to see how it behaves across different operating systems, browsers, and versions of each. Verify that it scales across different mobile devices and with different screen resolutions or network connectivity.
-</p>
+  <p>Manually test your web app to see how it behaves across different operating systems, browsers, and versions of each. Verify that it scales across different mobile devices and with different screen resolutions or network connectivity</p>
   </div>
 </div>
   <div className="box box2 card">
@@ -25,7 +24,6 @@ Achieving digital confidence for your website app involves knowing that every us
       <li><a href="/web-apps/automated-testing/playwright">Playwright</a></li>
       <li><a href="/web-apps/automated-testing/cucumberjs-playwright/quickstart">Cucumber.js with Playwright</a></li>
       <li><a href="/web-apps/automated-testing/testcafe">TestCafe</a></li>
-      <li><a href="/web-apps/automated-testing/puppeteer">Puppeteer</a></li>
       <li><a href="/web-apps/automated-testing/replay">Replay</a></li>
   </ul>
   </div>

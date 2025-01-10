@@ -1,27 +1,28 @@
 ---
 id: api-testing
-title: API Testing API Methods
+title: API Testing API Endpoints
 sidebar_label: API Testing
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-These API methods allow you to interact with Sauce Labs API Testing functionality. You can execute tests, view analytics, retrieve project information, and more.
+These API endpoints allow you to interact with Sauce Labs API Testing functionality. You can execute tests, view analytics, retrieve project information, and more.
 
 Refer to [Getting Started](/dev/api) for Authentication and Server information.
 
 ## What You'll Need
 
-- A Sauce Labs account ([Log in](https://accounts.saucelabs.com/am/XUI/#login/) or sign up for a [free trial license](https://saucelabs.com/sign-up))
-- Your Sauce Labs [Username and Access Key](https://app.saucelabs.com/user-settings)
-- An existing API test. To learn how to create one, see the [Quickstart](/api-testing/quickstart/).
+- A Sauce Labs account ([Log in](https://accounts.saucelabs.com/am/XUI/#login/) or sign up for a [free trial license](https://saucelabs.com/sign-up)).
+- Your Sauce Labs [Username and Access Key](https://app.saucelabs.com/user-settings).
+- An existing API Testing Project. For details on how to create one, see [API Testing Quickstart](/api-testing/quickstart/).
 
-## Project Methods
+## Project
 
 ### Get Project Details
 
-<details><summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;</code></summary>
+<details>
+    <summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;</code></summary>
 <p/>
 
 Returns the details of a project.
@@ -49,7 +50,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/dce8cc01-c193-4806-9b13-668323f0add7' | json_pp
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>' | json_pp
 ```
 
 </TabItem>
@@ -58,7 +59,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/dce8cc01-c193-4806-9b13-668323f0add7' | json_pp
+--request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>' | json_pp
 ```
 
 </TabItem>
@@ -113,11 +114,12 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 </details>
 
-## Test Methods
+## Test
 
 ### List All Tests in a Project
 
-<details><summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests</code></summary>
+<details>
+<summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests</code></summary>
 <p/>
 
 Returns a list of all tests within a project.
@@ -145,7 +147,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests' | json_pp
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests' | json_pp
 ```
 
 </TabItem>
@@ -154,7 +156,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests' | json_pp
+--request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests' | json_pp
 ```
 
 </TabItem>
@@ -178,47 +180,53 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 </table>
 
 ```jsx title="Sample Response"
-;[
-{
-id: '621ad2cefd18a5416b299e98',
-name: 'List all dog breeds',
-description: 'Returns a list of all dog breeds',
-lastModified: '2022-02-27T07:02:35Z',
-tags: ['dogs', 'doggos'],
-user: {
-id: '21b27f2d2aaa4a5c88c8c19df25857d6',
-name: '$SAUCE_USERNAME'
-},
-complete: true,
-status: {
-success: true,
-lastUpdate: '2022-02-27T08:58:01Z'
-},
-schedules: {
-total: 1,
-active: 1
-}
-},
-{
-id: '621b20e8fd17a5416b299e9f',
-name: 'Get all retriever sub-breeds: retrievers',
-description: 'Returns an array of all the sub-breeds from a breed',
-lastModified: '2022-02-27T07:05:25Z',
-tags: ['dogs', 'retrievers'],
-user: {
-id: '21b27f2d2aaa4a5c88c8c19df25857d6',
-name: '$SAUCE_USERNAME'
-},
-complete: true,
-status: {
-success: true,
-lastUpdate: '2022-02-27T09:47:33Z'
-},
-schedules: {
-total: 1,
-active: 1
-}
-}
+[
+   {
+      "id":"621ad2cefd18a5416b299e98",
+      "name":"List all dog breeds",
+      "description":"Returns a list of all dog breeds",
+      "lastModified":"2022-02-27T07:02:35Z",
+      "tags":[
+         "dogs",
+         "doggos"
+      ],
+      "user":{
+         "id":"21b27f2d2aaa4a5c88c8c19df25857d6",
+         "name":"$SAUCE_USERNAME"
+      },
+      "complete":true,
+      "status":{
+         "success":true,
+         "lastUpdate":"2022-02-27T08:58:01Z"
+      },
+      "schedules":{
+         "total":1,
+         "active":1
+      }
+   },
+   {
+      "id":"621b20e8fd17a5416b299e9f",
+      "name":"Get all retriever sub-breeds: retrievers",
+      "description":"Returns an array of all the sub-breeds from a breed",
+      "lastModified":"2022-02-27T07:05:25Z",
+      "tags":[
+         "dogs",
+         "retrievers"
+      ],
+      "user":{
+         "id":"21b27f2d2aaa4a5c88c8c19df25857d6",
+         "name":"$SAUCE_USERNAME"
+      },
+      "complete":true,
+      "status":{
+         "success":true,
+         "lastUpdate":"2022-02-27T09:47:33Z"
+      },
+      "schedules":{
+         "total":1,
+         "active":1
+      }
+   }
 ]
 ```
 
@@ -228,7 +236,8 @@ active: 1
 
 ### Upload a Test
 
-<details><summary><span className="api put">PUT</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests</code></summary>
+<details>
+    <summary><span className="api put">PUT</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests</code></summary>
 <p/>
 
 Uploads a new test, which you need to provide in the Request Body, to the Sauce Labs API Testing cloud. You can also use this method to modify (overwrite) an existing test.
@@ -269,26 +278,24 @@ Uploads a new test, which you need to provide in the Request Body, to the Sauce 
 <tbody>
   <tr>
    <td><code>unit</code></td>
-     <td><p><small>| BODY | REQUIRED | STRING |</small></p><p>Must contain the unit of the test you want to upload to the cloud. You can obtain this by going into a Test > <strong>Compose*</strong>section > toggle <strong>Code View</strong>.</p></td>
+     <td><p><small>| BODY | REQUIRED | STRING |</small></p><p>Must contain the unit of the test you want to upload to the cloud. You can obtain this by going into a Test > <strong>Compose </strong>section > toggle <strong>Code View</strong>.</p></td>
   </tr>
 </tbody>
 </table>
 
 <Tabs
 groupId="dc-url"
-defaultValue="usYaml"
+defaultValue="us"
 values={[
-{label: 'United States - YAML', value: 'usYaml'},
-{label: 'United States - XML', value: 'usXml'},
-{label: 'Europe - YAML', value: 'euYaml'},
-{label: 'Europe - XML', value: 'euXml'}
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
 ]}>
 
-<TabItem value="usYaml">
+<TabItem value="us">
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request PUT 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests' \
+--request PUT 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests' \
 -H 'Content-Type: application/json' \
 -d '{
     "name": "Get all retriever sub-breeds",
@@ -301,28 +308,11 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 </TabItem>
 
-<TabItem value="usXml">
+<TabItem value="eu">
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request PUT 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests' \
--H 'Content-Type: application/json' \
--d '{
-    "name": "Get all retriever sub-breeds",
-    "description": "Returns an array of all the sub-breeds from a breed",
-    "tags": ["dogs", "retrievers"],
-    "unit": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"${protocol}${domain}${endpoint}\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-    "input": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>"
-    }'
-```
-
-</TabItem>
-
-<TabItem value="euYaml">
-
-```jsx title="Sample Request"
-curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request PUT 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests' \
+--request PUT 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests' \
 -H 'Content-Type: application/json' \
 -d '{
     "name": "Get all retriever sub-breeds",
@@ -330,23 +320,6 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
     "tags": ["dogs", "retrievers"],
     "unit": "assertions:\n  - id: get\n    children:\n      - id: header\n        name: key\n        value: ABC123\n    url: ${protocol}${domain}${endpoint}\n    var: payload\n    mode: json\n  - id: assert-equals\n    expression: payload_response.headers['Content-Type']\n    value: application/json; charset=utf-8\nconfigs: []",
     "input": "- id: global\n  children:\n    - id: variable\n      name: protocol\n      value: http://\n    - id: variable\n      name: domain\n      value: demoapi.apifortress.com\n    - id: variable\n      name: endpoint\n      value: /api/retail/product\n- id: sets\n  children:\n    - id: set\n      children: []\n      name: default\n"
-    }'
-```
-
-</TabItem>
-
-<TabItem value="euXml">
-
-```jsx title="Sample Request"
-curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request PUT 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests' \
--H 'Content-Type: application/json' \
--d '{
-    "name": "Get all retriever sub-breeds",
-    "description": "Returns an array of all the sub-breeds from a breed",
-    "tags": ["dogs", "retrievers"],
-    "unit": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"${protocol}${domain}${endpoint}\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-    "input": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>"
     }'
 ```
 
@@ -370,16 +343,6 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 </tbody>
 </table>
 
-<Tabs
-groupId="type"
-defaultValue="yaml"
-values={[
-{label: 'Sample Response - YAML', value: 'yaml'},
-{label: 'Sample Response - XML', value: 'xml'}
-]}>
-
-<TabItem value="yaml">
-
 ```jsx title="Sample Response"
 {
     "published": {
@@ -399,42 +362,17 @@ values={[
 }
 ```
 
-</TabItem>
-
-<TabItem value="xml">
-
-```jsx title="Sample Response"
-{
-    "published": {
-        "id": "621db955a9f2b22a5a89638f",
-        "name": "Get all retriever sub-breeds",
-        "description": "Returns an array of all the sub-breeds from a breed",
-        "lastModified": "2022-03-01T06:12:37Z",
-        "tags": ["dogs", "retrievers"],
-        "user": {
-            "id": "21b27f2d2aaa4a5c88c8c19df25857d6",
-            "name": "$SAUCE_USERNAME"
-        },
-        "unit": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>",
-        "input": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"https://saucelabs.com/rest/v1/public/tunnels/info/versions\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-        "complete": true
-    }
-}
-```
-
-</TabItem>
-</Tabs>
-
 </details>
 
 ---
 
 ### Get Test Details
 
-<details><summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/&#123;testId&#125;</code></summary>
+<details>
+<summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/&#123;testId&#125;</code></summary>
 <p/>
 
-Returns the details of a test.
+Returns the details of the specified test.
 
 #### Parameters
 
@@ -465,7 +403,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/621b20e8fd17a5416b299e9f' | json_pp
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/<testId>' | json_pp
 ```
 
 </TabItem>
@@ -474,7 +412,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/621b20e8fd17a5416b299e9f' | json_pp
+--request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/<testId>' | json_pp
 ```
 
 </TabItem>
@@ -496,16 +434,6 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
   </tr>
 </tbody>
 </table>
-
-<Tabs
-groupId="type"
-defaultValue="yaml"
-values={[
-{label: 'Sample Response - YAML', value: 'yaml'},
-{label: 'Sample Response - XML', value: 'xml'}
-]}>
-
-<TabItem value="yaml">
 
 ```jsx title="Sample Response"
 {
@@ -536,42 +464,6 @@ values={[
 }
 ```
 
-</TabItem>
-
-<TabItem value="xml">
-
-```jsx title="Sample Response"
-{
-    "published": {
-        "id": "621b20e8fd17a5416b299e9f",
-        "name": "Get all retriever sub-breeds",
-        "description": "Returns an array of all the sub-breeds from a breed",
-        "lastModified": "2022-02-27T07:05:25Z",
-        "tags": ["dogs", "retrievers"],
-        "user": {
-            "id": "21b27f2d2aaa4a5c88c8c19df25857d6",
-            "name": "$SAUCE_USERNAME"
-        },
-        "unit": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"${protocol}${domain}${endpoint}\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-        "input": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>",
-        "complete": true
-    },
-    "workingCopy": {
-        "id": "621b216ca9f2b22a5a89633f",
-        "user": {
-            "id": "21b27f2d2aaa4a5c88c8c19df25857d7",
-            "name": "$SAUCE_USERNAME"
-        },
-        "unit": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"${protocol}${domain}${endpoint}\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-        "input": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>",
-        "lastModified": "2022-02-27T06:59:56Z"
-    }
-}
-```
-
-</TabItem>
-</Tabs>
-
 </details>
 
 ## Test Execution
@@ -580,7 +472,8 @@ When you run an API test using one of these methods, you'll receive a response i
 
 ### Run a Test
 
-<details><summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/&#123;testId&#125;/_run</code></summary>
+<details>
+<summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/&#123;testId&#125;/_run</code></summary>
 <p></p>
 
 Runs a single test on Sauce Labs API Testing, creates a Log in your Dashboard, and sends notifications, the same way it would when you run a test through the UI.
@@ -603,13 +496,19 @@ Runs a single test on Sauce Labs API Testing, creates a Log in your Dashboard, a
   <tbody>
     <tr>
      <td><code>buildId</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated to a build, the ID of the build should be provided, so that all resources can be associated to it.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>tunnelId</code></td>
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel ID for running tests using <strong>Sauce Connect Proxy.</strong></p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>tunnelOwner</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel owner for running tests using <strong>Sauce Connect Proxy. It is recommended when using unnamed tunnels.</strong></p></td>
     </tr>
   </tbody>
   <tbody>
@@ -632,7 +531,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/621ad2cefd18a5416b299e98/_run' \
+--request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/<testId>/_run' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -648,7 +547,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/621ad2cefd18a5416b299e98/_run' \
+--request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/<testId>/_run' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -693,7 +592,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Run All Tests
 
-<details><summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_run-all</code></summary>
+<details>
+<summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_run-all</code></summary>
 <p/>
 
 Runs all tests in a project.
@@ -710,13 +610,19 @@ Runs all tests in a project.
   <tbody>
     <tr>
      <td><code>buildId</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated to a build, the ID of the build should be provided, so that all resources can be associated to it.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>tunnelId</code></td>
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel ID for running tests using <strong>Sauce Connect Proxy.</strong></p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>tunnelOwner</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel owner for running tests using <strong>Sauce Connect Proxy. It is recommended when using unnamed tunnels.</strong></p></td>
     </tr>
   </tbody>
   <tbody>
@@ -739,7 +645,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_run-all' \
+--request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_run-all' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -755,7 +661,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_run-all' \
+--request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_run-all' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -800,7 +706,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Run Tests by Tag
 
-<details><summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_tag/&#123;tag&#125;/_run</code></summary>
+<details>
+<summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_tag/&#123;tag&#125;/_run</code></summary>
 <p/>
 
 Runs all tests in a project matching a tag.
@@ -823,13 +730,19 @@ Runs all tests in a project matching a tag.
   <tbody>
     <tr>
      <td><code>buildId</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated to a build, the ID of the build should be provided, so that all resources can be associated to it.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>tunnelId</code></td>
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel ID for running tests using <strong>Sauce Connect Proxy.</strong></p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>tunnelOwner</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel owner for running tests using <strong>Sauce Connect Proxy. It is recommended when using unnamed tunnels.</strong></p></td>
     </tr>
   </tbody>
   <tbody>
@@ -852,7 +765,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_tag/doggos/_run' \
+--request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_tag/<tag>/_run' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -868,7 +781,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_tag/doggos/_run' \
+--request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3<hookId>/tests/_tag/<tag>/_run' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -913,7 +826,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Execute a Test
 
-<details><summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_exec</code></summary>
+<details>
+<summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_exec</code></summary>
 <p></p>
 
 Executes the test you send in the request body and saves the results into the cloud. It will create a Log in the project **Dashboard**, but the test itself will not populate in your project's **Tests** section.
@@ -960,7 +874,7 @@ Executes the test you send in the request body and saves the results into the cl
   <tbody>
     <tr>
      <td><code>buildId</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated to a build, the ID of the build should be provided, so that all resources can be associated to it.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
   <tbody>
@@ -969,23 +883,27 @@ Executes the test you send in the request body and saves the results into the cl
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel ID for running tests using <strong>Sauce Connect Proxy.</strong></p></td>
     </tr>
   </tbody>
+  <tbody>
+    <tr>
+     <td><code>tunnelOwner</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel owner for running tests using <strong>Sauce Connect Proxy. It is recommended when using unnamed tunnels.</strong></p></td>
+    </tr>
+  </tbody>
 </table>
 
 <Tabs
 groupId="dc-url"
-defaultValue="usYaml"
+defaultValue="us"
 values={[
-{label: 'United States - yaml', value: 'usYaml'},
-{label: 'United States - xml', value: 'usXml'},
-{label: 'Europe - yaml', value: 'euYaml'},
-{label: 'Europe - xml', value: 'euXml'}
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
 ]}>
 
-<TabItem value="usYaml">
+<TabItem value="us">
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_exec'
+--request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_exec'
 -H 'Content-Type: application/json' \
 -d '{
     "name": "Get all retriever sub-breeds",
@@ -998,51 +916,17 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 </TabItem>
 
-<TabItem value="usXml">
+<TabItem value="eu">
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_exec'
--H 'Content-Type: application/json' \
--d '{
-    "name": "Get all retriever sub-breeds",
-    "tags": ["dogs", "retrievers"],
-    "unit": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"${protocol}${domain}${endpoint}\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-    "input": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>",
-    "params": {}
-    }'
-```
-
-</TabItem>
-
-<TabItem value="euYaml">
-
-```jsx title="Sample Request"
-curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_exec'
+--request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_exec'
 -H 'Content-Type: application/json' \
 -d '{
     "name": "Get all retriever sub-breeds",
     "tags": ["dogs", "retrievers"],
     "unit": "assertions:\n  - id: get\n    children:\n      - id: header\n        name: key\n        value: ABC123\n    url: ${protocol}${domain}${endpoint}\n    var: payload\n    mode: json\n  - id: assert-equals\n    expression: payload_response.headers['Content-Type']\n    value: application/json; charset=utf-8\nconfigs: []",
     "input": "- id: global\n  children:\n    - id: variable\n      name: protocol\n      value: http://\n    - id: variable\n      name: domain\n      value: demoapi.apifortress.com\n    - id: variable\n      name: endpoint\n      value: /api/retail/product\n- id: sets\n  children:\n    - id: set\n      children: []\n      name: default\n",
-    "params": {}
-    }'
-```
-
-</TabItem>
-
-<TabItem value="euXml">
-
-```jsx title="Sample Request"
-curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_exec'
--H 'Content-Type: application/json' \
--d '{
-    "name": "Get all retriever sub-breeds",
-    "tags": ["dogs", "retrievers"],
-    "unit": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"${protocol}${domain}${endpoint}\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-    "input": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>",
     "params": {}
     }'
 ```
@@ -1084,7 +968,8 @@ When you run an API test synchronously, you'll receive a response containing gra
 
 ### Run a Test Synchronously
 
-<details><summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/&#123;testId&#125;/_run-sync</code></summary>
+<details>
+<summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/&#123;testId&#125;/_run-sync</code></summary>
 <p></p>
 
 Runs a single test synchronously.
@@ -1107,19 +992,25 @@ Runs a single test synchronously.
   <tbody>
     <tr>
      <td><code>format</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Use this to set a response format. Possible values are <code>json</code> and <code>junit</code>.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specified the data format returned. Available values are <code>json</code> and <code>junit</code>. The default value is <code>json</code></p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>buildId</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated to a build, the ID of the build should be provided, so that all resources can be associated to it.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>tunnelId</code></td>
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel ID for running tests using <strong>Sauce Connect Proxy.</strong></p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>tunnelOwner</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel owner for running tests using <strong>Sauce Connect Proxy. It is recommended when using unnamed tunnels.</strong></p></td>
     </tr>
   </tbody>
   <tbody>
@@ -1142,7 +1033,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/621b20e8fd17b5416b299e9f/_run-sync?format=json' -H 'Content-Type: application/json'\
+--request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/<testId>/_run-sync?format=json' -H 'Content-Type: application/json'\
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -1158,7 +1049,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/621b20e8fd17b5416b299e9f/_run-sync?format=json' -H 'Content-Type: application/json' \
+--request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/<testId>/_run-sync?format=json' -H 'Content-Type: application/json' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -1189,123 +1080,131 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 </table>
 
 ```jsx title="Sample Response"
-;[
-{
-id: '621b320afd17a5416b299ea3',
-events: [
-{
-date: 1645949450067,
-events: [
-{
-date: 1645949450068,
-events: [
-{
-date: 1645949450068,
-events: [
-{
-action: 'get',
-expression: 'https://dog.ceo/api/breed/retriever/list',
-footprint: 'dog.ceo/api/breed/retriever/list',
-metrics: {
-fetch: 1,
-latency: 322,
-overall: 338
-},
-requestDetails:
-'GET https://dog.ceo/api/breed/retriever/list\n\nGET /api/breed/retriever/list HTTP/1.1\nhost: dog.ceo\nUser-Agent: SauceLabs/API-Fortress - WSTestJS\naccept-encoding: gzip, deflate\n\n',
-status: 200,
-success: true
-},
-{
-action: 'assert-equals',
-expression: "payload_response.headers['Content-Type']==application/json",
-success: true
-},
-{
-action: 'assert-exists',
-expression: 'payload',
-success: true
-},
-{
-action: 'assert-is',
-expression: 'payload.message is array',
-success: true
-},
-{
-action: 'assert-exists',
-expression: '_1',
-root: 'payload.message',
-success: true
-},
-{
-action: 'assert-exists',
-expression: '_1',
-root: 'payload.message',
-success: true
-},
-{
-action: 'assert-exists',
-expression: '_1',
-root: 'payload.message',
-success: true
-},
-{
-action: 'assert-exists',
-expression: '_1',
-root: 'payload.message',
-success: true
-},
-{
-action: 'assert-exists',
-expression: 'payload.status',
-success: true
-}
-],
-kind: 'sequence'
-}
-],
-kind: 'inputSet',
-name: 'default'
-}
-],
-inputBatteryName: 'default',
-kind: 'inputBattery'
-}
-],
-tags: ['dogs', 'retrievers'],
-criticalFailures: [],
-httpFailures: [],
-facts: {},
-date: 1645949450067,
-test: {
-name: 'Get all retriever sub-breeds',
-id: '621b20e8fd17v5416b299e9f'
-},
-failuresCount: 0,
-warningsCount: 0,
-compressed: false,
-run: {
-name: '',
-id: ''
-},
-company: {
-name: '',
-id: '7fb25570b4064716b9v6daae1a846790'
-},
-project: {
-name: 'Dog CEO',
-id: '621ad1466b1fa36aa4b8b044'
-},
-contextId: '856c431c-4e1a-46c2-9644-c084e7c36b61',
-temp: false,
-expireAt: null,
-executionTimeSeconds: 1,
-taskId: '693ddvb2-9482-4c51-95bf-52b3d70f5236',
-agent: 'wstestjs',
-mode: 'ondemand',
-buildId: '',
-exception: ''
-}
+[
+   {
+      "id":"621b320afd17a5416b299ea3",
+      "events":[
+         {
+            "date":1645949450067,
+            "events":[
+               {
+                  "date":1645949450068,
+                  "events":[
+                     {
+                        "date":1645949450068,
+                        "events":[
+                           {
+                              "action":"get",
+                              "expression":"https://dog.ceo/api/breed/retriever/list",
+                              "footprint":"dog.ceo/api/breed/retriever/list",
+                              "metrics":{
+                                 "fetch":1,
+                                 "latency":322,
+                                 "overall":338
+                              },
+                              "requestDetails":"GET https://dog.ceo/api/breed/retriever/list\n\nGET /api/breed/retriever/list HTTP/1.1\nhost: dog.ceo\nUser-Agent: SauceLabs/API-Fortress - WSTestJS\naccept-encoding: gzip, deflate\n\n",
+                              "status":200,
+                              "success":true
+                           },
+                           {
+                              "action":"assert-equals",
+                              "expression":"payload_response.headers['Content-Type']==application/json",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"payload",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-is",
+                              "expression":"payload.message is array",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "root":"payload.message",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "root":"payload.message",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "root":"payload.message",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "root":"payload.message",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"payload.status",
+                              "success":true
+                           }
+                        ],
+                        "kind":"sequence"
+                     }
+                  ],
+                  "kind":"inputSet",
+                  "name":"default"
+               }
+            ],
+            "inputBatteryName":"default",
+            "kind":"inputBattery"
+         }
+      ],
+      "tags":[
+         "dogs",
+         "retrievers"
+      ],
+      "criticalFailures":[
+
+      ],
+      "httpFailures":[
+
+      ],
+      "facts":{
+
+      },
+      "date":1645949450067,
+      "test":{
+         "name":"Get all retriever sub-breeds",
+         "id":"621b20e8fd17v5416b299e9f"
+      },
+      "failuresCount":0,
+      "warningsCount":0,
+      "compressed":false,
+      "run":{
+         "name":"",
+         "id":""
+      },
+      "company":{
+         "name":"",
+         "id":"7fb25570b4064716b9v6daae1a846790"
+      },
+      "project":{
+         "name":"Dog CEO",
+         "id":"621ad1466b1fa36aa4b8b044"
+      },
+      "contextId":"856c431c-4e1a-46c2-9644-c084e7c36b61",
+      "temp":false,
+      "expireAt":null,
+      "executionTimeSeconds":1,
+      "taskId":"693ddvb2-9482-4c51-95bf-52b3d70f5236",
+      "agent":"wstestjs",
+      "mode":"ondemand",
+      "buildId":"",
+      "exception":""
+   }
 ]
 ```
 
@@ -1315,7 +1214,8 @@ exception: ''
 
 ### Run All Tests Synchronously
 
-<details><summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_run-all-sync</code></summary>
+<details>
+<summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_run-all-sync</code></summary>
 <p/>
 
 Runs all tests in a project synchronously.
@@ -1331,20 +1231,26 @@ Runs all tests in a project synchronously.
   </tbody>
   <tbody>
     <tr>
-    <td><code>format</code></td>
-    <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Use this to set a response format. Possible values are <code>json</code> and <code>junit</code>.</p></td>
+     <td><code>format</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies the data format returned. Available values are <code>json</code> and <code>junit</code>. The default value is <code>json</code></p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>buildId</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated to a build, the ID of the build should be provided, so that all resources can be associated to it.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>tunnelId</code></td>
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel ID for running tests using <strong>Sauce Connect Proxy.</strong></p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>tunnelOwner</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel owner for running tests using <strong>Sauce Connect Proxy. It is recommended when using unnamed tunnels.</strong></p></td>
     </tr>
   </tbody>
   <tbody>
@@ -1367,7 +1273,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_run-all-sync?format=json' -H 'Content-Type: application/json'\
+--request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_run-all-sync?format=json' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -1383,7 +1289,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_run-all-sync?format=json' -H 'Content-Type: application/json'\
+--request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_run-all-sync?format=json' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -1592,10 +1498,11 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Run Tests by Tag Synchronously
 
-<details><summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_tag/&#123;tag&#125;/_run-sync</code></summary>
+<details>
+<summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_tag/&#123;tag&#125;/_run-sync</code></summary>
 <p/>
 
-Run all tests in a project synchronously.
+Runs all tests in a project matching a tag synchronously.
 
 #### Parameters
 
@@ -1615,19 +1522,25 @@ Run all tests in a project synchronously.
   <tbody>
     <tr>
      <td><code>format</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Use this to set a response format. Possible values are <code>json</code> and <code>junit</code>.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies the data format returned. Available values are <code>json</code> and <code>junit</code>. The default value is <code>json</code></p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>buildId</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated to a build, the ID of the build should be provided, so that all resources can be associated to it.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
      <td><code>tunnelId</code></td>
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel ID for running tests using <strong>Sauce Connect Proxy.</strong></p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>tunnelOwner</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel owner for running tests using <strong>Sauce Connect Proxy. It is recommended when using unnamed tunnels.</strong></p></td>
     </tr>
   </tbody>
   <tbody>
@@ -1650,7 +1563,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_tag/retrievers/_run-sync?format=json' -H 'Content-Type: application/json' \
+--request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>5/tests/_tag/<tag>/_run-sync?format=json' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -1666,7 +1579,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_tag/retrievers/_run-sync?format=json' -H 'Content-Type: application/json' \
+--request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_tag/<tag>/_run-sync?format=json' \
 -H 'Content-Type: application/json' \
 -d '{
       "params": {
@@ -1697,123 +1610,131 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 </table>
 
 ```jsx title="Sample Response"
-;[
-{
-id: '621b3d60a9f2b22a5a896344',
-events: [
-{
-date: 1545952352117,
-events: [
-{
-date: 1545952352117,
-events: [
-{
-date: 1545952352117,
-events: [
-{
-action: 'get',
-expression: 'https://dog.ceo/api/breed/retriever/list',
-footprint: 'dog.ceo/api/breed/retriever/list',
-metrics: {
-fetch: 1,
-latency: 330,
-overall: 343
-},
-requestDetails:
-'GET https://dog.ceo/api/breed/retriever/list\n\nGET /api/breed/retriever/list HTTP/1.1\nhost: dog.ceo\nUser-Agent: SauceLabs/API-Fortress - WSTestJS\naccept-encoding: gzip, deflate\n\n',
-status: 200,
-success: true
-},
-{
-action: 'assert-equals',
-expression: "payload_response.headers['Content-Type']==application/json",
-success: true
-},
-{
-action: 'assert-exists',
-expression: 'payload',
-success: true
-},
-{
-action: 'assert-is',
-expression: 'payload.message is array',
-success: true
-},
-{
-action: 'assert-exists',
-expression: '_1',
-root: 'payload.message',
-success: true
-},
-{
-action: 'assert-exists',
-expression: '_1',
-root: 'payload.message',
-success: true
-},
-{
-action: 'assert-exists',
-expression: '_1',
-root: 'payload.message',
-success: true
-},
-{
-action: 'assert-exists',
-expression: '_1',
-root: 'payload.message',
-success: true
-},
-{
-action: 'assert-exists',
-expression: 'payload.status',
-success: true
-}
-],
-kind: 'sequence'
-}
-],
-kind: 'inputSet',
-name: 'default'
-}
-],
-inputBatteryName: 'default',
-kind: 'inputBattery'
-}
-],
-tags: ['dogs', 'retrievers'],
-criticalFailures: [],
-httpFailures: [],
-facts: {},
-date: 1645952352117,
-test: {
-name: 'Get all retriever sub-breeds',
-id: '621b20e8fd17a5416b299e9f'
-},
-failuresCount: 0,
-warningsCount: 0,
-compressed: false,
-run: {
-name: '',
-id: ''
-},
-company: {
-name: '',
-id: '7fb25570b4064716b9b6daae2a846890'
-},
-project: {
-name: 'Dog CEO',
-id: '621ad1466b1fa36aa4b8b044'
-},
-contextId: '6cb1d39a-0964-3dfb-b595-7eabb3db1840',
-temp: false,
-expireAt: null,
-executionTimeSeconds: 1,
-taskId: '35bc67c7-c8ec-4686-b30d-47cc48e094hf',
-agent: 'wstestjs',
-mode: 'ondemand',
-buildId: '',
-exception: ''
-}
+[
+   {
+      "id":"621b3d60a9f2b22a5a896344",
+      "events":[
+         {
+            "date":1545952352117,
+            "events":[
+               {
+                  "date":1545952352117,
+                  "events":[
+                     {
+                        "date":1545952352117,
+                        "events":[
+                           {
+                              "action":"get",
+                              "expression":"https://dog.ceo/api/breed/retriever/list",
+                              "footprint":"dog.ceo/api/breed/retriever/list",
+                              "metrics":{
+                                 "fetch":1,
+                                 "latency":330,
+                                 "overall":343
+                              },
+                              "requestDetails":"GET https://dog.ceo/api/breed/retriever/list\n\nGET /api/breed/retriever/list HTTP/1.1\nhost: dog.ceo\nUser-Agent: SauceLabs/API-Fortress - WSTestJS\naccept-encoding: gzip, deflate\n\n",
+                              "status":200,
+                              "success":true
+                           },
+                           {
+                              "action":"assert-equals",
+                              "expression":"payload_response.headers['Content-Type']==application/json",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"payload",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-is",
+                              "expression":"payload.message is array",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "root":"payload.message",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "root":"payload.message",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "root":"payload.message",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "root":"payload.message",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"payload.status",
+                              "success":true
+                           }
+                        ],
+                        "kind":"sequence"
+                     }
+                  ],
+                  "kind":"inputSet",
+                  "name":"default"
+               }
+            ],
+            "inputBatteryName":"default",
+            "kind":"inputBattery"
+         }
+      ],
+      "tags":[
+         "dogs",
+         "retrievers"
+      ],
+      "criticalFailures":[
+
+      ],
+      "httpFailures":[
+
+      ],
+      "facts":{
+
+      },
+      "date":1645952352117,
+      "test":{
+         "name":"Get all retriever sub-breeds",
+         "id":"621b20e8fd17a5416b299e9f"
+      },
+      "failuresCount":0,
+      "warningsCount":0,
+      "compressed":false,
+      "run":{
+         "name":"",
+         "id":""
+      },
+      "company":{
+         "name":"",
+         "id":"7fb25570b4064716b9b6daae2a846890"
+      },
+      "project":{
+         "name":"Dog CEO",
+         "id":"621ad1466b1fa36aa4b8b044"
+      },
+      "contextId":"6cb1d39a-0964-3dfb-b595-7eabb3db1840",
+      "temp":false,
+      "expireAt":null,
+      "executionTimeSeconds":1,
+      "taskId":"35bc67c7-c8ec-4686-b30d-47cc48e094hf",
+      "agent":"wstestjs",
+      "mode":"ondemand",
+      "buildId":"",
+      "exception":""
+   }
 ]
 ```
 
@@ -1823,7 +1744,8 @@ exception: ''
 
 ### Execute a Test Synchronously
 
-<details><summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_exec-sync</code></summary>
+<details>
+<summary><span className="api post">POST</span><code>/api-testing/rest/v4/&#123;hookId&#125;/tests/_exec-sync</code></summary>
 <p></p>
 
 Executes synchronously the test you send in the request body and saves the results into the cloud. It will create a Log in the project **Dashboard**, however, the test itself will not populate in your project's **Tests** section.
@@ -1870,7 +1792,7 @@ Executes synchronously the test you send in the request body and saves the resul
   <tbody>
     <tr>
      <td><code>buildId</code></td>
-     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated to a build, the ID of the build should be provided, so that all resources can be associated to it.</p></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
   <tbody>
@@ -1879,23 +1801,33 @@ Executes synchronously the test you send in the request body and saves the resul
      <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel ID for running tests using <strong>Sauce Connect Proxy.</strong></p></td>
     </tr>
   </tbody>
+  <tbody>
+    <tr>
+     <td><code>tunnelOwner</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies your tunnel owner for running tests using <strong>Sauce Connect Proxy. It is recommended when using unnamed tunnels.</strong></p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>format</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Specifies the data format returned. Available values are <code>json</code> and <code>junit</code>. The default value is <code>json</code></p></td>
+    </tr>
+  </tbody>
 </table>
 
 <Tabs
 groupId="dc-url"
-defaultValue="usYaml"
+defaultValue="us"
 values={[
-{label: 'United States - yaml', value: 'usYaml'},
-{label: 'United States - xml', value: 'usXml'},
-{label: 'Europe - yaml', value: 'euYaml'},
-{label: 'Europe - xml', value: 'euXml'}
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
 ]}>
 
-<TabItem value="usYaml">
+<TabItem value="us">
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_exec-sync'
+--request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_exec-sync'
 -H 'Content-Type: application/json' \
 -d '{
     "name": "Get all retriever sub-breeds",
@@ -1908,51 +1840,17 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 </TabItem>
 
-<TabItem value="usXml">
+<TabItem value="eu">
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_exec-sync'
--H 'Content-Type: application/json' \
--d '{
-    "name": "Get all retriever sub-breeds",
-    "tags": ["dogs", "retrievers"],
-    "unit": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"${protocol}${domain}${endpoint}\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-    "input": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>",
-    "params" : {}
-    }'
-```
-
-</TabItem>
-
-<TabItem value="euYaml">
-
-```jsx title="Sample Request"
-curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_exec-sync'
+--request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/tests/_exec-sync'
 -H 'Content-Type: application/json' \
 -d '{
     "name": "Get all retriever sub-breeds",
     "tags": ["dogs", "retrievers"],
     "unit": "assertions:\n  - id: get\n    children:\n      - id: header\n        name: key\n        value: ABC123\n    url: ${protocol}${domain}${endpoint}\n    var: payload\n    mode: json\n  - id: assert-equals\n    expression: payload_response.headers['Content-Type']\n    value: application/json; charset=utf-8\nconfigs: []",
     "input": "- id: global\n  children:\n    - id: variable\n      name: protocol\n      value: http://\n    - id: variable\n      name: domain\n      value: demoapi.apifortress.com\n    - id: variable\n      name: endpoint\n      value: /api/retail/product\n- id: sets\n  children:\n    - id: set\n      children: []\n      name: default\n",
-    "params": {}
-    }'
-```
-
-</TabItem>
-
-<TabItem value="euXml">
-
-```jsx title="Sample Request"
-curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request POST 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/tests/_exec-sync'
--H 'Content-Type: application/json' \
--d '{
-    "name": "Get all retriever sub-breeds",
-    "tags": ["dogs", "retrievers"],
-    "unit": "<?xml version=\"1.0\"?>\n<unit>\n  <requirements/>\n  <configs/>\n  <sequence>\n    <get url=\"${protocol}${domain}${endpoint}\" params=\"[:]\" var=\"payload\" mode=\"json\"/>\n    <assert-equals expression=\"payload_response.headers['Content-Type']\" value=\"application/json\"/>\n    <assert-exists expression=\"payload\" gen=\"jag\"/>\n    <assert-is expression=\"payload.message\" type=\"array\" gen=\"jag\"/>\n    <each expression=\"payload.message\" gen=\"jag\">\n      <assert-exists expression=\"_1\" gen=\"jag\"/>\n    </each>\n    <assert-exists expression=\"payload.status\" gen=\"jag\"/>\n  </sequence>\n</unit>",
-    "input": "<?xml version=\"1.0\"?>\n<sets>\n  <global>\n    <param name=\"protocol\">https://</param>\n    <param name=\"domain\">dog.ceo</param>\n    <param name=\"endpoint\">/api/breed/retriever/list</param>\n  </global>\n  <set name=\"default\"/>\n</sets>",
     "params": {}
     }'
 ```
@@ -1979,443 +1877,448 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 </table>
 
 ```jsx title="Sample Response"
-;[
-{
-id: '621dd85d6b1fa36aa4b8b1d1',
-events: [
-{
-date: 1646122845550,
-events: [
-{
-date: 1646122845550,
-events: [
-{
-date: 1646122845550,
-events: [
-{
-action: 'get',
-expression: 'https://saucelabs.com/rest/v1/public/tunnels/info/versions',
-footprint: 'saucelabs.com/rest/v1/public/tunnels/info/versions',
-metrics: {
-fetch: 1,
-latency: 137,
-overall: 162
-},
-requestDetails:
-'GET https://saucelabs.com/rest/v1/public/tunnels/info/versions\n\nGET /rest/v1/public/tunnels/info/versions HTTP/1.1\nhost: saucelabs.com\nUser-Agent: SauceLabs/API-Fortress - WSTestJS\naccept-encoding: gzip, deflate\n\n',
-status: 200,
-success: true
-},
-{
-action: 'assert-equals',
-expression: "payload_response.headers['Content-Type']==application/json",
-foundValue: 'application/json; charset=utf-8',
-level: 0,
-snapshot: {
-domain: 'dog.ceo',
-endpoint: '/api/breed/retriever/list',
-payload_response: {
-headers: [
-{
-name: 'server',
-value: 'nginx'
-},
-{
-name: 'date',
-value: 'Tue, 01 Mar 2022 08:20:45 GMT'
-},
-{
-name: 'content-type',
-value: 'application/json; charset=utf-8'
-},
-{
-name: 'content-length',
-value: '617'
-},
-{
-name: 'connection',
-value: 'close'
-},
-{
-name: 'x-ratelimit-limit',
-value: '10'
-},
-{
-name: 'x-ratelimit-remaining',
-value: '9'
-},
-{
-name: 'x-ratelimit-reset',
-value: '60'
-},
-{
-name: 'vary',
-value: '*'
-},
-{
-name: 'cache-control',
-value: 'no-cache'
-},
-{
-name: 'x-sl-request-id',
-value: 'adc111d8b5cc4dde89f64ebca253e1aa'
-},
-{
-name: 'x-envoy-upstream-service-time',
-value: '90'
-},
-{
-name: 'x-backend',
-value: 'tunnel-resto'
-},
-{
-name: 'x-frame-options',
-value: 'SAMEORIGIN'
-},
-{
-name: 'x-content-type-options',
-value: 'nosniff'
-},
-{
-name: 'x-xss-protection',
-value: '1; mode=block'
-},
-{
-name: 'strict-transport-security',
-value: 'max-age=63072000; includeSubDomains'
-}
-],
-statusCode: '200'
-},
-payload_source:
-'a2c6057726bf89ba6bbfccbb64ac0e4754535b9b2774cb393c16070bed947966',
-protocol: 'https://'
-},
-success: false
-},
-{
-action: 'assert-exists',
-expression: 'payload',
-success: true
-},
-{
-action: 'assert-is',
-expression: 'payload.message is array',
-level: 0,
-snapshot: {
-domain: 'dog.ceo',
-endpoint: '/api/breed/retriever/list',
-payload_response: {
-headers: [
-{
-name: 'server',
-value: 'nginx'
-},
-{
-name: 'date',
-value: 'Tue, 01 Mar 2022 08:20:45 GMT'
-},
-{
-name: 'content-type',
-value: 'application/json; charset=utf-8'
-},
-{
-name: 'content-length',
-value: '617'
-},
-{
-name: 'connection',
-value: 'close'
-},
-{
-name: 'x-ratelimit-limit',
-value: '10'
-},
-{
-name: 'x-ratelimit-remaining',
-value: '9'
-},
-{
-name: 'x-ratelimit-reset',
-value: '60'
-},
-{
-name: 'vary',
-value: '*'
-},
-{
-name: 'cache-control',
-value: 'no-cache'
-},
-{
-name: 'x-sl-request-id',
-value: 'adc111d8a5cc4dde89f64ebca253e1aa'
-},
-{
-name: 'x-envoy-upstream-service-time',
-value: '90'
-},
-{
-name: 'x-backend',
-value: 'tunnel-resto'
-},
-{
-name: 'x-frame-options',
-value: 'SAMEORIGIN'
-},
-{
-name: 'x-content-type-options',
-value: 'nosniff'
-},
-{
-name: 'x-xss-protection',
-value: '1; mode=block'
-},
-{
-name: 'strict-transport-security',
-value: 'max-age=63072000; includeSubDomains'
-}
-],
-statusCode: '200'
-},
-payload_source:
-'a2c6057726bf89ba6bbfccbb64ac0e4854535b9b2774cb393c16070bed947966',
-protocol: 'https://'
-},
-success: false
-},
-{
-action: 'assert-exists',
-expression: '_1',
-level: 0,
-root: 'payload.message',
-snapshot: {
-domain: 'dog.ceo',
-endpoint: '/api/breed/retriever/list',
-payload_response: {
-headers: [
-{
-name: 'server',
-value: 'nginx'
-},
-{
-name: 'date',
-value: 'Tue, 01 Mar 2022 08:20:45 GMT'
-},
-{
-name: 'content-type',
-value: 'application/json; charset=utf-8'
-},
-{
-name: 'content-length',
-value: '617'
-},
-{
-name: 'connection',
-value: 'close'
-},
-{
-name: 'x-ratelimit-limit',
-value: '10'
-},
-{
-name: 'x-ratelimit-remaining',
-value: '9'
-},
-{
-name: 'x-ratelimit-reset',
-value: '60'
-},
-{
-name: 'vary',
-value: '*'
-},
-{
-name: 'cache-control',
-value: 'no-cache'
-},
-{
-name: 'x-sl-request-id',
-value: 'adc211d8a5cc4dde89f64ebca253e1aa'
-},
-{
-name: 'x-envoy-upstream-service-time',
-value: '90'
-},
-{
-name: 'x-backend',
-value: 'tunnel-resto'
-},
-{
-name: 'x-frame-options',
-value: 'SAMEORIGIN'
-},
-{
-name: 'x-content-type-options',
-value: 'nosniff'
-},
-{
-name: 'x-xss-protection',
-value: '1; mode=block'
-},
-{
-name: 'strict-transport-security',
-value: 'max-age=63072000; includeSubDomains'
-}
-],
-statusCode: '200'
-},
-payload_source:
-'a2c6057722bf89ba6bbfccbb64ac0e4754535b9b2774cb393c16070bed947966',
-protocol: 'https://'
-},
-success: false
-},
-{
-action: 'assert-exists',
-expression: 'payload.status',
-level: 0,
-snapshot: {
-domain: 'dog.ceo',
-endpoint: '/api/breed/retriever/list',
-payload_response: {
-headers: [
-{
-name: 'server',
-value: 'nginx'
-},
-{
-name: 'date',
-value: 'Tue, 01 Mar 2022 08:20:45 GMT'
-},
-{
-name: 'content-type',
-value: 'application/json; charset=utf-8'
-},
-{
-name: 'content-length',
-value: '617'
-},
-{
-name: 'connection',
-value: 'close'
-},
-{
-name: 'x-ratelimit-limit',
-value: '10'
-},
-{
-name: 'x-ratelimit-remaining',
-value: '9'
-},
-{
-name: 'x-ratelimit-reset',
-value: '60'
-},
-{
-name: 'vary',
-value: '*'
-},
-{
-name: 'cache-control',
-value: 'no-cache'
-},
-{
-name: 'x-sl-request-id',
-value: 'adc111d8a5cc4dde89f64ebca253e1aa'
-},
-{
-name: 'x-envoy-upstream-service-time',
-value: '90'
-},
-{
-name: 'x-backend',
-value: 'tunnel-resto'
-},
-{
-name: 'x-frame-options',
-value: 'SAMEORIGIN'
-},
-{
-name: 'x-content-type-options',
-value: 'nosniff'
-},
-{
-name: 'x-xss-protection',
-value: '1; mode=block'
-},
-{
-name: 'strict-transport-security',
-value: 'max-age=63072000; includeSubDomains'
-}
-],
-statusCode: '200'
-},
-payload_source:
-'a226057726bf89ba6bbfccbb64ac0e4754535b9b2774cb393c16070bed947966',
-protocol: 'https://'
-},
-success: false
-}
-],
-kind: 'sequence'
-}
-],
-kind: 'inputSet',
-name: 'default'
-}
-],
-inputBatteryName: 'default',
-kind: 'inputBattery'
-}
-],
-tags: ['dogs', 'retrievers'],
-criticalFailures: [],
-httpFailures: [],
-facts: {},
-date: 1646122845539,
-test: {
-name: 'Get all retriever sub-breeds',
-id: 'e42b06a6-bb34-49a8-81a7-35c8b58b6457'
-},
-failuresCount: 4,
-warningsCount: 0,
-compressed: false,
-run: {
-name: '',
-id: ''
-},
-company: {
-name: '',
-id: '7fb25570b4064716b4b6daae2a846790'
-},
-project: {
-name: 'Dog CEO',
-id: '621ad1466b1fa36aa4b8b044'
-},
-contextId: 'e4cb06a6-bb34-44a8-81a7-35c8b58b6457',
-temp: false,
-expireAt: null,
-executionTimeSeconds: 1,
-taskId: '3dd9dd20-4586-4b6b-8eb5-b319b249823b',
-agent: 'wstestjs',
-mode: 'ondemand',
-buildId: '',
-exception: ''
-}
+[
+   {
+      "id":"621dd85d6b1fa36aa4b8b1d1",
+      "events":[
+         {
+            "date":1646122845550,
+            "events":[
+               {
+                  "date":1646122845550,
+                  "events":[
+                     {
+                        "date":1646122845550,
+                        "events":[
+                           {
+                              "action":"get",
+                              "expression":"https://saucelabs.com/rest/v1/public/tunnels/info/versions",
+                              "footprint":"saucelabs.com/rest/v1/public/tunnels/info/versions",
+                              "metrics":{
+                                 "fetch":1,
+                                 "latency":137,
+                                 "overall":162
+                              },
+                              "requestDetails":"GET https://saucelabs.com/rest/v1/public/tunnels/info/versions\n\nGET /rest/v1/public/tunnels/info/versions HTTP/1.1\nhost: saucelabs.com\nUser-Agent: SauceLabs/API-Fortress - WSTestJS\naccept-encoding: gzip, deflate\n\n",
+                              "status":200,
+                              "success":true
+                           },
+                           {
+                              "action":"assert-equals",
+                              "expression":"payload_response.headers['Content-Type']==application/json",
+                              "foundValue":"application/json; charset=utf-8",
+                              "level":0,
+                              "snapshot":{
+                                 "domain":"dog.ceo",
+                                 "endpoint":"/api/breed/retriever/list",
+                                 "payload_response":{
+                                    "headers":[
+                                       {
+                                          "name":"server",
+                                          "value":"nginx"
+                                       },
+                                       {
+                                          "name":"date",
+                                          "value":"Tue, 01 Mar 2022 08:20:45 GMT"
+                                       },
+                                       {
+                                          "name":"content-type",
+                                          "value":"application/json; charset=utf-8"
+                                       },
+                                       {
+                                          "name":"content-length",
+                                          "value":"617"
+                                       },
+                                       {
+                                          "name":"connection",
+                                          "value":"close"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-limit",
+                                          "value":"10"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-remaining",
+                                          "value":"9"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-reset",
+                                          "value":"60"
+                                       },
+                                       {
+                                          "name":"vary",
+                                          "value":"*"
+                                       },
+                                       {
+                                          "name":"cache-control",
+                                          "value":"no-cache"
+                                       },
+                                       {
+                                          "name":"x-sl-request-id",
+                                          "value":"adc111d8b5cc4dde89f64ebca253e1aa"
+                                       },
+                                       {
+                                          "name":"x-envoy-upstream-service-time",
+                                          "value":"90"
+                                       },
+                                       {
+                                          "name":"x-backend",
+                                          "value":"tunnel-resto"
+                                       },
+                                       {
+                                          "name":"x-frame-options",
+                                          "value":"SAMEORIGIN"
+                                       },
+                                       {
+                                          "name":"x-content-type-options",
+                                          "value":"nosniff"
+                                       },
+                                       {
+                                          "name":"x-xss-protection",
+                                          "value":"1; mode=block"
+                                       },
+                                       {
+                                          "name":"strict-transport-security",
+                                          "value":"max-age=63072000; includeSubDomains"
+                                       }
+                                    ],
+                                    "statusCode":"200"
+                                 },
+                                 "payload_source":"a2c6057726bf89ba6bbfccbb64ac0e4754535b9b2774cb393c16070bed947966",
+                                 "protocol":"https://"
+                              },
+                              "success":false
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"payload",
+                              "success":true
+                           },
+                           {
+                              "action":"assert-is",
+                              "expression":"payload.message is array",
+                              "level":0,
+                              "snapshot":{
+                                 "domain":"dog.ceo",
+                                 "endpoint":"/api/breed/retriever/list",
+                                 "payload_response":{
+                                    "headers":[
+                                       {
+                                          "name":"server",
+                                          "value":"nginx"
+                                       },
+                                       {
+                                          "name":"date",
+                                          "value":"Tue, 01 Mar 2022 08:20:45 GMT"
+                                       },
+                                       {
+                                          "name":"content-type",
+                                          "value":"application/json; charset=utf-8"
+                                       },
+                                       {
+                                          "name":"content-length",
+                                          "value":"617"
+                                       },
+                                       {
+                                          "name":"connection",
+                                          "value":"close"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-limit",
+                                          "value":"10"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-remaining",
+                                          "value":"9"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-reset",
+                                          "value":"60"
+                                       },
+                                       {
+                                          "name":"vary",
+                                          "value":"*"
+                                       },
+                                       {
+                                          "name":"cache-control",
+                                          "value":"no-cache"
+                                       },
+                                       {
+                                          "name":"x-sl-request-id",
+                                          "value":"adc111d8a5cc4dde89f64ebca253e1aa"
+                                       },
+                                       {
+                                          "name":"x-envoy-upstream-service-time",
+                                          "value":"90"
+                                       },
+                                       {
+                                          "name":"x-backend",
+                                          "value":"tunnel-resto"
+                                       },
+                                       {
+                                          "name":"x-frame-options",
+                                          "value":"SAMEORIGIN"
+                                       },
+                                       {
+                                          "name":"x-content-type-options",
+                                          "value":"nosniff"
+                                       },
+                                       {
+                                          "name":"x-xss-protection",
+                                          "value":"1; mode=block"
+                                       },
+                                       {
+                                          "name":"strict-transport-security",
+                                          "value":"max-age=63072000; includeSubDomains"
+                                       }
+                                    ],
+                                    "statusCode":"200"
+                                 },
+                                 "payload_source":"a2c6057726bf89ba6bbfccbb64ac0e4854535b9b2774cb393c16070bed947966",
+                                 "protocol":"https://"
+                              },
+                              "success":false
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"_1",
+                              "level":0,
+                              "root":"payload.message",
+                              "snapshot":{
+                                 "domain":"dog.ceo",
+                                 "endpoint":"/api/breed/retriever/list",
+                                 "payload_response":{
+                                    "headers":[
+                                       {
+                                          "name":"server",
+                                          "value":"nginx"
+                                       },
+                                       {
+                                          "name":"date",
+                                          "value":"Tue, 01 Mar 2022 08:20:45 GMT"
+                                       },
+                                       {
+                                          "name":"content-type",
+                                          "value":"application/json; charset=utf-8"
+                                       },
+                                       {
+                                          "name":"content-length",
+                                          "value":"617"
+                                       },
+                                       {
+                                          "name":"connection",
+                                          "value":"close"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-limit",
+                                          "value":"10"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-remaining",
+                                          "value":"9"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-reset",
+                                          "value":"60"
+                                       },
+                                       {
+                                          "name":"vary",
+                                          "value":"*"
+                                       },
+                                       {
+                                          "name":"cache-control",
+                                          "value":"no-cache"
+                                       },
+                                       {
+                                          "name":"x-sl-request-id",
+                                          "value":"adc211d8a5cc4dde89f64ebca253e1aa"
+                                       },
+                                       {
+                                          "name":"x-envoy-upstream-service-time",
+                                          "value":"90"
+                                       },
+                                       {
+                                          "name":"x-backend",
+                                          "value":"tunnel-resto"
+                                       },
+                                       {
+                                          "name":"x-frame-options",
+                                          "value":"SAMEORIGIN"
+                                       },
+                                       {
+                                          "name":"x-content-type-options",
+                                          "value":"nosniff"
+                                       },
+                                       {
+                                          "name":"x-xss-protection",
+                                          "value":"1; mode=block"
+                                       },
+                                       {
+                                          "name":"strict-transport-security",
+                                          "value":"max-age=63072000; includeSubDomains"
+                                       }
+                                    ],
+                                    "statusCode":"200"
+                                 },
+                                 "payload_source":"a2c6057722bf89ba6bbfccbb64ac0e4754535b9b2774cb393c16070bed947966",
+                                 "protocol":"https://"
+                              },
+                              "success":false
+                           },
+                           {
+                              "action":"assert-exists",
+                              "expression":"payload.status",
+                              "level":0,
+                              "snapshot":{
+                                 "domain":"dog.ceo",
+                                 "endpoint":"/api/breed/retriever/list",
+                                 "payload_response":{
+                                    "headers":[
+                                       {
+                                          "name":"server",
+                                          "value":"nginx"
+                                       },
+                                       {
+                                          "name":"date",
+                                          "value":"Tue, 01 Mar 2022 08:20:45 GMT"
+                                       },
+                                       {
+                                          "name":"content-type",
+                                          "value":"application/json; charset=utf-8"
+                                       },
+                                       {
+                                          "name":"content-length",
+                                          "value":"617"
+                                       },
+                                       {
+                                          "name":"connection",
+                                          "value":"close"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-limit",
+                                          "value":"10"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-remaining",
+                                          "value":"9"
+                                       },
+                                       {
+                                          "name":"x-ratelimit-reset",
+                                          "value":"60"
+                                       },
+                                       {
+                                          "name":"vary",
+                                          "value":"*"
+                                       },
+                                       {
+                                          "name":"cache-control",
+                                          "value":"no-cache"
+                                       },
+                                       {
+                                          "name":"x-sl-request-id",
+                                          "value":"adc111d8a5cc4dde89f64ebca253e1aa"
+                                       },
+                                       {
+                                          "name":"x-envoy-upstream-service-time",
+                                          "value":"90"
+                                       },
+                                       {
+                                          "name":"x-backend",
+                                          "value":"tunnel-resto"
+                                       },
+                                       {
+                                          "name":"x-frame-options",
+                                          "value":"SAMEORIGIN"
+                                       },
+                                       {
+                                          "name":"x-content-type-options",
+                                          "value":"nosniff"
+                                       },
+                                       {
+                                          "name":"x-xss-protection",
+                                          "value":"1; mode=block"
+                                       },
+                                       {
+                                          "name":"strict-transport-security",
+                                          "value":"max-age=63072000; includeSubDomains"
+                                       }
+                                    ],
+                                    "statusCode":"200"
+                                 },
+                                 "payload_source":"a226057726bf89ba6bbfccbb64ac0e4754535b9b2774cb393c16070bed947966",
+                                 "protocol":"https://"
+                              },
+                              "success":false
+                           }
+                        ],
+                        "kind":"sequence"
+                     }
+                  ],
+                  "kind":"inputSet",
+                  "name":"default"
+               }
+            ],
+            "inputBatteryName":"default",
+            "kind":"inputBattery"
+         }
+      ],
+      "tags":[
+         "dogs",
+         "retrievers"
+      ],
+      "criticalFailures":[
+
+      ],
+      "httpFailures":[
+
+      ],
+      "facts":{
+
+      },
+      "date":1646122845539,
+      "test":{
+         "name":"Get all retriever sub-breeds",
+         "id":"e42b06a6-bb34-49a8-81a7-35c8b58b6457"
+      },
+      "failuresCount":4,
+      "warningsCount":0,
+      "compressed":false,
+      "run":{
+         "name":"",
+         "id":""
+      },
+      "company":{
+         "name":"",
+         "id":"7fb25570b4064716b4b6daae2a846790"
+      },
+      "project":{
+         "name":"Dog CEO",
+         "id":"621ad1466b1fa36aa4b8b044"
+      },
+      "contextId":"e4cb06a6-bb34-44a8-81a7-35c8b58b6457",
+      "temp":false,
+      "expireAt":null,
+      "executionTimeSeconds":1,
+      "taskId":"3dd9dd20-4586-4b6b-8eb5-b319b249823b",
+      "agent":"wstestjs",
+      "mode":"ondemand",
+      "buildId":"",
+      "exception":""
+   }
 ]
 ```
 
 </details>
 
-## Events
+## Builds
 
-### List All Events
+### Create/Update a Build
 
-<details><summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/insights/events</code></summary>
+<details>
+<summary><span className="api put">PUT</span><code>/api-testing/rest/v4/&#123;hookId&#125;/builds</code></summary>
 <p></p>
 
-Lists all events in a project.
+Creates or updates a build.
 
 #### Parameters
 
@@ -2428,26 +2331,26 @@ Lists all events in a project.
   </tbody>
   <tbody>
     <tr>
-     <td><code>from</code></td>
-     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the start time, in UNIX time milliseconds. Default value is 2 days before.</p></td>
-    </tr>
-  </tbody>
-  <tbody>
-      <tr>
-      <td><code>to</code></td>
-      <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the end time, in UNIX time milliseconds. Default value is current time.</p></td>
-      </tr>
-  </tbody>
-  <tbody>
-    <tr>
-     <td><code>limit</code></td>
-     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the number of records to return. Default value is 100 and the max value is 500.</p></td>
+     <td><code>id</code></td>
+     <td><p><small>| BODY | REQUIRED | STRING |</small></p><p>The buildId you want to create or update.</p></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
-     <td><code>offset</code></td>
-     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Specifies the number of events to be skipped from the beginning of the list. Needs to be used in combination with limit.</p></td>
+     <td><code>environment</code></td>
+     <td><p><small>| BODY | OPTIONAL | STRING |</small></p><p>The environment you want to assign the build to.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>branch</code></td>
+     <td><p><small>| BODY | OPTIONAL | STRING |</small></p><p>The branch the build belongs to.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>issue</code></td>
+     <td><p><small>| BODY | OPTIONAL | STRING |</small></p><p>The issue the build belongs to.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2464,7 +2367,16 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/insights/events' | json_pp
+--request PUT 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/builds' \
+-H 'Content-Type: application/json' \
+-d '{
+      "id": "<buildId>",
+      "metadata": {
+        "environment": "<environment>",
+        "branch": "<branch>",
+        "issue": "<issue>"
+      }
+    }'
 ```
 
 </TabItem>
@@ -2473,7 +2385,524 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/insights/events' | json_pp
+--request PUT 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/builds'  \
+-H 'Content-Type: application/json' \
+-d '{
+      "id": "<buildId>",
+      "metadata": {
+        "environment": "<environment>",
+        "branch": "<branch>",
+        "issue": "<issue>"
+      }
+    }'
+```
+
+</TabItem>
+</Tabs>
+
+#### Responses
+
+<table id="table-api">
+<tbody>
+  <tr>
+    <td><code>200</code></td>
+    <td colSpan='2'>Success.</td>
+  </tr>
+</tbody>
+</table>
+
+```jsx title="Sample Response"
+{
+    "id": "<buildId>",
+    "companyId": "<companyId>",
+    "createdAt": "2023-04-28T13:33:29Z",
+    "updatedAt": "2023-04-28T13:33:29Z",
+    "projects": [],
+    "totalEvents": 0,
+    "successes": 0,
+    "failures": 0,
+    "metadata": {
+        "environment": "<environment>",
+        "branch": "<branch>",
+        "issue": "<issue>"
+    }
+}
+```
+
+</details>
+
+---
+
+### Get Builds
+
+<details>
+<summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/builds</code></summary>
+<p></p>
+
+Returns the list of builds.
+
+#### Parameters
+
+<table id="table-api">
+  <tbody>
+    <tr>
+     <td><code>hookId</code></td>
+     <td><p><small>| PATH | REQUIRED | STRING |</small></p><p>Your project's hook ID, which you can create and/or retrieve from your project's <strong>Webhooks</strong> tab.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>start</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the start date, in <code>YYYY-MM-DD</code> (UTC) format.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+      <tr>
+      <td><code>end</code></td>
+      <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the end date, in <code>YYYY-MM-DD</code> (UTC) format. The default value is current date.</p></td>
+      </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>limit</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the number of records to return. The default value is 10 and the max value is 50.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>offset</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Specifies the number of records to be skipped from the beginning of the list. Must be used in combination with the limit parameter.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs
+groupId="dc-url"
+defaultValue="us"
+values={[
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
+]}>
+
+<TabItem value="us">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/builds' | json_pp
+```
+
+</TabItem>
+
+<TabItem value="eu">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/builds' | json_pp
+```
+
+</TabItem>
+</Tabs>
+
+#### Responses
+
+<table id="table-api">
+<tbody>
+  <tr>
+    <td><code>200</code></td>
+    <td colSpan='2'>Success.</td>
+  </tr>
+</tbody>
+</table>
+
+```jsx title="Sample Response"
+[
+    {
+        "id": "build123",
+        "createdAt": "2023-04-28T09:12:02Z",
+        "updatedAt": "2023-04-28T09:12:02Z",
+        "totalEvents": 22,
+        "successes": 15,
+        "failures": 7
+    },
+    {
+        "id": "build456",
+        "createdAt": "2023-04-28T09:08:54Z",
+        "updatedAt": "2023-04-28T09:08:54Z",
+        "totalEvents": 20,
+        "successes": 20,
+        "failures": 0
+    }
+]
+```
+
+</details>
+
+---
+
+### Get Build Details
+
+<details>
+<summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/builds/&#123;buildId&#125;</code></summary>
+<p></p>
+
+Returns the details of the specified build.
+
+#### Parameters
+
+<table id="table-api">
+  <tbody>
+    <tr>
+     <td><code>hookId</code></td>
+     <td><p><small>| PATH | REQUIRED | STRING |</small></p><p>Your project's hook ID, which you can create and/or retrieve from your project's <strong>Webhooks</strong> tab.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>buildId</code></td>
+     <td><p><small>| PATH | REQUIRED | STRING |</small></p><p>The build ID you want to retrieve the details.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs
+groupId="dc-url"
+defaultValue="us"
+values={[
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
+]}>
+
+<TabItem value="us">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/builds/<buildId>' | json_pp
+```
+
+</TabItem>
+
+<TabItem value="eu">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/builds/<buildId>' | json_pp
+```
+
+</TabItem>
+</Tabs>
+
+#### Responses
+
+<table id="table-api">
+<tbody>
+  <tr>
+    <td><code>200</code></td>
+    <td colSpan='2'>Success.</td>
+  </tr>
+</tbody>
+</table>
+
+```jsx title="Sample Response"
+{
+    "id": "<buildId>",
+    "companyId": "435c2dfcf77742e084a03b2d89261fec",
+    "createdAt": "2023-04-28T09:08:54Z",
+    "updatedAt": "2023-04-28T09:08:54Z",
+    "projects": [
+        {
+            "id": "<projectId>",
+            "name": "<projectName>"
+        }
+    ],
+    "totalEvents": 22,
+    "successes": 15,
+    "failures": 7,
+    "metadata": {}
+}
+```
+
+</details>
+
+---
+
+## Vault
+
+### Get Vault
+
+<details>
+<summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/vault</code></summary>
+<p></p>
+
+Returns the content of the project vault.
+
+#### Parameters
+
+<table id="table-api">
+  <tbody>
+    <tr>
+     <td><code>hookId</code></td>
+     <td><p><small>| PATH | REQUIRED | STRING |</small></p><p>Your project's hook ID, which you can create and/or retrieve from your project's <strong>Webhooks</strong> tab.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs
+groupId="dc-url"
+defaultValue="us"
+values={[
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
+]}>
+
+<TabItem value="us">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/vault' | json_pp
+```
+
+</TabItem>
+
+<TabItem value="eu">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/vault' | json_pp
+```
+
+</TabItem>
+</Tabs>
+
+#### Responses
+
+<table id="table-api">
+<tbody>
+  <tr>
+    <td><code>200</code></td>
+    <td colSpan='2'>Success.</td>
+  </tr>
+</tbody>
+</table>
+
+```jsx title="Sample Response"
+{
+   "snippets" : {
+      "temp" : "- id: get\n  children:\n    - id: header\n      name: key\n      value: ABC123\n  url: http://demoapi.apifortress.com/api/retail/product\n  var: payload\n  mode: json"
+   },
+   "variables" : [
+      {
+         "name" : "var1",
+         "type" : "variable",
+         "value" : "foo"
+      },
+      {
+         "name" : "var2",
+         "type" : "variable",
+         "value" : "bar"
+      },
+      {
+         "name" : "var3",
+         "type" : "variable",
+         "value" : "chu"
+      }
+   ]
+```
+
+</details>
+
+---
+
+### Update Vault
+
+<details>
+<summary><span className="api put">PUT</span><code>/api-testing/rest/v4/&#123;hookId&#125;/vaults</code></summary>
+<p></p>
+
+Updates the content of the project vault.
+
+#### Parameters
+
+<table id="table-api">
+  <tbody>
+    <tr>
+     <td><code>hookId</code></td>
+     <td><p><small>| PATH | REQUIRED | STRING |</small></p><p>Your project's hook ID, which you can create and/or retrieve from your project's <strong>Webhooks</strong> tab.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>variables</code></td>
+     <td><p><small>| BODY | REQUIRED | ARRAY |</small></p><p>The array contains the variable object you want to update/add to the project vault and it can be empty. Each object contains the key/value pairs: <code>name</code> (the name of the variable you want to update/add), <code>value</code> (the value of the variable you want to update/add), <code>type</code> the value can be <code>variable</code> or <code>sensitive</code>. If the type is <code>sensitive</code> the value is <a href="/api-testing/vault/#mark-variables-as-sensitive">obfuscated</a> and cannot be seen by anyone.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>snippets</code></td>
+     <td><p><small>| BODY | REQUIRED | OBJECT |</small></p><p>The object containing the snippets you want to update/add. The object contains the key/value pairs: snippet_name:snippet. It can be empty.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs
+groupId="dc-url"
+defaultValue="us"
+values={[
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
+]}>
+
+<TabItem value="us">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request PUT 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/vaults'  \
+-H 'Content-Type: application/json' \
+-d '{
+      "variables": [
+        {
+          "name": "var3",
+          "value": "chu",
+          "type": "variable"
+        }
+      ],
+      "snippets": {
+        "test": "- id: get\n  url: http://demoapi.apifortress.com/api/retail/product\n  var: payload\n  mode: json"
+      }
+    }'
+```
+
+</TabItem>
+
+<TabItem value="eu">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request PUT 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/vault'  \
+-H 'Content-Type: application/json' \
+-d '{
+      "variables": [
+        {
+          "name": "var3",
+          "value": "chu",
+          "type": "variable"
+        }
+      ],
+      "snippets": {
+        "test": "- id: get\n  url: http://demoapi.apifortress.com/api/retail/product\n  var: payload\n  mode: json"
+      }
+    }'
+```
+
+</TabItem>
+</Tabs>
+
+#### Responses
+
+<table id="table-api">
+<tbody>
+  <tr>
+    <td><code>200</code></td>
+    <td colSpan='2'>Success.</td>
+  </tr>
+</tbody>
+</table>
+
+```jsx title="Sample Response"
+{
+   "snippets" : {
+      "snippet1" : "- id: get\n  children:\n    - id: header\n      name: key\n      value: ABC123\n  url: http://demoapi.apifortress.com/api/retail/product\n  var: payload\n  mode: json"
+   },
+   "variables" : [
+      {
+         "name" : "var1",
+         "type" : "variable",
+         "value" : "foo"
+      },
+      {
+         "name" : "var2",
+         "type" : "variable",
+         "value" : "bar"
+      },
+      {
+         "name" : "var3",
+         "type" : "variable",
+         "value" : "chu"
+      }
+   ]
+}
+```
+
+</details>
+
+---
+
+## Events
+
+### List All Events
+
+<details>
+<summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/insights/events</code></summary>
+<p></p>
+
+Lists all events in a project.
+
+#### Parameters
+
+<table id="table-api">
+  <tbody>
+    <tr>
+     <td><code>hookId</code></td>
+     <td><p><small>| PATH | REQUIRED | STRING |</small></p><p>Your project's hook ID, which you can create and/or retrieve from your project's <strong>Webhooks</strong> tab.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>from</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the start time, in UNIX time milliseconds. The default value is 2 days before.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+      <tr>
+      <td><code>to</code></td>
+      <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the end time, in UNIX time milliseconds. The default value is the current time.</p></td>
+      </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>limit</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the number of records to return. The default value is 100 and the max value is 500.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>offset</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Specifies the number of records to be skipped from the beginning of the list. Must be used in combination with the limit parameter.</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<Tabs
+groupId="dc-url"
+defaultValue="us"
+values={[
+{label: 'United States', value: 'us'},
+{label: 'Europe', value: 'eu'},
+]}>
+
+<TabItem value="us">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/insights/events' | json_pp
+```
+
+</TabItem>
+
+<TabItem value="eu">
+
+```jsx title="Sample Request"
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+--request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/insights/events' | json_pp
 ```
 
 </TabItem>
@@ -2535,10 +2964,11 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Get Event Details
 
-<details><summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/insights/events/&#123;eventId&#125;</code></summary>
+<details>
+<summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/insights/events/&#123;eventId&#125;</code></summary>
 <p></p>
 
-Returns the details of an event.
+Returns the details of the specified event.
 
 #### Parameters
 
@@ -2569,7 +2999,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/insights/events/621b48b3a9f3b22a5a896345' | json_pp
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/insights/events/<eventId>' | json_pp
 ```
 
 </TabItem>
@@ -2578,7 +3008,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/insights/events/621b48b3a9f2b23a5a896345' | json_pp
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/insights/events/<eventId>' | json_pp
 ```
 
 </TabItem>
@@ -2599,11 +3029,11 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 {
     "_id": "621b48b3a9f2b52a5a896345",
     "events": [{
-        "date": 1.645995253102E12,
+        "date": 1645995253102,
         "events": [{
-            "date": 1.645995253102E12,
+            "date": 1645995253102,
             "events": [{
-                "date": 1.645995253102E12,
+                "date": 1645995253102,
                 "events": [{
                     "action": "get",
                     "expression": "https://dog.ceo/api/breed/retriever/list",
@@ -2701,7 +3131,8 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ### Get Metrics
 
-<details><summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/insights/metrics</code></summary>
+<details>
+<summary><span className="api get">GET</span><code>/api-testing/rest/v4/&#123;hookId&#125;/insights/metrics</code></summary>
 <p></p>
 
 Returns metrics for all tests in a project.
@@ -2713,6 +3144,48 @@ Returns metrics for all tests in a project.
     <tr>
      <td><code>hookId</code></td>
      <td><p><small>| PATH | REQUIRED | STRING |</small></p><p>Your project's hook ID, which you can create and/or retrieve from your project's <strong>Webhooks</strong> tab.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>from</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the start time, in UNIX time milliseconds. The default value is 2 days before.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+      <tr>
+      <td><code>to</code></td>
+      <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the end time, in UNIX time milliseconds. The default value is the current time.</p></td>
+      </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>limit</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Identifies the number of records to return. The default value is 100 and the max value is 500.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>offset</code></td>
+     <td><p><small>| QUERY | OPTIONAL | INTEGER |</small></p><p>Specifies the number of records to be skipped from the beginning of the list. Must be used in combination with the limit parameter.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>failuresOnly</code></td>
+     <td><p><small>| QUERY | OPTIONAL | BOOLEAN |</small></p><p>Filters the metrics to include only the tests that completed with failure(s).</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>footprint</code></td>
+     <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>Filters the metrics based on the footprint.</p></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+     <td><code>buildId</code></td>
+    <td><p><small>| QUERY | OPTIONAL | STRING |</small></p><p>If this execution is associated with a build, provide the build ID so that all resources can be associated to it.</p></td>
     </tr>
   </tbody>
 </table>
@@ -2729,7 +3202,7 @@ values={[
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/insights/metrics' | json_pp
+--request GET 'https://api.us-west-1.saucelabs.com/api-testing/rest/v4/<hookId>/insights/metrics' | json_pp
 ```
 
 </TabItem>
@@ -2738,7 +3211,7 @@ curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
 ```jsx title="Sample Request"
 curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
---request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/3e540e3f-50bd-4088-8c1b-97f1d1530f15/insights/metrics' | json_pp
+--request GET 'https://api.eu-central-1.saucelabs.com/api-testing/rest/v4/<hookId>/insights/metrics' | json_pp
 ```
 
 </TabItem>

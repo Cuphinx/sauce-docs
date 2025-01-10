@@ -16,7 +16,7 @@ Our goal is to provide you access to a device that will behave in a predictable,
 
 A clean device:
 
-- Has only those apps which are provided by the manufacturer and by Sauce Labs, or which you have specifically requested to be installed.
+- Has only those apps which are provided by Sauce Labs, or which you have specifically requested to be installed.
 - Has the default system settings, which are typical for a newly configured device.
 - Provides some convenient locale and system account defaults.
 - Has an empty file system, containing no additional media or documents.
@@ -24,7 +24,52 @@ A clean device:
 ## Public Devices
 
 Every 5th cleaning session includes a device reboot. This ensures that the system remains
-performant, and any stray processes are stopped.
+performant and any stray processes are stopped.
+
+:::caution
+Setting up VPNs on public devices is not supported. Please refer to our documentation for guidance on establishing a secure connection to your internal networks, firewalls, or endpoints. See [Sauce Connect](/secure-connections/sauce-connect-5) for more details.
+:::
+
+:::caution
+On Public devices, user access to device settings is limited to app-specific configurations only. like notifications, location services, permissions, app storage, and app details. For iOS Enterprise apps, users can trust the app via settings. Access is restricted to the test application and webapps through Safari or Chrome. These rules apply to both iOS and Android public devices.
+
+The list of restrictions on iOS:
+- Face ID/Touch ID & Passcodes.
+- Developer mode
+- Language and region
+- Reset device
+- Find My Device
+- Standby mode
+- Create new Apple ID
+- Sounds and Haptics
+- Screen Time
+- Auto-lock settings
+- Zoom settings
+- Airplay & handoff
+
+Android restrictions:
+- Biometrics and Passcode/Pincode
+- Lock settings
+- Google Account settings 
+- Developer mode
+- Network settings
+
+The following settings are allowed ONLY on Private devices, these are blocked on public devices:
+- Safari developer settings
+- Changing Text Size
+- Battery
+- VPN settings
+- Cellular
+- Analytics and Crash
+- Control Center
+- Apple Wallet
+- Safari and App Passwords
+- Mail settings
+- Apple ID Sign In
+- Proxy configuration
+- Network settings
+
+:::
 
 :::note
 A factory reset is not performed between test sessions, as this requires manual intervention and would slow down the time required between test runs.
@@ -51,13 +96,32 @@ We use a proprietary process that wipes every real device clean at the end of th
 
 ## Private Devices
 
-Private Devices follow the same process as Public Devices. However, the customer can adjust the following as desired:
+:::caution
+On Private Devices, access to some parts of the iOS settings is restricted: 
+- Face ID/Touch ID & Passcodes.
+- Developer mode
+- Language and region
+- Reset device
+- Find My Device
+- Standby mode
+- Create new Apple ID
+- Sounds and Haptics
+- Screen Time
+- Auto-lock settings
+- Zoom settings
+- Airplay & handoff
 
-App allowlist:
+On Android the following options are restricted: 
+- Biometrics and Passcode/Pincode
+- Lock settings
+- Google Account settings 
+- Developer mode
+- Network settings
 
-- Apps installed on the device can be selected, by name/bundleID/package name, to be preserved between sessions. These apps and their data will not be cleaned. They can be uploaded by the customer from Sauce Storage, or installed from the App Store/Play Store.
+:::
 
-Account allowlist:
+:::caution
+Setting up VPNs on private devices is not supported. Please consult our documentation on how to set up a secure connection to your internal networks, firewalls, or endpoints. For more details, visit [Sauce Connect](/secure-connections/sauce-connect-5).
+:::
 
-- Google accounts signed into the Play Store can be preserved between sessions.
-- Apple IDs signed into the device and App Store can be preserved between sessions.
+While both Private and Public Devices follow the same cleaning process, Private Devices can be configured to allow applications and accounts to persist between sessions. Please see [Private Device Management](/basics/acct-team-mgmt/private-device-mgmt) for details.

@@ -1,15 +1,53 @@
+const unwrapJsx = require('./src/plugins/unwrap-jsx');
+
+// Enabling PR previews
+let siteBaseUrl = '/';
+if (process.env.PREVIEW_PATH) siteBaseUrl += process.env.PREVIEW_PATH;
+
 const docusaurusConfig = {
     title: 'Sauce Labs Documentation',
     tagline: 'Test all the things.',
     url: 'https://docs.saucelabs.com',
     noIndex: process.env.NO_INDEX,
     trailingSlash: true,
-    baseUrl: '/',
+    baseUrl: siteBaseUrl,
+    onBrokenAnchors: 'throw',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'throw',
-    favicon: 'img/favicon.ico',
     organizationName: 'saucelabs',
     projectName: 'sauce-docs',
+    // TODO: I don't think google-site-verification is working at all, confirm with P.O.
+    customFields: {
+        headTags: [
+            {
+                tagName: 'meta',
+                attributes: {
+                    name: 'google-site-verification',
+                    content: 'googlee2afebcc27f8c950.html',
+                },
+            },
+        ],
+    },
+    headTags: [
+        {
+            tagName: 'link',
+            attributes: {
+                rel: 'icon',
+                type: 'image/png',
+                sizes: '16x16',
+                href: '/img/favicon-16x16.png',
+            },
+        },
+        {
+            tagName: 'link',
+            attributes: {
+                rel: 'icon',
+                type: 'image/png',
+                sizes: '32x32',
+                href: '/img/favicon-32x32.png',
+            },
+        },
+    ],
     scripts: [
         '/scripts/hide.js',
         // Need Help? button
@@ -27,11 +65,6 @@ const docusaurusConfig = {
         },
     ],
     themeConfig: {
-        beamer: {
-            product_id: `'WyhkZHOU27797'`,
-            display: `'popup'`,
-            // selector: `'.beamerContainer'`,
-        },
         prism: {
             additionalLanguages: [
                 'java',
@@ -54,8 +87,8 @@ const docusaurusConfig = {
             hideOnScroll: false,
             logo: {
                 alt: 'Sauce Labs logo',
-                src: '/img/logo-saucelabs.svg',
-                srcDark: '/img/logo-saucelabs-white.svg',
+                src: '/img/sl-logo-horizontal-color-dark.svg',
+                srcDark: '/img/sl-logo-horizontal-color-neutral.svg',
             },
             items: [
                 {
@@ -74,20 +107,19 @@ const docusaurusConfig = {
                     to: '/dev/cli',
                 },
                 {
-                    label: 'Low Code',
+                    label: 'Visual',
                     position: 'left',
-                    to: '/dev/low-code',
+                    to: '/visual-testing',
                 },
                 {
-                    label: 'Error and Crash Reporting',
+                    label: 'App Distribution',
+                    position: 'left',
+                    to: '/testfairy',
+                },
+                {
+                    label: 'Error Reporting',
                     position: 'left',
                     to: '/error-reporting/getting-started',
-                },
-                {
-                    type: 'html',
-                    position: 'right',
-                    className: 'beamerTrigger',
-                    value: '<img src="/img/beamer.svg" width="22" height="22" class="beamer-navbar-bell" alt="Product Updates">',
                 },
             ],
         },
@@ -95,7 +127,7 @@ const docusaurusConfig = {
         footer: {
             logo: {
                 alt: 'Sauce Logo',
-                src: '/img/logo-saucelabs-inverted.png',
+                src: '/img/sl-logo-horizontal-color-neutral.svg',
                 href: 'https://saucelabs.com',
             },
             style: 'light',
@@ -118,6 +150,7 @@ const docusaurusConfig = {
                         'https://github.com/saucelabs/sauce-docs/edit/main/',
                     showLastUpdateAuthor: true,
                     showLastUpdateTime: true,
+                    remarkPlugins: [unwrapJsx],
                 },
                 googleAnalytics: {
                     trackingID: 'UA-6735579-1',
@@ -136,8 +169,7 @@ const docusaurusConfig = {
             },
         ],
     ],
-    themes: ['@saucelabs/theme-github-codeblock'],
-    plugins: ['./src/plugins/beamer'],
+    themes: ['docusaurus-theme-github-codeblock'],
 };
 
 if (!process.env.SAUCE_DOCS_DEV) {

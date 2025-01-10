@@ -26,14 +26,14 @@ You will use this token in the next step.
 
 To set up the integration, first go to the **Project Settings** page for the project you want to add a integration for:
 
-<img src={useBaseUrl('img/error-reporting/workflow-integrations/set-up-workflow-integration.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/workflow-integrations/set-up-workflow-integration.webp')} alt="" />
 
 Then click **Integrations** in the left-hand menu, and the plus sign to create a new integration:
 
-<img src={useBaseUrl('img/error-reporting/workflow-integrations/add-wf-integration.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/workflow-integrations/add-wf-integration.webp')} alt="" />
 
 Select **Gitter** and fill in the required settings (name, token, and room name).
 
 <img src={useBaseUrl('img/error-reporting/workflow-integrations/gitter-settings.png')} alt="" />
 
-Next: After filling in the integration-specific settings, proceed to [Common Settings](/error-reporting/workflow-integrations/common-settings) to finish configuring the integration.
+Next: After filling in the integration-specific settings, proceed to Common Settings to finish configuring the integration.

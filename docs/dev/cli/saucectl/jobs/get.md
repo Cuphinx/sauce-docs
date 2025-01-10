@@ -1,10 +1,8 @@
 ---
 id: get
 title: saucectl jobs get
-sidebar_label: saucectl jobs get
+sidebar_label: get
 ---
-
-## Description
 
 Get job details from Sauce Labs.
 

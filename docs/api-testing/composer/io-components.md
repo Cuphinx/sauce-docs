@@ -12,6 +12,7 @@ keywords:
 - put
 - patch
 - config
+- github
 ---
 
 import Tabs from '@theme/Tabs';
@@ -34,7 +35,8 @@ I/O request components enable you to perform the I/O operations `GET`, `POST`, `
 
 Performs a `GET` method request. See [Request Header](#request-header), [Query Params](#query-params), [Config](#config), and [Basic Authentication](#basic-authentication).
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: get
@@ -50,7 +52,8 @@ Performs a `GET` method request. See [Request Header](#request-header), [Query P
 
 Performs a `POST` method request. See [Request Body](#request-body), [Request Header](#request-header), [URL Encoded Params](#url-encoded-param), [Query Params](#query-params), [Config](#config), [File (Multi-part)](#file-multi-part), and [Basic Authentication](#basic-authentication).
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: post
@@ -66,7 +69,8 @@ Performs a `POST` method request. See [Request Body](#request-body), [Request He
 
 Performs a `PUT` method request. See [Request Body](#request-body), [Request Header](#request-header), [URL Encoded Params](#url-encoded-param), [Query Params](#query-params), [Config](#config), [File (Multi-part)](#file-multi-part), and [Basic Authentication](#basic-authentication).
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: put
@@ -82,7 +86,8 @@ Performs a `PUT` method request. See [Request Body](#request-body), [Request Hea
 
 Performs a `PATCH` method request. See [Request Body](#request-body), [Request Header](#request-header), [URL Encoded Params](#url-encoded-param), [Query Params](#query-params), [Config](#config), [File (Multi-part)](#file-multi-part), and [Basic Authentication](#basic-authentication).
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: patch
@@ -98,7 +103,8 @@ Performs a `PATCH` method request. See [Request Body](#request-body), [Request H
 
 Performs a `DELETE` method request. See [Request Body](#request-body), [Request Header](#request-header), [URL Encoded Params](#url-encoded-param), [Query Params](#query-params), [Config](#config), [File (Multi-part)](#file-multi-part), and [Basic Authentication](#basic-authentication).
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: delete
@@ -112,11 +118,16 @@ Performs a `DELETE` method request. See [Request Body](#request-body), [Request 
 
 ### GitHub
 
-The GitHub component is meant to simplify the process of retrieving a file from GitHub and use it as a data source. Some examples of files to use would be CSV or JSON files. [Here is a tutorial](/api-testing/on-prem/how-to/github-for-datasets) on how to use it as part of a test.
+The GitHub component is meant to simplify the process of retrieving a file from GitHub and using it as a data source. Some examples of files to use would be CSV or JSON files. Check [Use Cases](/api-testing/use-cases/github-datasets/) out to see an example using this component.
 
-<img src={useBaseUrl('img/api-testing/githubComponent.png')} alt="GitHub Component" />
+:::note
+GitHub Enterprise version or GitHub AE are not supported.
+:::
 
-<details><summary><strong>Code View Example</strong></summary>
+<img src={useBaseUrl('img/api-testing/githubComponent.webp')} alt="GitHub Component" />
+
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: github
@@ -176,7 +187,8 @@ The **Base URL**, **Branch**, and **Ref** fields will auto-populate, but you can
 The **Contract Test** component allows you to test an open API specification file stored in the [Vault](/api-testing/vault/).
 <img src={useBaseUrl('img/api-testing/contracttest.png')} alt="Contract Test"/>
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: contract
@@ -221,7 +233,8 @@ The `Contract Test` component has two child: the `Include (Contract T.)` and the
 
 `Include (Contract T.)` is useful when used together with `Inclusion Strategy` set to `Required` because in this way you can test both the required fields and any other fields that are not required. `Exclude (Contract T.)` is useful to be used together with `Inclusion Strategy` set to `All` because in this way you can exclude some of the fields whether they are required or not.
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: contract
@@ -258,11 +271,12 @@ The `Contract Test` component has two child: the `Include (Contract T.)` and the
 
 ### File DataSource
 
-The **File Data Source** component allows you to use a file from the [Vault](/api-testing/vault/) as a data source.
+The **File Data Source** component allows you to use a file from the [Vault](/api-testing/vault/#files) as a data source. To [learn more](/api-testing/use-cases/use-drive) check the use case out.
 
 <img src={useBaseUrl('img/api-testing/filedatasource.png')} alt="File Data Source"/>
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: set
@@ -305,7 +319,8 @@ For all the Child Components the value can be:
 1. Click **Request Body**.<br/><img src={useBaseUrl('img/api-testing/postBody1.png')} alt="Post" />
 1. Fill in the **Content-Type** and **Body** fields.<br/><img src={useBaseUrl('img/api-testing/postBody.png')} alt="Post" />
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: post
@@ -338,10 +353,11 @@ For all the Child Components the value can be:
 
 ### Request Header
 
-1. Click **Request Header**.<br/><img src={useBaseUrl('img/api-testing/ioHeader.png')} alt="I/O Header" />
+1. Click **Request Header**.<br/><img src={useBaseUrl('img/api-testing/ioHeader.webp')} alt="I/O Header" />
 1. Fill in the **Name** and **Value** fields.<br/><img src={useBaseUrl('img/api-testing/ioHeader2.png')} alt="I/O Header" />
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: post
@@ -377,7 +393,8 @@ For all the Child Components the value can be:
 1. Click **URL Encoded Param**.<br/><img src={useBaseUrl('img/api-testing/UrlParam.png')} alt="Post" />
 1. Fill in the **Name** and **Value** fields.<br/><img src={useBaseUrl('img/api-testing/URlParam1.png')} alt="Post" />
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: post
@@ -417,7 +434,8 @@ This refers to the **Query Param** section. Enter any params you want to add to 
 1. To add, click **Query Param**.<br/><img src={useBaseUrl('img/api-testing/ioConfig.png')} alt="I/O Config" />
 2. Fill in the fields.<br/><img src={useBaseUrl('img/api-testing/ioConfig2.png')} alt="I/O Config" />
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: post
@@ -450,9 +468,10 @@ This refers to the **Query Param** section. Enter any params you want to add to 
 
 ### Config
 
-This component allows you to add specific configurations in your I/O Component. Using the **config** component you can set up the footprints shown in the project dashboard, you can allow a call to (not) follow a redirect or you can set the timeout.
+This component allows you to add specific configurations in your I/O Component. Using the **config** component you can set up the [footprints](/api-testing/composer/io-components/#footprint) shown in the project dashboard, you can allow a call to (not) [follow a redirect](/api-testing/composer/io-components/#follow-redirects) or you can set the [timeout](/api-testing/composer/io-components/#timeout).
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: post
@@ -578,7 +597,8 @@ To do so, you can add the config component in the GET request as follow:
 1. Click **Select** for the file you want to use.
 1. Fill in the **Name** field.<br/><img src={useBaseUrl('img/api-testing/FileMulti1.png')} alt="Post" />
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: post
@@ -617,10 +637,11 @@ To do so, you can add the config component in the GET request as follow:
 
 This refers to the **Basic Authentication** configuration, included in each of the I/O request components. If required for your API tests, enter your authentication credentials here.
 
-1. Click **Basic Authentication**.<br/><img src={useBaseUrl('img/api-testing/ioAuth.png')} alt="I/O Authentication" />
+1. Click **Basic Authentication**.<br/><img src={useBaseUrl('img/api-testing/ioAuth.webp')} alt="I/O Authentication" />
 2. Fill in the Username and Password fields<br/><img src={useBaseUrl('img/api-testing/authBasic.png')} alt="I/O Authentication" />
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: post
@@ -661,7 +682,8 @@ The fields apply to all I/O request components except **GitHub**, **Contract Tes
 
 In this field, enter the url of the resource you want to test. It could be the full url of the resource (i.e., `https://domain/endpoint`) or a string with variables (i.e., `https://${domain}${endpoint}`).<br/><img src={useBaseUrl('img/api-testing/Request-1024x281.png')} alt="Request-1024x281.jpg" />
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: get
@@ -679,7 +701,8 @@ In this field, enter the url of the resource you want to test. It could be the f
 
 In this field, enter the name of the variable that contains the response (value must be a string). It will be the name you will refer during the test.
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: get
@@ -703,7 +726,8 @@ Fill out this field only if the expected behavior differs from a positive respon
 
 Multiple status codes can be expected by adding them all (i.e., `200|302|400|500|VALID`)
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: get
@@ -728,7 +752,8 @@ Multiple status codes can be expected by adding them all (i.e., `200|302|400|500
 
 Enter the type of the response you want to test (must be 'json','xml', 'html',or 'text').
 
-<details><summary><strong>Code View Example</strong></summary>
+<details>
+<summary><strong>Code View Example</strong></summary>
 
 ```yaml
 - id: get
@@ -740,9 +765,9 @@ Enter the type of the response you want to test (must be 'json','xml', 'html',or
 
 </details>
 
-## Editing Components
+## Adding Child Components
 
-Once you've created a component and wish to edit (i.e., need to add request headers, params or a request body):
+Once you've created a component and wish to add child components (that is., need to add request headers, params, or a request body):
 
 1. Click **Add Child Component**.<br/><img src={useBaseUrl('img/api-testing/editComponent2.png')} alt="subComps.jpg" />
 2. Now you'll see the component's available sub-components for that operation.<br/><img src={useBaseUrl('img/api-testing/editComponent3.png')} alt="subComps.jpg" />

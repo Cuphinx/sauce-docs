@@ -20,7 +20,7 @@ Before getting started with the High Availability setup, we recommend trying the
 
 ## Basic Setup Leveraging High Availability
 
-The diagram below shows the basic Sauce Connect Proxy setup using HA.<br/><img src={useBaseUrl('img/sauce-connect/scp-basic-ha.png')} alt="Basic setup using High Availability" width="600"/>
+The diagram below shows the basic Sauce Connect Proxy setup using HA.<br/><img src={useBaseUrl('img/sauce-connect/scp-basic-ha.webp')} alt="Basic setup using High Availability" width="600"/>
 
 On the Sauce Labs side, there are three major components: **Sauce Test VM**, **Sauce Connect Tunnel VM**, and **Tunnel Pool**. The logic flow is:
 
@@ -32,7 +32,7 @@ On the Sauce Labs side, there are three major components: **Sauce Test VM**, **S
 
 In this diagram, we see a setup that allows for multiple network routes when reaching the site(s) under test.
 
-<img src={useBaseUrl('img/sauce-connect/scp-mult-routes.png')} alt="Multiple network routes to Site Under Test (SUT)" width="600"/>
+<img src={useBaseUrl('img/sauce-connect/scp-mult-routes.webp')} alt="Multiple network routes to Site Under Test (SUT)" width="600"/>
 
 There are variations to this, of course. For example, some of the Sauce Connect Proxy instances could be in the same network infrastructure as the site(s) under test. You can also imagine leveraging different virtual routes inside the same physical network. What is gained by setting up tunnels in this manner is redundancy for Sauce Connect Proxy tests, should one network route fail.
 
@@ -112,7 +112,7 @@ Tunnel pools do not self-heal (see [Self-management](<https://en.wikipedia.org/w
 
 When in High Availability mode, we recommend restarting Sauce Connect Proxy tunnels every 24 hours. The tunnel will stay open until all tests associated with it have completed. At the same time, once the shutdown command has been sent, the tunnel is marked inactive in the eyes of the pool, and no new jobs will use it.
 
-- Windows users: [Running as a Microsoft Windows Service](/secure-connections/sauce-connect/proxy-tunnels/#running-as-a-microsoft-windows-service)
+- Windows users: [Running as a Microsoft Windows Service](/secure-connections/sauce-connect/proxy-tunnels/#running-nssm-for-windows)
 - Linux users: [Monitoring with Service Management Tools](/secure-connections/sauce-connect/proxy-tunnels/#service-management-tools)
 
 ### Using Multiple Machines for Failover Functionality
@@ -123,4 +123,4 @@ If you're using the same machine for multiple tunnels, you should start Sauce Co
 
 ## More Information
 
-- [Sauce Connect Proxy Performance Metrics](/secure-connections/sauce-connect/proxy-tunnels/#performance-metrics)
+- [Sauce Connect Proxy Performance Metrics](/secure-connections/sauce-connect/proxy-tunnels/#improving-sauce-connect-proxy-performance)

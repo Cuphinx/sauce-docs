@@ -30,12 +30,24 @@ The Backtrace Unity SDK reports on the following types of errors:
 | Supported Platforms | Supported Systems                                                                     |
 | ------------------- | ------------------------------------------------------------------------------------- |
 | Mobile              | Android, iOS                                                                          |
-| PC                  | Windows, MacOS                                                                        |
-| Web                 | WebGL                                                                                 |
-| Game Consoles       | PlayStation 4, PlayStation 5, Xbox One, Xbox Series X, Nintendo Switch, Google Stadia |
+| PC                  | Windows, MacOS*                                                                       |
+| Web                 | WebGL*                                                                                |
+| Game Consoles       | PlayStation 4, PlayStation 5, Xbox One, Xbox Series X, Nintendo Switch.               |
+
+:::note
+Native Crashes on MacOS and WeBGL are not supported via backtrace-unity.
+:::
+
+:::note
+Native Crashes on PlayStation and Nintendo Switch are captured via Backtrace Data Sources, which connect to the vendor provided crash reporting server. Native Crashes on Xbox can be captured by installing an additional dynamic link library (DLL) for Backtrace-Unity. Reach out to your Xbox partner manager to verify developer status with Sauce Labs Backtrace.
+:::
 
 :::note
 Offline database capabilities are currently not supported for Nintendo Switch.
+:::
+
+:::note
+The iOS SDK contains a privacy manifest to declare the types of data accessed on the device. Please refer to this [source document](https://github.com/backtrace-labs/backtrace-unity/blob/master/iOS/PrivacyInfo.xcprivacy) for the specific types of data collected by the SDK.
 :::
 
 ## What You'll Need
@@ -72,7 +84,6 @@ values={[
 {label: 'OpenUPM', value: 'openupm'},
 {label: 'Unity Package Manager', value: 'unity'},
 {label: 'Git', value: 'git'},
-{label: 'Backtrace Hub', value: 'hub'}
 ]}>
 
 <TabItem value="openupm">
@@ -106,14 +117,6 @@ For more information, see the installation steps on [OpenUPM](https://openupm.co
 1. Complete the steps in [Installing from a Git URL](https://docs.unity3d.com/Manual/upm-ui-giturl.html) in the Unity Documentation.
 
 > This installation method is supported for Unity 2018.3 or higher.
-
-</TabItem>
-<TabItem value="hub">
-
-1. Download the installer for the [Backtrace Hub](https://drive.google.com/file/d/1hbSmqMSBEep00pHVLPUpTVsj5K_O8Jq6/view).
-1. Double-click to open the file.
-1. In the dialog for the Backtrace Hub Installer, click **Install Now**. <br/> After the installation is complete, you can download the Backtrace Plugin from the Backtrace Hub.
-1. From the **Backtrace Hub**, for the **Backtrace Plugin**, click **Install**.
 
 </TabItem>
 </Tabs>

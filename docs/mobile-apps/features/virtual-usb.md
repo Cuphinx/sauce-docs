@@ -8,17 +8,19 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Virtual USB (vUSB) is a mobile (app) debugging tool that simulates connecting a Sauce Labs real device directly to your local machine with a USB cable. It integrates into your development environment as if the device is connected directly to your workstation, meaning you can use your choice of homegrown development and testing tools to debug.
+Virtual USB (vUSB) is a mobile (app) debugging tool that simulates connecting a Sauce Labs real device directly to your local machine/test runner host.
+It integrates into your development and test environment, meaning you can use your choice of homegrown development and testing tools to debug.
 
-- Build and deploy apps directly from any IDE (e.g., Android Studio, Xcode).
-- Make the most out of your early stage development.
-- Use a mix of live and automated testing as it fits your use case.
-- Monitor device performance metrics such as CPU consumption, device memory, and network data performance (depending on what the IDE/your tools offer).
+- Make the most out of your early-stage development or inhouse built testing solution.
+- Use a mix of manual and automated testing as it fits your use case.
+- Run non-traditional automation frameworks.
+- Run adb commands on Android devices.
+- Monitor device performance metrics such as CPU consumption, device memory, and network data performance.
 - Interact with your app manually in a live test session using browser-based developer tools (e.g., Chrome DevTools, Safari Web Inspector).
 
 ## What You'll Need
 
-<small><span className="sauceDBlue">Enterprise Plans Only</span></small>
+<small><span className="sauceGreen">Enterprise Plans Only</span></small>
 
 - A Sauce Labs account ([Log in](https://accounts.saucelabs.com/am/XUI/#login/) or sign up for a [free trial license](https://saucelabs.com/sign-up))
 - Your Sauce Labs [Username and Access Key](https://app.saucelabs.com/user-settings)
@@ -29,11 +31,16 @@ Virtual USB (vUSB) is a mobile (app) debugging tool that simulates connecting a 
 - A mobile native app or web app.
 - If you're testing an iOS app:
   - macOS or Linux required (not supported for Windows).
-  - Have Xcode installed (macOS only).
+  - Have Xcode command line tools installed (macOS only).
 - If you're testing an Android app:
   - Android Debug Bridge (ADB) version higher than 1.0.39.
   - Android Studio 4 or higher.
 - If you need to use [Sauce Connect Proxy](/secure-connections/sauce-connect), you'll need to have the client installed first.
+
+:::note Limitations
+vUSB is currently only supported for test automation. Debugging with any IDE, and attaching debuggers with Xcode and Android Studio, are not advised and won't be supported at this time). 
+iOS17 is not supported at this time. We will soon introduce a new CLI tool to connect to a device and run automated tests. 
+:::
 
 ## Using Virtual USB
 
@@ -43,9 +50,9 @@ See [Virtual USB CLI Reference](/dev/cli/virtual-usb.md) for a full list of vUSB
 
 ### Download Client
 
-1. Click below to download the latest Virtual USB client to your local machine where you have your IDE installed/set up.
+1. Click below to download the latest Virtual USB client to your local machine where you have your command line tools and test enginees installed/set up.
 
-  <p> <a href="https://saucelabs-vusb.s3.eu-west-1.amazonaws.com/v2.0.5/virtual-usb-client-2.0.5.jar"><button class="download">Download Virtual USB 2.0.5</button></a> </p>
+  <p> <a href="https://saucelabs-vusb.s3.eu-west-1.amazonaws.com/v2.0.6/virtual-usb-client-2.0.6.jar"><button class="download">Download Virtual USB 2.0.6</button></a> </p>
 
 For Virtual USB release history, see our [changelog](https://changelog.saucelabs.com/en?category=virtual%20usb).
 
@@ -69,7 +76,7 @@ As a reminder, vUSB only works on private devices (marked with a <img src={useBa
 
 4. On your local machine, launch a command line terminal window and use `cd` to navigate to the folder where you downloaded the vUSB client.
 
-5. In your terminal, enter the [`server`](/dev/cli/virtual-usb/start-server) command, followed by `--datacenter US` or `--datacenter EU`, to specify the Sauce Labs U.S. or E.U. Data Center. This establishes the connection from your local machine to our Real Device Cloud, where your private devices are hosted.
+5. In your terminal, enter the [`server`](/dev/cli/virtual-usb/start-server) command, followed by `--datacenter US`, `--datacenter EU` or `--datacenter US_east` to specify the Sauce Labs xxU.S. or E.U. Data Center. This establishes the connection from your local machine to our Real Device Cloud, where your private devices are hosted.
 
 ```java
 java -jar virtual-usb-client.jar server --datacenter US
@@ -280,11 +287,11 @@ adb connect localhost:7000
 
 ### Test and Debug
 
-8. Now, you can debug and run tests on your app. For guidance and ideas, see the [Example Use Cases](/mobile-apps/features/virtual-usb/#example-use-cases).
+8. Now, you can debug and run tests on your app. We advise you to use our Sauce App Storage to upload the apps and run tests against them. 
 
 <!-- prettier-ignore-start -->
-:::caution iOS Limitation
-To do proper debugging, the iOS device symbols will need to be downloaded to your local machine. This happens automatically when you're connecting to a Sauce Labs iOS device for the first time via a remote debug vUSB session with Xcode. **Xcode will attempt to download the iOS device symbols over the vUSB tunnel, causing a lag that can last up to a few minutes.**
+:::caution iOS Limitations
+Attaching a debugger is not supported due to the amount of data that the iOS device symbols will need to be downloaded to your local machine. This process occurs automatically when you're connecting to a Sauce Labs iOS device for the first time via a remote debug vUSB session with Xcode. Xcode will attempt to download the iOS device symbols over the vUSB tunnel, causing a lag that can last from a few minutes to an hour..**
 
 - **What to Do**: Go to `~/Library/Developer/Xcode/iOS DeviceSupport/` and check the used iOS version of the phone to see if the symbols have been downloaded. The total used space per OS should be more than 1GB. If they are less than 1MB, delete the folder and restart Xcode again so it can re-fetch them.
   This a one-time action that you won't need to do again for future tests.
@@ -293,7 +300,7 @@ To do proper debugging, the iOS device symbols will need to be downloaded to you
 <br/>
 
 :::caution Android Limitation
-**The `adb-reverse` command is not supported.**
+**The `adb reverse` command is not supported.** Please rethink your implementation and think about using [`adb forward`](#android-port-forwarding-with-adb-forward) instead.
 :::
 <!-- prettier-ignore-end -->
 
@@ -334,64 +341,7 @@ java -jar virtual-usb-client.jar disconnect --sessionId 37D274BC3A65A34BB3DA4DDF
 
 ## Example Use Cases
 
-### Exploratory Testing
-
-Introduce breakpoints in your IDE and then do exploratory testing.
-
-### Android Debugging
-
-#### Android Studio Debugging
-
-To for example profile your Android app you can follow the instructions as mentioned [here](https://developer.android.com/studio/profile). This can result in the following data.
-
-<img src={useBaseUrl('img/virtual-usb/vusb-android-profiling.png')} alt="Virtual USB Android Studio Profiling" />
-
-#### Chrome DevTools Web Debugging
-
-This example demonstrates how to connect your test device to Chrome Inspector and export an [Http ARchive (HAR)](<https://en.wikipedia.org/wiki/HAR_(file_format)>) file to your local machine from a live testing session. Chrome Inspector's suite of developer tools provides a powerful way to work with your web pages while leveraging our real devices.
-
-HAR files are useful for identifying performance issues, network traffic, and other information, such as:
-
-- HTTP requests generated by your web pages
-- API calls
-- User analytics
-- Third-party web service calls
-
-1. Follow the steps in the previous section to start up a test session (i.e., download vUSB client, connect to Data Center, connect to your device, and initialize an `adb` connection). Have your Sauce Labs device test session up on your screen.
-
-2. Open a Chrome tab locally and run `chrome://inspect` in the address bar. This opens the Chrome Inspector.
-   <img src={useBaseUrl('img/virtual-usb/vusb4.png')} alt="Virtual USB" width="400" />
-
-3. Use your command line terminal to open Chrome on the device by running the `adb` commands below. The first one launches the Chrome app:
-
-```java
-$ ./adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main
-```
-
-Then, navigate to a website (for this example, we'll use our demo site).
-
-```java
-$ ./adb shell am start -a android.intent.action.VIEW -d http://www.saucedemo.com
-```
-
-4. If the above commands are successful, you should see a new set of options under the **Remote Target** heading in your `chrome://inspect` tab.
-
-If you click **Inspect**, a new window will open, displaying Chrome DevTools the same as if the device were sitting on your desk, connected to a USB cable.
-<img src={useBaseUrl('img/virtual-usb/vusb3.png')} alt="Virtual USB" width="400" />
-<img src={useBaseUrl('img/virtual-usb/vusb2.png')} alt="Virtual USB" width="600" />
-
-5. Click the **Network** tab and reload the page to display all HTTP requests made during the refresh:
-
-6. Under the **Network** tab, click the down arrow icon to export a HAR file locally. This will prompt you with a Save dialog. Choose a location for the HAR file.
-   <img src={useBaseUrl('img/virtual-usb/vusb6.png')} alt="Virtual USB HAR" width="600" />
-
-7. Review your HAR file. It should contain every HTTP request/response gathered during the page load, as well as all of the headers, parameters, timing info. Using this information, you can dive deep into the way your web pages are put together. You can do it on any configured device, without having to worry about power management or keeping up with the physical device.
-
-:::tip
-For more tips on working with HAR Files, check out [Visualize HAR Files with the Sauce Labs React Network Viewer Component](https://opensource.saucelabs.com/blog/react_network_viewer).
-:::
-
-#### ADB commands
+### ADB commands
 
 You can execute `adb` commands on the device connected over vUSB as you would normally also use. This is a simple example to capture a screenshot and pull it to your local machine.
 
@@ -411,28 +361,36 @@ adb shell rm /sdcard/screen.png
 open /tmp/screen.png
 ```
 
-### iOS Debugging
+### Android port forwarding with `adb forward`
 
-To deploy and debug your iOS apps, you can use Xcode. To debug your website, we recommend using the developer tools within Safari.
-
-#### **Xcode Debugging**
+There are cases in which you want to set up arbitrary port forwarding, which forwards requests from your local machine port to a different port on the connected Android device through vUSB.
 
 :::note
-Before debugging with Xcode, please read the known limitations under [Test and Debug](/mobile-apps/features/virtual-usb/#test-and-debug).
+This is the [app code](https://github.com/saucelabs/my-demo-app-android) we use for the below example.
 :::
 
-To profile your app: from your Xcode nav, select **Product** > **Profile**. It will automatically profile the app and generate a new menu, as shown below.
+The following example sets up forwarding of host port 40000 (laptop/CI) to device port 50000 (the Android device) where we change text in the app.
 
-<img src={useBaseUrl('img/virtual-usb/vusb-ios-profiling.png')} alt="Virtual USB Profiling" />
+- Start a [server](#start-server)
+- Connect to a device with for example [`startSession`](#method-2-start-new-session-with-vusb-client-from-command-line)
+- Get the app installed. Advice would be to use Android Studio and run the app on the remote device (Android Studio will automatically detect the remote device).
+- Open the shared url in your browser
+- Click on "Menu → Virtual USB". You will find two commands on the screen. They are:
 
-<br/>
+  ```
+  adb forward tcp:40000 tcp:50000
+  echo GOOSE | nc localhost 40000
+  ```
 
-In this example below, **Energy Log** has been selected and recording has been started. This can result in the following screen.
+- Execute the commands to get the following result
 
-<img src={useBaseUrl('img/virtual-usb/vusb-energy-logs.png')} alt="Virtual USB Energy Logs" />
+<video controls style={{"max-width": "800px"}}>
 
-#### **Safari Web Debugging**
+  <source src={useBaseUrl('img/virtual-usb/vusb-adb-forward.mp4')} />
+</video>
 
-To debug with Safari: Open Safari > From the nav, select **Develop** > **Select your device** > **Select the view** you want to debug. In our example, we want to debug the [Sauce Swag Labs demo website](https://www.saucedemo.com).
+### Android Studio Debugging
 
-<img src={useBaseUrl('img/virtual-usb/vusb-safari-debug.png')} alt="Virtual USB Energy Logs" />
+To for example profile your Android app you can follow the instructions as mentioned [here](https://developer.android.com/studio/profile). This can result in the following data.
+
+<img src={useBaseUrl('img/virtual-usb/vusb-android-profiling.png')} alt="Virtual USB Android Studio Profiling" />

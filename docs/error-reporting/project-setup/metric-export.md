@@ -9,13 +9,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-## Overview
-
 Teams want to incorporate error and crash data that Backtrace collects into their central dashboard systems that are designed to allow for generic monitoring, time-series data analysis, custom visualizations, alarms and alerts. Backtrace Metric Export allows admins to support this, by defining hierarchal groupings of time-series metrics that can be pushed or pulled to systems like Circonus, Datadog, Graphite, Grafana, Prometheus, and InfluxDB.
 
 Below, you can see an example of Backtrace data (number of incoming errors for a project) being exported as a timed metric to a Circonus dashboard system once a minute. In this chart, the average number of errors seen for project are displayed and available for different time windows.
 
-<img src={useBaseUrl('img/error-reporting/project-settings/circonus-dashboard.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/project-settings/circonus-dashboard.webp')} alt="" />
 
 To use the Metric Export feature, a Project Admin user needs to define:
 
@@ -31,7 +29,7 @@ Click on Project Settings > Metric Export to manage Metrics Sets and Metrics Sto
 
 In this section, we will describe how to create Metric Sets and Metrics, and how to create and manage Metric Stores that you will share information with your third party systems.
 
-<img src={useBaseUrl('img/error-reporting/project-settings/create-metrics-store.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/project-settings/create-metrics-store.webp')} alt="" />
 
 ## Metric Sets and Metrics
 
@@ -58,11 +56,11 @@ NOTE - Backtrace will ignore the Time Frame when creating the metric, and allow 
 
 See an example below where we use Explore to group by error.type and aggregate user.id-unique, to share how many users were impacted by each error.type. Use the "Export As" button on the right to Export the query as a Metric. Provide a name that identifies the Metric and save it within a Metric Set (or create a new one). In a subsequent step, we will create Metric Stores that will be associate to gather the Metrics with a Metric Set on a scheduled basis (i.e. once a minute).
 
-<img src={useBaseUrl('img/error-reporting/project-settings/metrics-export-example.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/project-settings/metrics-export-example.webp')} alt="" />
 
 See an example below where a Metric Set called ProjectXErrorsAndImpactedUsers contains 4 metrics (AllErrors2, ErrorsByTypeWithImpactedUsers, UsersImpacted, and UsersImpactedPerFingerprint). You can preview the query that is defining each metric.
 
-<img src={useBaseUrl('img/error-reporting/project-settings/metrics-set-example.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/project-settings/metrics-set-example.webp')} alt="" />
 
 ## Supported Metric Stores
 
@@ -119,7 +117,7 @@ The API for this is [here](https://docs.influxdata.com/influxdb/v1.8/guides/writ
 
 Each Metric Store will provide information about how often it shares data with the target (you can see below each Metric store has a Period of 60 seconds), and the last time data was transmitted for the Push type adapters. Additional configuration details can be viewed, For the PUSH type adapters, you can see the configured URL or similar that Backtrace will push data to every ## seconds. For the PULL type adapters, you can view the resource URL you can enter into the third party store to retrieve information from Backtrace.
 
-<img src={useBaseUrl('img/error-reporting/project-settings/view-status-metrics-stores.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/project-settings/view-status-metrics-stores.webp')} alt="" />
 
 ## Summary
 

@@ -19,12 +19,16 @@ OS and platform combinations with [Android Emulators](https://developer.android.
 - The native or hybrid mobile app you want to test. If you don't have one on hand and would like to test this functionality, consider using our [Sauce Labs demo mobile app](https://github.com/saucelabs/sample-app-mobile).
 - Ensure that your system fulfills the project support and requirements prior to uploading your apps or leveraging device Emulators and Simulators. Review the [Automated Mobile App Testing Admin Guide](/mobile-apps/supported-devices) for further details.
 
+:::note
+Sauce Labs does not support Android Emulators with Play Store integration. For more information contact [Sauce Labs Support](https://saucelabs.com/training-support) or use the [Sauce Labs Portal](https://portal.productboard.com/sauceprod/2-sauce-labs-portal/submit-idea).
+:::
+
 ## Upload Your App to Emulators and Simulators
 
 To begin, upload your app to a publicly available source. Accepted file types are \*.zip iOS package files for Simulators and \*.apk or \*.aab Android package files for Emulators. There are two ways you can upload your app for automated testing:
 
 - Upload a local file using the [App Storage REST API](/dev/api/storage/#upload-file-to-app-storage)
-- Provide a URL to install from a [Remote Location](/mobile-apps/automated-testing/appium/real-devices/#uploading-mobile-apps-from-a-remote-location)
+- Provide a URL to install from a [Remote Location](/mobile-apps/automated-testing/appium/virtual-devices/#set-the-location-of-your-mobile-app)
 
 ## Set Your Test Credentials
 
@@ -46,7 +50,7 @@ Here are some tips for configuring your Appium tests:
 ### Set the Location of Your Mobile App
 
 Set the value of `app` to the location for where it can be accessed. This can be a full URL, or it can use
-[Sauce Labs App Storage](/mobile-apps/app-storage/#using-application-storage-with-automated-test-builds)
+[Sauce Labs App Storage](/mobile-apps/app-storage/#using-app-storage-with-automated-test-builds)
 
 :::note
 Sauce Labs only allows you to set either `browserName` or `app`. If you have a value set for `browserName` Sauce will
@@ -76,7 +80,7 @@ If this value is not set, an older default value may be used instead.
 
 ## iOS Code Examples
 
-Below are examples of an iPhone 8 project using iOS version 12.2:
+Below are examples of an iPhone 8 project using iOS version 14.0:
 
 <Tabs
 defaultValue="Java"
@@ -95,7 +99,7 @@ DesiredCapabilities caps = DesiredCapabilities.iphone();
     caps.setCapability("appiumVersion", "1.13.0");
     caps.setCapability("deviceName","iPhone 8 Simulator");
     caps.setCapability("deviceOrientation", "portrait");
-    caps.setCapability("platformVersion","12.2");
+    caps.setCapability("platformVersion","14.0");
     caps.setCapability("platformName", "iOS");
     caps.setCapability("browserName", "");
     caps.setCapability("app", "https://github.com/saucelabs/sample-app-mobile/releases/download/2.2.0/iOS.Simulator.SauceLabs.Mobile.Sample.app.2.1.0.zip");
@@ -345,14 +349,10 @@ where you'll find demo scripts for a variety of use cases to get you started wit
 
 ## Additional Test Configuration Options
 
-- [Implement timeouts to control text execution times](/dev/test-configuration-options/#virtual-device-capabilities-sauce-specific--optional)
+- [Implement timeouts to control text execution times](/dev/test-configuration-options/#mobile-appium-timeout-capabilities)
 - [Annotating Tests with the Sauce Labs REST API](/basics/test-config-annotation/test-annotation/#sauce-labs-rest-api)
 - [Annotating Tests with Selenium's JavaScript Executor](/basics/test-config-annotation/test-annotation/#selenium-javascript-executor)
 - [Setting Test Status to Pass or Fail](/test-results/test-status)
 - [Using Build IDs and tags to differentiate and identify test runs](/basics/test-config-annotation/test-annotation)
 - [Create your own test script examples using our Platform Configurator](https://saucelabs.com/platform/platform-configurator#/)
 - [Browse our full suite of test configuration options and advanced configurations](/dev/test-configuration-options)
-
-## Training
-
-Lean how to run Appium Android tests on an Emulator in the [Automation Quickstart Course](https://training.saucelabs.com/codelabs/Module2-Quickstart/index.html?index=..%2F..quickstart#0).

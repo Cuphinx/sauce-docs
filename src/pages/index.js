@@ -32,33 +32,39 @@ function Home() {
                             Popular Searches:&nbsp;
                             <a
                                 className='hero__popular-searches'
-                                href='https://docs.saucelabs.com/dev/cli/saucectl/#installing-saucectl/'
+                                href='/dev/cli/saucectl/#installing-saucectl/'
                             >
                                 &nbsp;saucectl |
                             </a>
                             <a
                                 className='hero__popular-searches'
-                                href='https://docs.saucelabs.com/dev/cli/sauce-connect-proxy/'
+                                href='/secure-connections/sauce-connect-5/'
                             >
                                 &nbsp;Sauce Connect |
                             </a>
                             <a
                                 className='hero__popular-searches'
-                                href='https://docs.saucelabs.com/api-testing/index.html'
+                                href='/api-testing/index.html'
                             >
                                 &nbsp;API Testing |
                             </a>
                             <a
                                 className='hero__popular-searches'
-                                href='https://docs.saucelabs.com/web-apps/automated-testing/selenium/selenium4/'
+                                href='/web-apps/automated-testing/selenium/selenium4/'
                             >
                                 &nbsp;Selenium 4 |
                             </a>
                             <a
                                 className='hero__popular-searches'
-                                href='https://docs.saucelabs.com/dev/api/'
+                                href='/dev/api/'
                             >
-                                &nbsp;REST API
+                                &nbsp;REST API |
+                            </a>
+                            <a
+                                className='hero__popular-searches'
+                                href='/visual-testing/'
+                            >
+                                &nbsp;Sauce Visual
                             </a>
                         </span>
                         <span className='landpage-buttons-container'>
@@ -70,14 +76,20 @@ function Home() {
                             </a>
                             <a href='/dev/api/'>
                                 <Button
-                                    className='button-dark'
+                                    className='button-light'
                                     name='Sauce REST API'
                                 />
                             </a>
                             <a href='/dev/cli/'>
                                 <Button
-                                    className='button-dark'
+                                    className='button-light'
                                     name='Sauce CLI'
+                                />
+                            </a>
+                            <a href='/visual-testing/'>
+                                <Button
+                                    className='button-light'
+                                    name='Sauce Visual'
                                 />
                             </a>
                         </span>
@@ -85,7 +97,7 @@ function Home() {
                     <div className='column-right'>
                         <img
                             className='landpage-hero'
-                            src='img/dev-resources-hero.png'
+                            src='img/developer-tier-1.png'
                         />
                     </div>
                 </div>

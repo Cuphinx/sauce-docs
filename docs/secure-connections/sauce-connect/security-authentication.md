@@ -28,7 +28,13 @@ There are several ways to secure Sauce Connect Proxy in your network. With our r
 
 ### Recommended Configuration
 
-The [sc client program](/secure-connections/sauce-connect/installation/#download-latest-version) establishes a TLS connection (tunnel connection) to a dedicated tunnel endpoint server hosted in the Sauce Labs cloud. During test sessions, browsers and mobile apps use this tunnel endpoint as an HTTP proxy. HTTP requests are multiplexed and relayed back through the tunnel connection to the sc client program, which proxies these HTTP requests, providing access to the App Under Test within your network.
+The [sc client program](/secure-connections/sauce-connect/installation)
+establishes a TLS connection (tunnel connection) to a dedicated tunnel endpoint
+server hosted in the Sauce Labs cloud. During test sessions, browsers and mobile
+apps use this tunnel endpoint as an HTTP proxy. HTTP requests are multiplexed
+and relayed back through the tunnel connection to the sc client program, which
+proxies these HTTP requests, providing access to the App Under Test within your
+network.
 
 There are two options to control and monitor the access sc has to your network: firewall rules and proxy settings. In our recommended configuration, both are used.
 
@@ -107,7 +113,7 @@ For more information, see [Using Environment Variables for Authentication Creden
 
 The security of Sauce Connect Proxy communication to both the Sauce Labs API and the virtual machine hosting your tests in the Sauce Labs cloud is managed through [public key certificates](https://en.wikipedia.org/wiki/Public_key_certificate).
 
-For connection to the API, Sauce Connect Proxy uses certificates issued by certificate authorities, which are are integrated into the operating system of the machine where Sauce Connect Proxy is running.
+For connection to the API, Sauce Connect Proxy uses certificates issued by certificate authorities, which are integrated into the operating system of the machine where Sauce Connect Proxy is running.
 
 For connection to the Sauce Labs virtual machines, the certificate presented by the tunnel endpoint is signed by public certificate authorities.
 
@@ -115,9 +121,15 @@ For connection to the Sauce Labs virtual machines, the certificate presented by 
 
 When securing Sauce Connect Proxy, be sure to allowlist these sites so that the Sauce Connect SSL certificates can be verified:
 
-- **OCSP:** http://gp.symcd.com
-- **OCSP Servers for VDC/RDC clouds:** http://ocsp.digicert.com, http://status.geotrust.com
-- **OCSP Servers for Headless:** http://ocsp.int-x3.letsencrypt.org,  http://isrg.trustid.ocsp.identrust.com
+- http://crl1.digicert.com
+- http://crl2.digicert.com
+- http://crl3.digicert.com
+- http://crl4.digicert.com
+- http://ocsp.digicert.com
+- http://status.geotrust.com
+- http://\*.o.lencr.org
+- http://\*.c.lencr.org
+- http://gp.symcd.com
 
 Sauce Connect Proxy will try to resolve the entire certificate chain at runtime and check if it can reach the OCSP servers in the entire chain. Because the chain is resolved during runtime and certificates change and are constantly renewed, it's possible that the OCSP sites listed in the certification check might change over time as well.
 
@@ -149,9 +161,7 @@ On macOS machines, certificates are pre-installed as part of the [Trust Store](h
 
 ### Tunnel Connection to the Sauce Labs Virtual Machine over SSL/TLS
 
-Sauce Connect Proxy reverses tunnel VM-to-test target traffic through the TLS connection from Sauce Connect-to-tunnel endpoints. Your Selenium and Appium webdriver traffic is sent over `http(80)` or `https(443)` to `ondemand.saucelabs.com`, which has its own TLS certificate that's then passed to the test VM.
-
-Sauce Connect Proxy versions 4.6.x and above will default to the public certificate.
+Sauce Connect Proxy routes VM-to-test target traffic through the TLS connection between the Sauce Connect Proxy client and the Sauce Connect Server. Sauce Connect Proxy is not used with your Selenium and Appium webdriver traffic to the Sauce Labs `on-demand` endpoint, for example, `ondemand.us-west-1.saucelabs.com`.
 
 ## SSL Certificate Bumping
 
@@ -181,7 +191,6 @@ SSL Bumping is enabled by default for Sauce Connect Proxy, but there are some si
 
 - If you're working with sites that are highly dependent on AJAX
 - Some network components, such as browsers and servers that use WebSockets, won’t work if the traffic to them has been altered, which Sauce Connect Proxy appears to do
-- If you're testing with iOS 10.3 on iPad Pro (12.9 inch) simulator or iPad Pro (9.7 inch) simulator
 - If you're testing with Android Real Devices
 
 #### How to Disable SSL Bumping

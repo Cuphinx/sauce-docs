@@ -14,7 +14,7 @@ The following environment variables are available during test execution.
 
 ## Tailoring Your Test File Bundle
 
-The `saucectl` command line bundles your root directory (`rootDir` parameter of `config.yml`) and transmits it to the Sauce Labs cloud or your own infrastructure via Docker, then unpacks the bundle and runs the tests. This functionality is partly what allows Sauce Control to operate in a framework-agnostic capacity. However, you can and should manage the inclusion and exclusion of files that get bundled to optimize performance and ensure security.
+The `saucectl` command line bundles your root directory (`rootDir` parameter of `config.yml`) and transmits it to the Sauce Labs cloud, then unpacks the bundle and runs the tests. This functionality is partly what allows Sauce Control to operate in a framework-agnostic capacity. However, you can and should manage the inclusion and exclusion of files that get bundled to optimize performance and ensure security.
 
 ### Excluding Files from the Bundle
 
@@ -123,23 +123,27 @@ If you know that your tests require only specific dependencies, install them ind
 ```bash
 # Install individual dependencies
 npm install playwright-xpath
-npm install @playwright/react
 
 saucectl run
 ```
 
 ### Set NPM Packages in `config.yml`
 
-You can avoid installing or uninstalling dependencies prior to each bundling operation by defining a default set of NPM packages to install in your sauce configuration file using the `npm` parameter, as shown in the following example:
+You can avoid installing or uninstalling dependencies prior to each bundling
+operation by defining a default set of NPM packages to install in your sauce
+configuration file using the `npm` parameter, as shown in the following example:
 
 ```jsx title= "config.yml npm example"
 npm:
-  registry: https://registry.npmjs.org
+  registries:
+    - url: https://registry.npmjs.org
+  usePackageLock: true
   packages:
-    lodash: "4.17.20"
-    "@babel/preset-typescript": "7.12"
-    "@playwright/react": "^5.0.1"
+    "lodash": "4.17.20"
 ```
+
+Setting `usePackageLock: true` will in most cases reduce the time required for
+installation.
 
 Alternatively, you can let `saucectl` selectively include already installed dependencies from the `node_modules` folder.
 
@@ -149,44 +153,52 @@ npm:
     - lodash
 ```
 
-:::caution
-This feature is highly experimental.
-:::
+If a `package.json` file is specified, `saucectl` will automatically include all
+locally installed `dependencies` and `devDependencies` listed in the
+`package.json` file. While this may seem convenient at first, it can lead to
+long startup times if the `package.json` file includes dependencies that are
+not strictly required for the test run.
+```jsx title= "config.yml npm dependencies from package.json"
+npm:
+  dependencies:
+    - "package.json"
+```
 
 ## Attaching Test Assets
 
-Any test assets created by your tests at runtime (such as logs, screenshots or reports) you wish to retain along with your test results must be placed in the `__assets__` directory of your project root folder. On Sauce Labs VMs, this path is relative to the current working directory.
+By default, any test assets created by your tests at runtime (such as logs, screenshots or reports) you wish to retain along with your test results must be placed in the `__assets__` directory of your project root folder. On Sauce Labs VMs, this path is relative to the current working directory.
 
-:::note Screenshots not Viewable in UI
-Test Screenshots uploaded to Sauce Labs are currently not viewable in Test Results screen of the Sauce Labs UI, but can be retrieved using the [Get Job Asset File](/dev/api/jobs/#get-a-job-asset-file) API. Alternatively, you can use the [artifacts.download](#download) configuration parameter to download test assets to a local file upon completion of your test.
-:::
+### Attaching entire directories
 
-:::note Nested Paths
+In situations where you want to preserve the file structure of your assets (e.g. a multi-page HTML report),
+you can use the `retain` feature to define a directory to archive and store as a test asset.
+
+### Handling nested assets
+
 Nested assets are stored **flat** in Sauce Labs. A test asset like `__assets__/mylogs/log.txt` would therefore be stored and available for download as `log.txt`.
 Please keep that in mind when creating custom assets, as examples like `__assets__/mylogs/log.txt` and `__assets__/myotherlogs/log.txt` would eventually collide when persisted.
-:::
 
-### Setting up a Proxy
+For Cypress and Playwright, there are cases where you may want to override this default behavior; e.g. your test framework generates
+an HTML report and you want to preserve the entire report directory and don't want the individual files to
+be flattened and automatically attached as described above. In that case, you can set an environment variable
+in your saucectl config to opt out of the default behaviour. When set, the configured output directory
+for the test run will be honoured; e.g. it won't be overridden to `__assets__/`.
+
+```yaml title= "example configuration"
+artifacts:
+  retain:
+    report-directory: archived-report.zip
+
+env:
+  SAUCE_SYNC_WEB_ASSETS: "true"
+```
+
+When configured this way, the directory named `report-directory` will be archived as `archived-report.zip`.
+To maintain backwards compatibility with our UI, some asset types (e.g. images, logs, etc.) in `report-directory` will still be automatically copied over to `__assets__/` and attached to the test results.
+
+## Setting up a Proxy
 
 If you need to go through a proxy server, you can set it through the following variables:
 
 - `HTTP_PROXY`: Proxy to use to access HTTP websites
 - `HTTPS_PROXY`: Proxy to use to access HTTPS websites
-
-### Docker Proxy Considerations
-
-When running in docker-mode, `saucectl` still must reach the Sauce Labs platform get the latest docker image available or upload the test package to Sauce Cloud, and the docker container needs to access the tested website and Sauce Labs to upload results.
-
-Therefore, you may be required to set the proxy twice, as shown in the following examples:
-
-```title= "Example: Windows Powershell"
-PS> $Env:HTTP_PROXY=http://my.proxy.org:3128/
-PS> $Env:HTTPS_PROXY=http://my.proxy.org:3128/
-PS> saucectl run -e HTTP_PROXY=${Env:HTTP_PROXY} -e HTTPS_PROXY=${Env:HTTPS_PROXY}
-```
-
-```title= "Example: Linux/macOS"
-$> export HTTP_PROXY=http://my.proxy.org:3128/
-$> export HTTPS_PROXY=http://my.proxy.org:3128/
-$> saucectl run -e HTTP_PROXY=${HTTP_PROXY} -e HTTPS_PROXY=${HTTPS_PROXY}
-```

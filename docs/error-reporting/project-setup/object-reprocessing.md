@@ -9,8 +9,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-## Overview
-
 Backtrace provides system administrators with the ability to Reprocess Objects they have stored in Backtrace. This is useful in cases where
 
 - They need to regenerate callstacks after debug symbols are uploaded.
@@ -20,7 +18,7 @@ Note that the grouping of errors may change after reprocessing.
 
 ## How To Reprocess Objects
 
-There are a couple of ways for system administrators to reprocess objects. In this guide, we will discuss the capabilities available via the Web Console. Admins can also use the [morgue command line tool](https://support.backtrace.io/hc/en-us/articles/360040517151-Morgue) to reprocess objects.
+There are a couple of ways for system administrators to reprocess objects. In this guide, we will discuss the capabilities available via the Web Console. Admins can also use the [morgue command line tool](/error-reporting/advanced/morgue/) to reprocess objects.
 
 ### Reprocess by Time
 
@@ -44,4 +42,4 @@ In the List view, admins can reprocess objects from the object ID column.
 
 In the Debugger view, admins can reprocess an object from the menu on the right.
 
-<img src={useBaseUrl('img/error-reporting/project-settings/debug-reprocess.png')} alt="" />
+<img src={useBaseUrl('img/error-reporting/project-settings/debug-reprocess.webp')} alt="" />

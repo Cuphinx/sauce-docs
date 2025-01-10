@@ -9,6 +9,12 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::warning
+`apifctl` has been deprecated and replaced with [saucectl](/api-testing/integrations/apitesting-saucectl-integration/).
+
+If you have any questions, contact your Customer Success Manager or Sauce Labs Support.
+:::
+
 Execute API tests and interact with Sauce Labs API Testing (either locally or in a pipeline) using our API Testing CLI tool, `apifctl`.
 
 ## Usage
@@ -28,17 +34,17 @@ To utilize most `apifctl` CI/CD integration functionalities, you'll need to gene
 To generate a webhook:
 
 1. Log in to Sauce Labs, then click **API Testing**.
-1. Navigate to your Project and select the **WebHooks** tab.<br/><img src={useBaseUrl('img/api-fortress/2021/04/webHooksSection.png')} alt="webhook screenshot"/>
-1. Select **Create Hook**.<br/><img src={useBaseUrl('img/api-fortress/2021/04/createHook.png')} alt="Create New WebHook" width="300"/>
-1. Enter a **Hook Name** for your webhook (**Description** is optional), then click **Save**.<br/><img src={useBaseUrl('img/api-fortress/2021/04/sampleHook.png')} alt="sample webhook details" width="300" />
+1. Navigate to your Project and select the **WebHooks** tab.<br/><img src={useBaseUrl('img/api-testing/webhook_tab.png')} alt="webhook screenshot" width="200"/>
+1. Select **Create WebHook**.<br/><img src={useBaseUrl('img/api-testing/createHook.png')} alt="Create New WebHook" width="300"/>
+1. Enter a **Name** for your webhook (**Description** is optional), then click **Save**.<br/><img src={useBaseUrl('img/api-testing/sampleHook.png')} alt="sample webhook details" width="300" />
 1. The generated **Hook URL** will then appear. Your Sauce Labs username, Sauce API Testing endpoint, and `{hook_id}` will populate automatically. For security reasons, you'll need to add your own access key.
 
-```bash
-https://{SAUCE_USERNAME}:{SAUCE_ACCESS_KEY}@{SAUCE_API_ENDPOINT}/{hook_id}
-```
+   ```bash
+   https://{SAUCE_USERNAME}:{SAUCE_ACCESS_KEY}@{SAUCE_API_ENDPOINT}/{hook_id}
+   ```
 
 1. Copy the URL to your clipboard and then you can use it either locally or as part of CI build.<br/>
-   <img src={useBaseUrl('img/api-fortress/2021/04/hookURL.png')} alt="sample Hook URL"/>
+   <img src={useBaseUrl('img/api-testing/hookURL.png')} alt="sample Hook URL"/>
 
 You can then reuse this Webhook for future tests within that Project by returning to the **Webhooks** tab and copying it there. Webhooks are Project-specific.
 
@@ -483,7 +489,7 @@ Identifies the ID of the event you want to see. For use with the **[`event`](#ev
 
 <p><small>| STRING |</small></p>
 
-Adding this parameter allows you to specify the build ID you want to run your tests against. For use with the **[`run`](#run)**, **[`run-all`](#run-all)**, **[`run-tag`](#run-tag)**, and **[`exec`](#exec)** commands. For more information, see [Test Builds](/api-testing/project-dashboard/#test-builds).
+Adding this parameter allows you to specify the build ID you want to run your tests against. For use with the **[`run`](#run)**, **[`run-all`](#run-all)**, **[`run-tag`](#run-tag)**, and **[`exec`](#exec)** commands. For more information, see [Test Builds](/api-testing/project-dashboard/#test-build-reports).
 
 ```bash
 -b build-12345

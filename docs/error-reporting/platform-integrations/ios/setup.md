@@ -22,22 +22,19 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Supported Platforms
 
-- iOS 10+
-- macOS 10.10+
-- tvOS 10+
+- iOS 11+
+- macOS 10.13+
+- tvOS 11+
+
+### Privacy manifest
+
+The iOS SDK contains a privacy manifest to declare the types of data accessed on the device. Please refer to this [source document](https://github.com/backtrace-labs/backtrace-cocoa/blob/master/PrivacyInfo.xcprivacy) for the specific types of data collected by the SDK.
 
 ## What You'll Need
 
 - A Backtrace account ([log in](https://backtrace.io/login) or sign up for a [free trial license](https://backtrace.io/sign-up)).
 - Your subdomain name (used to connect to your Backtrace instance). For example, `https://example-subdomain.sp.backtrace.io`.
-- A Backtrace project and a submission token.
-
-<!-- prettier-ignore -->
-:::tip Generate a Submission Token
-
-1. In the Backtrace Console, go to **Project settings > Error submission > Submission tokens**.
-1. Select **+**.
-:::
+- A Backtrace project and a [submission token](/error-reporting/project-setup/submission-url).
 
 ### System Requirements
 
@@ -45,15 +42,39 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Install the SDK
 
-Use [CocoaPods](https://cocoapods.org/) to install the latest version of the reporting library. To use CocoaPods, add the [Backtrace pod](https://cocoapods.org/pods/Backtrace) to your `Podfile`:
+You can install the SDK with Swift Package Manager (SPM) or CocoaPods. The SPM package can be integrated directly in Xcode or by editing your package's `Package.swift` file.
+
+<Tabs>
+  <TabItem value="xcode" label="Xcode" default>
+   <ol>
+   <li>In <b>Xcode</b> select <b>File > Add Packages</b>, then search for and add <code>https://github.com/backtrace-labs/backtrace-cocoa.git</code>.</li>
+   <li>Verify your project <b>Package Dependencies</b> list for backtrace-cocoa.</li>
+   <li>Add Backtrace to your target’s <b>Frameworks, Libraries, and Embedded Content</b>.</li>
+   </ol>
+  </TabItem>
+  <TabItem value="SPM" label="Swift Package Manager">
+   Add the following dependency to your <code>Package.swift</code> file:
+
+```
+.package(url: "https://github.com/backtrace-labs/backtrace-cocoa.git, branch: "feature/SwiftPM")
+```
+
+  </TabItem>
+  <TabItem value="cocoapods" label="CocoaPods">
+   Add the following to your <code>Podfile</code>:
+   <ol>
+   <li>Specify <code>use_frameworks!</code>.</li>
+   <li>
+       Add the <code>Backtrace</code> pod:
 
 ```
 pod 'Backtrace'
 ```
 
-:::note
-Make sure to specify `use_frameworks!` in your `Podfile`.
-:::
+   </li>
+   </ol>
+  </TabItem>
+</Tabs>
 
 ## Initialize the Backtrace Client
 
@@ -82,7 +103,7 @@ BacktraceCredentials *backtraceCredentials = [[BacktraceCredentials alloc] initW
 
 After compiling your application with the new backtrace-cocoa library, make sure symbol files are generated in dSYM format and are uploaded to Backtrace to symbolicate incoming crashes.
 
-For information on how to upload debug symbols, see [Symbol Formats and Upload Methods](/error-reporting/project-setup/symbolication/#symbol-formats-and-upload-methods).
+For information on how to upload debug symbols, see [Symbol Formats and Upload Methods](/error-reporting/project-setup/symbolication).
 
 ### Set Debug Symbol Format
 
@@ -100,7 +121,7 @@ To find dSYM files while building the project:
 
 1. In Xcode, build your project.
 1. From the **Products** folder, select your iOS app. <br/>
-   <img src={useBaseUrl('img/error-reporting/ios/xcode-products.png')} width="400" alt="" />
+   <img src={useBaseUrl('img/error-reporting/ios/xcode-products.webp')} width="400" alt="" />
 1. Right-click, then click **Show in Finder**.
 1. Zip all the dSYM files and upload to Backtrace.
    <img src={useBaseUrl('img/error-reporting/ios/finder-dsyms-products.png')} width="600" alt="" />
@@ -112,7 +133,7 @@ To find dSYM files while archiving the project:
 1. Select your iOS app, then click **Show in Finder**. dSYMs are stored in a `.xcarchive` file.
    <img src={useBaseUrl('img/error-reporting/ios/xcode-organizer.png')} width="900" alt="" />
 1. Right-click, then click **Show Package Contents**.
-   <img src={useBaseUrl('img/error-reporting/ios/finder-xcarchive.png')} width="700" alt="" />
+   <img src={useBaseUrl('img/error-reporting/ios/finder-xcarchive.webp')} width="700" alt="" />
 1. Search for the **dSYMs** folder.
 1. Zip all the dSYM files and upload to Backtrace. <br/>
    <img src={useBaseUrl('img/error-reporting/ios/finder-dsyms-archive.png')} width="400" alt="" />

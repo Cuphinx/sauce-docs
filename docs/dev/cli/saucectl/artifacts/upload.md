@@ -1,10 +1,8 @@
 ---
 id: upload
 title: saucectl artifacts upload
-sidebar_label: saucectl artifacts upload
+sidebar_label: upload
 ---
-
-## Description
 
 Uploads an artifact for a job to Sauce Labs.
 
@@ -47,9 +45,9 @@ Real Device job is not supported.
 ### <span className="cli">--out</span>
 
 <div className="cli-desc">
-<p><small>| REQUIRED | STRING |</small></p>
+<p><small>| OPTIONAL | STRING |</small></p>
 
-Save files to target directory. Defaults to current working directory.
+Specifies the output format for the console. Options include: "text" or "json". The default setting is "text".
 
 **Shorthand:** `-o <text/json>`
 

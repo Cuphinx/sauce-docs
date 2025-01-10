@@ -11,8 +11,7 @@ Explore View Tree is a feature that is designed to help you discover all the vis
 Explore View Tree feature allows you to see, debug, analyze or determine the state of individual View components. It also informs you about global changes in the view tree.
 
 :::note
-This feature CANNOT be used as Appium Inspector. If you wanna use Appium Inspector please visit the following link: https://github.com/saucelabs/appium-inspector-saucelabs
-Such global changes include, for example, a layout of the whole tree.
+You can use our [Appium Inspector capability](/mobile-apps/features/appium-inspector/) to inspect the App Source and attributes in real time during a Live Testing session! 
 :::
 
 The feature speeds up your debugging experience of QA SDET for automated test scripts, and expedites the debugging and validating View and UI-related issues. Finally, the Explore feature is a critical factor for easy validation of accessibility labels.
@@ -26,13 +25,23 @@ The feature speeds up your debugging experience of QA SDET for automated test sc
 
 By default, the Explore View Tree feature is enabled if the instrumentation feature is enabled.
 
-To enable device instrumentation:
+To enable instrumentation:
 
-1. On Sauce Labs, click **Live** > **Mobile App**.
-2. [Upload your mobile app to Sauce Labs](/mobile-apps/app-storage/) through the UI or CLI.
-3. After you’ve uploaded your app, return to the **Live** > **Mobile App** page, hover your mouse over your app, then select **Settings**. <br/><img src={useBaseUrl('img/mobile-apps/networkcapturescr.png')} alt="Mobile app settings navigation" width="600"/>
-4. Under **Default Settings**, toggle **Instrumentation** on.
-   <br/><img src={useBaseUrl('img/mobile-apps/Device-Vitals-screenshot-1.png')} alt="Mobile app settings navigation" width="600"/>
+1. In Sauce Labs, from the left navigation, click **App Management**.
+
+<img src={useBaseUrl('img/mobile-apps/app-logs5.png')} alt="App Logs" width="300"/>
+
+2. Upload your mobile app.
+
+<img src={useBaseUrl('img/mobile-apps/app-logs-8.png')} alt="App Logs" width="700"/>
+
+3. After you’ve uploaded your app, hover your mouse over your app, then select **Settings**.
+
+<img src={useBaseUrl('img/mobile-apps/app-logs-6.png')} alt="App Logs" width="700"/>
+
+4. Under **Real Device Settings**, toggle **Instrumentation** to **Enabled**.
+
+<img src={useBaseUrl('img/mobile-apps/app-logs-7.png')} alt="App Logs" width="700"/>
 
 Now you can start your live or automated testing session. View Tree will be captured and be part of your test results.
 
@@ -86,6 +95,7 @@ The following table lists the available attributes:
 
 - Webviews and hybrid apps will have additional capture limitations.
 - Emulators and Simulators are not supported.
+
 :::
 
 ## More Information
